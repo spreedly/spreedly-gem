@@ -2,6 +2,7 @@ require 'rest_client'
 require 'nokogiri'
 require 'time'
 require 'bigdecimal'
+require 'delegate'
 
 class Spreedly
   def self.configure(name, token)
@@ -9,7 +10,19 @@ class Spreedly
   end
   
   def self.site
-    @site
+    if @site
+      @site
+    else
+      raise "You must call Spreedly.configure before calling methods."
+    end
+  end
+  
+  def self.mock!
+    require 'mock_spreedly'
+  end
+  
+  def self.process_response(response)
+    XMLResponseData.new(response)
   end
   
   class Subscriber
@@ -23,7 +36,7 @@ class Spreedly
 
     def self.create!(params={})
       id = params.delete(:id)
-      new(subscribers.post(:subscriber => {:customer_id => id}.merge(params)))
+      new(Spreedly.process_response(subscribers.post(:subscriber => {:customer_id => id}.merge(params))))
     rescue RestClient::RequestFailed => e
       case e.http_code
       when 422
@@ -36,17 +49,27 @@ class Spreedly
     end
     
     def self.find(id)
-      new(subscribers[id].get)
+      new(Spreedly.process_response(subscribers[id.to_s].get))
     end
     
     attr_reader :id
     
-    def initialize(xml)
-      @doc = Nokogiri::XML(xml)
-      @id = @doc.at('customer-id').content
+    def initialize(data)
+      @data = data
+      @id = @data.customer_id
     end
     
-    def method_missing(method, *args, &block)
+    def method_missing(*args, &block)
+      @data.send(*args, &block)
+    end
+  end
+  
+  class XMLResponseData
+    def initialize(xml)
+      @doc = Nokogiri::XML(xml)
+    end
+    
+    def method_missing(method, *args)
       if args.empty? && node = @doc.at(method.to_s.tr('_', '-'))
         case node['type']
         when 'datetime'

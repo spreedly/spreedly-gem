@@ -13,9 +13,15 @@ namespace :test do
     ruby %(-rubygems -Ilib test/spreedly_gem_test.rb)
   end
   
-  task :real_on do
+  task :real do
     ENV["SPREEDLY_TEST"] = "REAL"
   end
   
   task :real => [:real_on, :default]
+  
+  task :both do
+    Rake::Task['test:default'].execute
+    Rake::Task['test:real'].execute
+    Rake::Task['test:default'].execute
+  end
 end

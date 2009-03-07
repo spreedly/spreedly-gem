@@ -1,22 +1,18 @@
 require 'test/unit'
 require 'shoulda'
 require 'yaml'
+require 'pp'
 
 require 'spreedly'
 
-if ENV["SPREEDLY_TEST"] == "REAL"
-  test_site = YAML.load(File.read(File.dirname(__FILE__) + '/test_site.yml'))
-  Spreedly.configure(test_site['name'], test_site['token'])
-  Spreedly::Subscriber.wipe!
-else
-  Spreedly.mock!
-end
+Spreedly.mock! unless ENV["SPREEDLY_TEST"] == "REAL"
+
+test_site = YAML.load(File.read(File.dirname(__FILE__) + '/test_site.yml'))
+Spreedly.configure(test_site['name'], test_site['token'])
+Spreedly::Subscriber.wipe!
 
 class SpreedlyGemTest < Test::Unit::TestCase
   context "A Spreedly site" do
-    setup do
-    end
-    
     should "add a subscriber" do
       subscriber = Spreedly::Subscriber.create!(:id => 'joe')
       assert_not_nil subscriber.token
