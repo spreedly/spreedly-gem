@@ -3,9 +3,11 @@ require 'shoulda'
 require 'yaml'
 require 'pp'
 
-require 'spreedly'
-
-Spreedly.mock! unless ENV["SPREEDLY_TEST"] == "REAL"
+if ENV["SPREEDLY_TEST"] == "REAL"
+  require 'spreedly'
+else
+  require 'mock_spreedly'
+end
 
 test_site = YAML.load(File.read(File.dirname(__FILE__) + '/test_site.yml'))
 Spreedly.configure(test_site['name'], test_site['token'])
@@ -51,6 +53,22 @@ class SpreedlyGemTest < Test::Unit::TestCase
       subscriber = create_subscriber(:id => "fred", :screen_name => "FREDDY", :email => "fred@example.com")
       assert_equal "FREDDY", subscriber.screen_name
       assert_equal "fred@example.com", subscriber.email
+    end
+    
+    should "return all subscribers" do
+      one = create_subscriber
+      two = create_subscriber
+      subscribers = Spreedly::Subscriber.all
+      assert subscribers.size >= 2
+      assert subscribers.detect{|e| e.id == one.id}
+      assert subscribers.detect{|e| e.id == two.id}
+    end
+    
+    should "generate a subscribe url" do
+      assert_equal "https://spreedly.com/terralien-test/subscribers/joe/subscribe/1/Joe%20Bob",
+        Spreedly.subscribe_url(:id => 'joe', :plan => '1', :screen_name => "Joe Bob")
+      assert_equal "https://spreedly.com/terralien-test/subscribers/joe/subscribe/1/",
+        Spreedly.subscribe_url(:id => 'joe', :plan => '1')
     end
   end
   

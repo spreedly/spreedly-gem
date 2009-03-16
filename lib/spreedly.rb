@@ -2,11 +2,15 @@ require 'rest_client'
 require 'nokogiri'
 require 'time'
 require 'bigdecimal'
-require 'delegate'
+require 'uri'
+
+raise "Mock Spreedly already required!" if defined?(Spreedly::MOCK)
 
 class Spreedly
+  REAL = "real"
   def self.configure(name, token)
-    @site = RestClient::Resource.new("https://spreedly.com/api/v4/#{name}", :user => token, :password => 'X')
+    @name = name
+    @site = Resource.new("https://spreedly.com/api/v4/#{name}", :user => token, :password => 'X', :headers => {'Content-Type' => 'text/xml', 'Accept' => 'text/xml'})
   end
   
   def self.site
@@ -17,12 +21,17 @@ class Spreedly
     end
   end
   
-  def self.mock!
-    require 'mock_spreedly'
+  def self.name
+    @name
   end
   
   def self.process_response(response)
-    XMLResponseData.new(response)
+    XMLResponseData.new(Nokogiri::XML(response))
+  end
+  
+  def self.subscribe_url(params)
+    screen_name = (params[:screen_name] ? URI.escape(params[:screen_name]) : "")
+    "https://spreedly.com/#{name}/subscribers/#{params[:id]}/subscribe/#{params[:plan]}/#{screen_name}"
   end
   
   class Subscriber
@@ -52,6 +61,10 @@ class Spreedly
       new(Spreedly.process_response(subscribers[id.to_s].get))
     end
     
+    def self.all
+      Spreedly.process_response(subscribers.get).subscribers.collect{|data| new(data)}
+    end
+    
     attr_reader :id
     
     def initialize(data)
@@ -64,9 +77,18 @@ class Spreedly
     end
   end
   
+  class Resource < RestClient::Resource
+    def url
+      @url + '.xml'
+    end
+    def [](suburl)
+      self.class.new(concat_urls(@url, suburl), options)
+    end
+  end
+
   class XMLResponseData
-    def initialize(xml)
-      @doc = Nokogiri::XML(xml)
+    def initialize(parsed_xml)
+      @doc = parsed_xml
     end
     
     def method_missing(method, *args)
@@ -78,6 +100,8 @@ class Spreedly
           (node.content == "true")
         when 'decimal'
           BigDecimal(node.content)
+        when 'array'
+          node.children.reject{|e| e.text?}.collect{|e| XMLResponseData.new(e)}
         else
           node.content
         end
