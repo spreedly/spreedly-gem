@@ -1,5 +1,4 @@
-require 'ostruct'
-require 'bigdecimal'
+require 'spreedly/common'
 
 raise "Real Spreedly already required!" if defined?(Spreedly::REAL)
 
@@ -7,6 +6,11 @@ class Spreedly
   MOCK = "mock"
   
   def self.configure(name, token)
+    @site_name = name
+  end
+  
+  def self.site_name
+    @site_name
   end
   
   class Subscriber
@@ -16,6 +20,7 @@ class Spreedly
       :active => proc{false},
       :store_credit => proc{BigDecimal("0.0")},
       :active_until => proc{nil},
+      :feature_level => proc{""},
     }
 
     def self.wipe!
@@ -53,12 +58,28 @@ class Spreedly
       ATTRIBUTES.each{|k,v| @attributes[k] = v.call}
     end
     
+    def comp(params={})
+      raise "Could not comp subscriber: no longer exists." unless self.class.find(id)
+      raise "Could not comp subscriber: validation failed." unless params.include?(:duration_units) && params.include?(:duration_quantity)
+      current_active_until = (active_until || Time.now)
+      @attributes[:active_until] = case params[:duration_units]
+      when 'days'
+        current_active_until + (params[:duration_quantity].to_i * 86400)
+      when 'months'
+        current_active_until + (params[:duration_quantity].to_i * 30 * 86400)
+      end
+      @attributes[:feature_level] = params[:feature_level]
+      @attributes[:active] = true
+    end
+    
     def id
       @attributes[:id]
     end
     
     def method_missing(method, *args)
-      if @attributes.include?(method)
+      if method.to_s =~ /\?$/
+        send(method.to_s[0..-2], *args)
+      elsif @attributes.include?(method)
         @attributes[method]
       else
         super

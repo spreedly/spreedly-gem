@@ -1,16 +1,16 @@
 require 'rest_client'
 require 'nokogiri'
 require 'time'
-require 'bigdecimal'
-require 'uri'
+
+require 'spreedly/common'
 
 raise "Mock Spreedly already required!" if defined?(Spreedly::MOCK)
 
 class Spreedly
   REAL = "real"
   def self.configure(name, token)
-    @name = name
-    @site = Resource.new("https://spreedly.com/api/v4/#{name}", :user => token, :password => 'X', :headers => {'Content-Type' => 'text/xml', 'Accept' => 'text/xml'})
+    @site_name = name
+    @site = Resource.new("https://spreedly.com/api/v4/#{site_name}", :user => token, :password => 'X', :headers => {'Content-Type' => 'text/xml', 'Accept' => 'text/xml'})
   end
   
   def self.site
@@ -21,17 +21,12 @@ class Spreedly
     end
   end
   
-  def self.name
-    @name
+  def self.site_name
+    @site_name
   end
   
   def self.process_response(response)
     XMLResponseData.new(Nokogiri::XML(response))
-  end
-  
-  def self.subscribe_url(params)
-    screen_name = (params[:screen_name] ? URI.escape(params[:screen_name]) : "")
-    "https://spreedly.com/#{name}/subscribers/#{params[:id]}/subscribe/#{params[:plan]}/#{screen_name}"
   end
   
   class Subscriber
@@ -72,6 +67,22 @@ class Spreedly
       @id = @data.customer_id
     end
     
+    def comp(params={})
+      endpoint = (active? ? "complimentary_time_extensions" : "complimentary_subscriptions")
+      self.class.subscribers[@id + "/" + endpoint].post(endpoint[0..-2] => params)
+    rescue RestClient::RequestFailed, RestClient::ResourceNotFound => e
+      case e.http_code
+      when 404
+        raise "Could not comp subscriber: no longer exists."
+      when 422
+        raise "Could not comp subscriber: validation failed."
+      when 403
+        raise "Could not comp subscriber: invalid comp type (#{endpoint})."
+      else
+        raise
+      end
+    end
+    
     def method_missing(*args, &block)
       @data.send(*args, &block)
     end
@@ -92,7 +103,9 @@ class Spreedly
     end
     
     def method_missing(method, *args)
-      if args.empty? && node = @doc.at(method.to_s.tr('_', '-'))
+      if method.to_s =~ /\?$/
+        send(method.to_s[0..-2], *args)
+      elsif args.empty? && node = @doc.at(method.to_s.tr('_', '-'))
         case node['type']
         when 'datetime'
           (node.content == "" ? nil : Time.parse(node.content))

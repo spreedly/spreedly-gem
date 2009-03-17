@@ -6,15 +6,22 @@ require 'pp'
 if ENV["SPREEDLY_TEST"] == "REAL"
   require 'spreedly'
 else
-  require 'mock_spreedly'
+  require 'spreedly/mock'
 end
 
 test_site = YAML.load(File.read(File.dirname(__FILE__) + '/test_site.yml'))
 Spreedly.configure(test_site['name'], test_site['token'])
-Spreedly::Subscriber.wipe!
 
 class SpreedlyGemTest < Test::Unit::TestCase
+  def self.only_real
+    yield if ENV["SPREEDLY_TEST"] == "REAL"
+  end
+
   context "A Spreedly site" do
+    setup do
+      Spreedly::Subscriber.wipe!
+    end
+
     should "add a subscriber" do
       subscriber = Spreedly::Subscriber.create!(:id => 'joe')
       assert_not_nil subscriber.token
@@ -69,6 +76,68 @@ class SpreedlyGemTest < Test::Unit::TestCase
         Spreedly.subscribe_url(:id => 'joe', :plan => '1', :screen_name => "Joe Bob")
       assert_equal "https://spreedly.com/terralien-test/subscribers/joe/subscribe/1/",
         Spreedly.subscribe_url(:id => 'joe', :plan => '1')
+    end
+    
+    should "generate an edit subscriber url" do
+      assert_equal "https://spreedly.com/terralien-test/subscriber_accounts/zetoken",
+        Spreedly.edit_subscriber_url('zetoken')
+    end
+    
+    should "comp an inactive subscriber" do
+      sub = create_subscriber
+      assert !sub.active?
+      assert_nil sub.active_until
+      assert_equal "", sub.feature_level
+      sub.comp(:duration_quantity => 1, :duration_units => 'days', :feature_level => 'Sweet!')
+      sub = Spreedly::Subscriber.find(sub.id)
+      assert_not_nil sub.active_until
+      assert_equal 'Sweet!', sub.feature_level
+      assert sub.active?
+    end
+    
+    should "comp an active subscriber" do
+      sub = create_subscriber
+      assert !sub.active?
+      sub.comp(:duration_quantity => 1, :duration_units => 'days')
+
+      sub = Spreedly::Subscriber.find(sub.id)
+      assert sub.active?
+      old_active_until = sub.active_until
+      sub.comp(:duration_quantity => 1, :duration_units => 'days')
+
+      sub = Spreedly::Subscriber.find(sub.id)
+      assert sub.active?
+      assert old_active_until < sub.active_until
+    end
+    
+    should "throw an error if comp is against unknown subscriber" do
+      sub = create_subscriber
+      Spreedly::Subscriber.wipe!
+      ex = assert_raise(RuntimeError) do
+        sub.comp(:duration_quantity => 1, :duration_units => 'days')
+      end
+      assert_match /exists/i, ex.message
+    end
+    
+    should "throw an error if comp is invalid" do
+      sub = create_subscriber
+      ex = assert_raise(RuntimeError) do
+        sub.comp
+      end
+      assert_match /validation/i, ex.message
+      assert_raise(RuntimeError){sub.comp(:duration_quantity => 1)}
+      assert_raise(RuntimeError){sub.comp(:duration_units => 1)}
+    end
+    
+    only_real do
+      should "throw an error if comp is wrong type" do
+        sub = create_subscriber
+        sub.comp(:duration_quantity => 1, :duration_units => 'days')
+        ex = assert_raise(RuntimeError) do
+          sub.comp(:duration_quantity => 1, :duration_units => 'days')
+        end
+        assert_match /invalid/i, ex.message
+      end
     end
   end
   
