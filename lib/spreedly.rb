@@ -88,6 +88,20 @@ class Spreedly
     end
   end
   
+  class SubscriptionPlan
+    def self.all
+      Spreedly.process_response(Spreedly.site['subscription_plans'].get).subscription_plans.collect{|data| new(data)}
+    end
+    
+    def initialize(data)
+      @data = data
+    end
+    
+    def method_missing(*args, &block)
+      @data.send(*args, &block)
+    end
+  end
+  
   class Resource < RestClient::Resource
     def url
       @url + '.xml'

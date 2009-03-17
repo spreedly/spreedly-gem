@@ -129,6 +129,11 @@ class SpreedlyGemTest < Test::Unit::TestCase
       assert_raise(RuntimeError){sub.comp(:duration_units => 1)}
     end
     
+    should "return subscription plans" do
+      assert !Spreedly::SubscriptionPlan.all.empty?
+      assert_not_nil Spreedly::SubscriptionPlan.all.first.name
+    end
+    
     only_real do
       should "throw an error if comp is wrong type" do
         sub = create_subscriber

@@ -13,8 +13,40 @@ class Spreedly
     @site_name
   end
   
-  class Subscriber
-    ATTRIBUTES = {
+  class Resource
+    def self.attributes
+      @attributes ||= {}
+    end
+
+    def self.attributes=(value)
+      @attributes = value
+    end
+    
+    def initialize(params={})
+      @attributes = params
+      if !id || id == ''
+        raise "Could not create subscriber: validation failed."
+      end
+      self.class.attributes.each{|k,v| @attributes[k] = v.call}
+    end
+    
+    def id
+      @attributes[:id]
+    end
+
+    def method_missing(method, *args)
+      if method.to_s =~ /\?$/
+        send(method.to_s[0..-2], *args)
+      elsif @attributes.include?(method)
+        @attributes[method]
+      else
+        super
+      end
+    end
+  end
+  
+  class Subscriber < Resource
+    self.attributes = {
       :created_at => proc{Time.now},
       :token => proc{(rand * 1000).round},
       :active => proc{false},
@@ -51,11 +83,10 @@ class Spreedly
     end
     
     def initialize(params={})
-      @attributes = params
+      super
       if !id || id == ''
         raise "Could not create subscriber: validation failed."
       end
-      ATTRIBUTES.each{|k,v| @attributes[k] = v.call}
     end
     
     def comp(params={})
@@ -71,19 +102,15 @@ class Spreedly
       @attributes[:feature_level] = params[:feature_level]
       @attributes[:active] = true
     end
-    
-    def id
-      @attributes[:id]
+  end
+  
+  class SubscriptionPlan < Resource
+    def self.all
+      plans.values
     end
     
-    def method_missing(method, *args)
-      if method.to_s =~ /\?$/
-        send(method.to_s[0..-2], *args)
-      elsif @attributes.include?(method)
-        @attributes[method]
-      else
-        super
-      end
+    def self.plans
+      @plans ||= {1 => new(:id => 1, :name => 'Default mock plan')}
     end
   end
 end
