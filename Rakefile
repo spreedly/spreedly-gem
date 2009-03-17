@@ -11,9 +11,9 @@ end
 namespace :test do
   task :default do
     if only = ENV['TEST_ONLY']
-      only = "-n /#{only}/"
+      only = "-n '/#{only}/'"
     end
-    ruby %(-rubygems -Ilib test/spreedly_gem_test.rb #{only})
+    ruby %(-rubygems -Ilib -Ivendor/httparty/lib test/spreedly_gem_test.rb #{only})
   end
   
   task :real_on do

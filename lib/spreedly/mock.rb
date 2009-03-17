@@ -24,9 +24,6 @@ class Spreedly
     
     def initialize(params={})
       @attributes = params
-      if !id || id == ''
-        raise "Could not create subscriber: validation failed."
-      end
       self.class.attributes.each{|k,v| @attributes[k] = v.call}
     end
     
@@ -85,7 +82,7 @@ class Spreedly
     def initialize(params={})
       super
       if !id || id == ''
-        raise "Could not create subscriber: validation failed."
+        raise "Could not create subscriber: no id passed OR already exists."
       end
     end
     

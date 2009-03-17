@@ -53,7 +53,7 @@ class SpreedlyGemTest < Test::Unit::TestCase
       ex = assert_raise(RuntimeError) do
         create_subscriber(:id => '')
       end
-      assert_match /validation/i, ex.message
+      assert_match /no id/i, ex.message
     end
     
     should "create with additional params" do
