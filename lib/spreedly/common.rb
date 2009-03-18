@@ -1,6 +1,6 @@
 Dir[File.dirname(__FILE__) + '/../../vendor/*'].each do |directory|
   next unless File.directory?(directory)
-  $: << File.expand_path(directory + '/lib')
+  $LOAD_PATH.unshift File.expand_path(directory + '/lib')
 end
 
 require 'uri'
