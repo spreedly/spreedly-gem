@@ -4,7 +4,7 @@ require 'spreedly/common'
 
 raise "Mock Spreedly already required!" if defined?(Spreedly::MOCK)
 
-class Spreedly
+module Spreedly
   REAL = "real"
 
   include HTTParty

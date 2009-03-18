@@ -2,7 +2,7 @@ require 'spreedly/common'
 
 raise "Real Spreedly already required!" if defined?(Spreedly::REAL)
 
-class Spreedly
+module Spreedly
   MOCK = "mock"
   
   def self.configure(name, token)
