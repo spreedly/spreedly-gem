@@ -1,30 +1,31 @@
-require 'rake'
+require 'hoe'
+require './lib/spreedly/version.rb'
 
-task :default => 'test:default'
-
-namespace :rest_client do
-  task :verbose do
-    ENV["RESTCLIENT_LOG"] = "stdout"
-  end
+hoe = nil
+Hoe.new('spreedly-gem', Spreedly::VERSION) do |project|
+  hoe = project
+  project.rubyforge_name = 'terralien'
+  project.developer('Nathaniel Talbott', 'nathaniel@terralien.com')
+  project.test_globs = ["test/**/*_test.rb"]
+  project.extra_dev_deps = ["thoughtbot-shoulda"]
 end
 
-namespace :test do
-  task :default do
-    if only = ENV['TEST_ONLY']
-      only = "-n '/#{only}/'"
-    end
-    ruby %(-rubygems -Ilib -Ivendor/httparty/lib test/spreedly_gem_test.rb #{only})
-  end
-  
-  task :real_on do
-    ENV["SPREEDLY_TEST"] = "REAL"
-  end
-  
-  task :real => [:real_on, :default]
-  
-  task :both do
-    Rake::Task['test:default'].execute
-    Rake::Task['test:real_on'].execute
-    Rake::Task['test:default'].execute
-  end
+desc "Run tests with and without mocking."
+task :test do
+  ENV["SPREEDLY_TEST"] = "REAL"
+  hoe.run_tests
+end
+
+task :test_mock do
+  hoe.run_tests
+end
+
+task :test_real do
+  ENV["SPREEDLY_TEST"] = "REAL"
+  hoe.run_tests
+end
+
+task :multi do
+  ENV["SPREEDLY_TEST"] = "REAL"
+  hoe.run_tests(true)
 end

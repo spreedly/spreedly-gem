@@ -46,14 +46,14 @@ class SpreedlyGemTest < Test::Unit::TestCase
       ex = assert_raise(RuntimeError) do
         create_subscriber(:id => 'bob')
       end
-      assert_match /exists/i, ex.message
+      assert_match(/exists/i, ex.message)
     end
     
     should "raise error if subscriber is invalid" do
       ex = assert_raise(RuntimeError) do
         create_subscriber(:id => '')
       end
-      assert_match /no id/i, ex.message
+      assert_match(/no id/i, ex.message)
     end
     
     should "create with additional params" do
@@ -116,7 +116,7 @@ class SpreedlyGemTest < Test::Unit::TestCase
       ex = assert_raise(RuntimeError) do
         sub.comp(:duration_quantity => 1, :duration_units => 'days')
       end
-      assert_match /exists/i, ex.message
+      assert_match(/exists/i, ex.message)
     end
     
     should "throw an error if comp is invalid" do
@@ -124,7 +124,7 @@ class SpreedlyGemTest < Test::Unit::TestCase
       ex = assert_raise(RuntimeError) do
         sub.comp
       end
-      assert_match /validation/i, ex.message
+      assert_match(/validation/i, ex.message)
       assert_raise(RuntimeError){sub.comp(:duration_quantity => 1)}
       assert_raise(RuntimeError){sub.comp(:duration_units => 1)}
     end
@@ -141,7 +141,7 @@ class SpreedlyGemTest < Test::Unit::TestCase
         ex = assert_raise(RuntimeError) do
           sub.comp(:duration_quantity => 1, :duration_units => 'days')
         end
-        assert_match /invalid/i, ex.message
+        assert_match(/invalid/i, ex.message)
       end
     end
   end

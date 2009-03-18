@@ -1,6 +1,5 @@
-require 'httparty'
-
 require 'spreedly/common'
+require 'httparty'
 
 raise "Mock Spreedly already required!" if defined?(Spreedly::MOCK)
 
@@ -12,10 +11,10 @@ module Spreedly
   headers 'Content-Type' => 'text/xml'
   format :xml
 
-  def self.configure(name, token)
-    base_uri "https://spreedly.com/api/v4/#{name}"
+  def self.configure(site_name, token)
+    base_uri "https://spreedly.com/api/v4/#{site_name}"
     basic_auth token, 'X'
-    @site_name = name
+    @site_name = site_name
   end
   
   def self.site_name

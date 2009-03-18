@@ -1,5 +1,11 @@
+Dir[File.dirname(__FILE__) + '/../../vendor/*'].each do |directory|
+  next unless File.directory?(directory)
+  $: << File.expand_path(directory + '/lib')
+end
+
 require 'uri'
 require 'bigdecimal'
+
 require 'spreedly/version'
 
 module Spreedly
