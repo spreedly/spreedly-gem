@@ -23,7 +23,7 @@ class SpreedlyGemTest < Test::Unit::TestCase
     end
 
     should "add a subscriber" do
-      subscriber = Spreedly::Subscriber.create!(:id => 'joe')
+      subscriber = Spreedly::Subscriber.create!('joe')
       assert_not_nil subscriber.token
       assert_equal subscriber.token, Spreedly::Subscriber.find('joe').token
     end
@@ -42,22 +42,22 @@ class SpreedlyGemTest < Test::Unit::TestCase
     end
     
     should "raise error if subscriber exists" do
-      create_subscriber(:id => 'bob')
+      create_subscriber('bob')
       ex = assert_raise(RuntimeError) do
-        create_subscriber(:id => 'bob')
+        create_subscriber('bob')
       end
       assert_match(/exists/i, ex.message)
     end
     
     should "raise error if subscriber is invalid" do
       ex = assert_raise(RuntimeError) do
-        create_subscriber(:id => '')
+        create_subscriber('')
       end
       assert_match(/no id/i, ex.message)
     end
     
     should "create with additional params" do
-      subscriber = create_subscriber(:id => "fred", :screen_name => "FREDDY", :email => "fred@example.com")
+      subscriber = create_subscriber("fred", "fred@example.com", "FREDDY")
       assert_equal "FREDDY", subscriber.screen_name
       assert_equal "fred@example.com", subscriber.email
     end
@@ -73,9 +73,9 @@ class SpreedlyGemTest < Test::Unit::TestCase
     
     should "generate a subscribe url" do
       assert_equal "https://spreedly.com/terralien-test/subscribers/joe/subscribe/1/Joe%20Bob",
-        Spreedly.subscribe_url(:id => 'joe', :plan => '1', :screen_name => "Joe Bob")
+        Spreedly.subscribe_url('joe', '1', "Joe Bob")
       assert_equal "https://spreedly.com/terralien-test/subscribers/joe/subscribe/1/",
-        Spreedly.subscribe_url(:id => 'joe', :plan => '1')
+        Spreedly.subscribe_url('joe', '1')
     end
     
     should "generate an edit subscriber url" do
@@ -88,7 +88,7 @@ class SpreedlyGemTest < Test::Unit::TestCase
       assert !sub.active?
       assert_nil sub.active_until
       assert_equal "", sub.feature_level
-      sub.comp(:duration_quantity => 1, :duration_units => 'days', :feature_level => 'Sweet!')
+      sub.comp(1, 'days', 'Sweet!')
       sub = Spreedly::Subscriber.find(sub.id)
       assert_not_nil sub.active_until
       assert_equal 'Sweet!', sub.feature_level
@@ -98,12 +98,12 @@ class SpreedlyGemTest < Test::Unit::TestCase
     should "comp an active subscriber" do
       sub = create_subscriber
       assert !sub.active?
-      sub.comp(:duration_quantity => 1, :duration_units => 'days')
+      sub.comp(1, 'days')
 
       sub = Spreedly::Subscriber.find(sub.id)
       assert sub.active?
       old_active_until = sub.active_until
-      sub.comp(:duration_quantity => 1, :duration_units => 'days')
+      sub.comp(1, 'days')
 
       sub = Spreedly::Subscriber.find(sub.id)
       assert sub.active?
@@ -114,7 +114,7 @@ class SpreedlyGemTest < Test::Unit::TestCase
       sub = create_subscriber
       Spreedly::Subscriber.wipe!
       ex = assert_raise(RuntimeError) do
-        sub.comp(:duration_quantity => 1, :duration_units => 'days')
+        sub.comp(1, 'days')
       end
       assert_match(/exists/i, ex.message)
     end
@@ -122,11 +122,11 @@ class SpreedlyGemTest < Test::Unit::TestCase
     should "throw an error if comp is invalid" do
       sub = create_subscriber
       ex = assert_raise(RuntimeError) do
-        sub.comp
+        sub.comp(nil, nil)
       end
       assert_match(/validation/i, ex.message)
-      assert_raise(RuntimeError){sub.comp(:duration_quantity => 1)}
-      assert_raise(RuntimeError){sub.comp(:duration_units => 1)}
+      assert_raise(RuntimeError){sub.comp(1, nil)}
+      assert_raise(RuntimeError){sub.comp(nil, 'days')}
     end
     
     should "return subscription plans" do
@@ -137,16 +137,16 @@ class SpreedlyGemTest < Test::Unit::TestCase
     only_real do
       should "throw an error if comp is wrong type" do
         sub = create_subscriber
-        sub.comp(:duration_quantity => 1, :duration_units => 'days')
+        sub.comp(1, 'days')
         ex = assert_raise(RuntimeError) do
-          sub.comp(:duration_quantity => 1, :duration_units => 'days')
+          sub.comp(1, 'days')
         end
         assert_match(/invalid/i, ex.message)
       end
     end
   end
   
-  def create_subscriber(params = {:id => (rand*100000000).to_i})
-    Spreedly::Subscriber.create!(params)
+  def create_subscriber(id=(rand*100000000).to_i, email=nil, screen_name=nil)
+    Spreedly::Subscriber.create!(id, email, screen_name)
   end
 end

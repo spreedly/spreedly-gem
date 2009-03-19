@@ -52,12 +52,12 @@ module Spreedly
       :feature_level => proc{""},
     }
 
-    def self.wipe!
+    def self.wipe! # :nodoc: all
       @subscribers = nil
     end
     
-    def self.create!(params={})
-      sub = new(params)
+    def self.create!(id, email=nil, screen_name=nil) # :nodoc: all
+      sub = new({:id => id, :email => email, :screen_name => screen_name})
 
       if subscribers[sub.id]
         raise "Could not create subscriber: already exists."
@@ -86,17 +86,17 @@ module Spreedly
       end
     end
     
-    def comp(params={})
+    def comp(quantity, units, feature_level=nil)
       raise "Could not comp subscriber: no longer exists." unless self.class.find(id)
-      raise "Could not comp subscriber: validation failed." unless params.include?(:duration_units) && params.include?(:duration_quantity)
+      raise "Could not comp subscriber: validation failed." unless units && quantity
       current_active_until = (active_until || Time.now)
-      @attributes[:active_until] = case params[:duration_units]
+      @attributes[:active_until] = case units
       when 'days'
-        current_active_until + (params[:duration_quantity].to_i * 86400)
+        current_active_until + (quantity.to_i * 86400)
       when 'months'
-        current_active_until + (params[:duration_quantity].to_i * 30 * 86400)
+        current_active_until + (quantity.to_i * 30 * 86400)
       end
-      @attributes[:feature_level] = params[:feature_level]
+      @attributes[:feature_level] = feature_level if feature_level
       @attributes[:active] = true
     end
   end

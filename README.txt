@@ -5,9 +5,9 @@
 == DESCRIPTION:
 
 The Spreedly gem provides a convenient Ruby wrapper for the goodness that is
-the http://spreedly.com API. Created by http://terralien.com.
+the http://spreedly.com API. Created by Terralien[http://terralien.com].
 
-== FEATURES/PROBLEMS:
+== FEATURES:
 
 * Makes it easy to get started.
 * Fully tested.
@@ -29,6 +29,8 @@ the http://spreedly.com API. Created by http://terralien.com.
   url = Spreedly.subscribe_url(:id => 'customer id', :plan => 'plan id')
   subscriber = Spreedly::Subscriber.find('customer id')
   subscriber.active?
+  
+Yup, they're exactly the same except for the require and the speed!
 
 == REQUIREMENTS:
 
@@ -37,7 +39,7 @@ the http://spreedly.com API. Created by http://terralien.com.
 
 == INSTALL:
 
-`sudo gem install spreedly-gem`
+  `sudo gem install spreedly-gem`
 
 == LICENSE:
 
