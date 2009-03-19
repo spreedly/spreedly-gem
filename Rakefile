@@ -1,6 +1,8 @@
 require 'hoe'
 require './lib/spreedly/version.rb'
 
+ENV["COPYFILE_DISABLE"] = "true" # Lose all the fugly ._ files when tar'ing
+
 hoe = nil
 Hoe.new('spreedly-gem', Spreedly::VERSION) do |project|
   hoe = project
