@@ -17,7 +17,8 @@ def remove_task(*task_names)
 end
  
 def replace_task(task_name, *args, &block)
-  remove_task(task_name)
+  name = (task_name.is_a?(Hash) ? task_name.keys.first : task_name)
+  remove_task(name)
   task(task_name, *args, &block)
 end
 
@@ -33,6 +34,14 @@ Rake::RDocTask.new(:docs) do |rd|
   rd.options << "-t" << title << "-f" << "darkfish"
 end
 
+replace_task :publish_docs => [:clean, :docs] do
+  host = "terralien@terralien.biz"
+
+  remote_dir = "/var/www/terralien/www/shared/static/projects/spreedly-gem"
+  local_dir = 'doc'
+
+  sh %{rsync #{hoe.rsync_args} #{local_dir}/ #{host}:#{remote_dir}}
+end
 
 desc "Run tests with and without mocking."
 replace_task :test do
