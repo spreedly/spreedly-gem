@@ -1,7 +1,7 @@
 = Spreedly-Gem
 
-* http://terralien.com/static/projects/spreedly-gem/
-* http://github.com/terralien/spreedly-gem
+* Docs[http://terralien.com/static/projects/spreedly-gem/]
+* Source[http://github.com/terralien/spreedly-gem]
 
 == DESCRIPTION:
 
