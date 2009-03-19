@@ -4,7 +4,7 @@ require './lib/spreedly/version.rb'
 ENV["COPYFILE_DISABLE"] = "true" # Lose all the fugly ._ files when tar'ing
 
 hoe = nil
-Hoe.new('spreedly-gem', Spreedly::VERSION) do |project|
+Hoe.new('spreedly', Spreedly::VERSION) do |project|
   hoe = project
   project.rubyforge_name = 'terralien'
   project.developer('Nathaniel Talbott', 'nathaniel@terralien.com')
@@ -31,7 +31,7 @@ Rake::RDocTask.new(:docs) do |rd|
 
   rd.rdoc_files += ['lib/spreedly.rb', 'lib/spreedly/common.rb', hoe.readme_file]
 
-  title = "Terralien's Spreedly gem (#{hoe.version}) Documentation"
+  title = "Terralien's Spreedly Gem (#{hoe.version}) Documentation"
 
   rd.options << "-t" << title << "-f" << "darkfish"
 end
