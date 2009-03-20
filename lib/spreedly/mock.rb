@@ -106,6 +106,10 @@ module Spreedly
       plans.values
     end
     
+    def self.find(id)
+      plans[id.to_i]
+    end
+    
     def self.plans
       @plans ||= {1 => new(:id => 1, :name => 'Default mock plan')}
     end

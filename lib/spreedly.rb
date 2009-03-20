@@ -67,6 +67,10 @@ module Spreedly
       @data = data
     end
     
+    def id
+      @data["id"]
+    end
+    
     def method_missing(method, *args, &block)
       if method.to_s =~ /\?$/
         send(method.to_s[0..-2])
@@ -149,6 +153,10 @@ module Spreedly
     # Returns all of the subscription plans defined in your site.
     def self.all
       Spreedly.get('/subscription_plans.xml')['subscription_plans'].collect{|data| new(data)}
+    end
+
+    def self.find(id)
+      all.detect{|e| e.id.to_s == id.to_s}
     end
   end
 end

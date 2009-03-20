@@ -134,6 +134,16 @@ class SpreedlyGemTest < Test::Unit::TestCase
       assert_not_nil Spreedly::SubscriptionPlan.all.first.name
     end
     
+    should "return the subscription plan id" do
+      plan = Spreedly::SubscriptionPlan.all.first
+      assert_not_equal plan.id, plan.object_id
+    end
+    
+    should "be able to find an individual subscription plan" do
+      plan = Spreedly::SubscriptionPlan.all.first
+      assert_equal plan.name, Spreedly::SubscriptionPlan.find(plan.id).name
+    end
+    
     only_real do
       should "throw an error if comp is wrong type" do
         sub = create_subscriber
