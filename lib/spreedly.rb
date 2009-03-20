@@ -155,6 +155,7 @@ module Spreedly
       Spreedly.get('/subscription_plans.xml')['subscription_plans'].collect{|data| new(data)}
     end
 
+    # Returns the subscription plan with the given id.
     def self.find(id)
       all.detect{|e| e.id.to_s == id.to_s}
     end
