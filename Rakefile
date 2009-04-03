@@ -47,26 +47,26 @@ end
 
 desc "Run tests with and without mocking."
 replace_task :test do
-  hoe.run_tests
+  ruby hoe.make_test_cmd
 
   ENV["SPREEDLY_TEST"] = "REAL"
-  hoe.run_tests
+  ruby hoe.make_test_cmd
 end
 
 desc "Run only mock tests."
 task :test_mock do
-  hoe.run_tests
+  ruby hoe.make_test_cmd
 end
 
 desc "Run only real tests."
 task :test_real do
   ENV["SPREEDLY_TEST"] = "REAL"
-  hoe.run_tests
+  ruby hoe.make_test_cmd
 end
 
 desc "Run both sets of tests under multiruby"
 replace_task :multi do
-  hoe.run_tests(true)
+  ruby hoe.make_test_cmd(:multi)
   ENV["SPREEDLY_TEST"] = "REAL"
-  hoe.run_tests(true)
+  ruby hoe.make_test_cmd(true)
 end

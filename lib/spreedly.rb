@@ -97,7 +97,7 @@ module Spreedly
     def self.create!(id, email=nil, screen_name=nil)
       result = Spreedly.post('/subscribers.xml', :body => 
         Spreedly.to_xml_params(:subscriber => {:customer_id => id, :email => email, :screen_name => screen_name}))
-      case result.code
+      case result.code.to_s
       when /2../
         new(result['subscriber'])
       when '403'
@@ -135,7 +135,7 @@ module Spreedly
       params[:feature_level] = feature_level if feature_level
       endpoint = (active? ? "complimentary_time_extensions" : "complimentary_subscriptions")
       result = Spreedly.post("/subscribers/#{id}/#{endpoint}.xml", :body => Spreedly.to_xml_params(endpoint[0..-2] => params))
-      case result.code
+      case result.code.to_s
       when /2../
       when '404'
         raise "Could not comp subscriber: no longer exists."
