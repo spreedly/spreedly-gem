@@ -68,5 +68,5 @@ desc "Run both sets of tests under multiruby"
 replace_task :multi do
   ruby hoe.make_test_cmd(:multi)
   ENV["SPREEDLY_TEST"] = "REAL"
-  ruby hoe.make_test_cmd(true)
+  ruby hoe.make_test_cmd(:multi)
 end
