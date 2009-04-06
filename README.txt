@@ -40,7 +40,7 @@ Yup, they're exactly the same except for the require and the speed!
 
 == INSTALL:
 
-  `sudo gem install spreedly-gem`
+  `sudo gem install spreedly`
 
 == LICENSE:
 
