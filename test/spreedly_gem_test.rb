@@ -22,6 +22,16 @@ class SpreedlyGemTest < Test::Unit::TestCase
       Spreedly::Subscriber.wipe!
     end
 
+    should "delete a subscriber" do
+      one = create_subscriber
+      two = create_subscriber
+      subscribers = Spreedly::Subscriber.all
+      assert subscribers.size == 2
+      Spreedly::Subscriber.delete!(one.id)
+      subscribers = Spreedly::Subscriber.all
+      assert subscribers.size == 1 
+    end
+    
     should "add a subscriber" do
       subscriber = Spreedly::Subscriber.create!('joe')
       assert_not_nil subscriber.token
