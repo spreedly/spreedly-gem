@@ -155,8 +155,8 @@ module Spreedly
     
     # Activates a free trial on the subscriber.
     # Requires customer_id and subscription_id of the free trial plan
-    def activate_free_trial(customer_id, subscription_id)
-      result = Spreedly.post("/subscribers/#{customer_id}/subscribe_to_free_trial.xml", :body => 
+    def activate_free_trial(subscription_id)
+      result = Spreedly.post("/subscribers/#{id}/subscribe_to_free_trial.xml", :body => 
         Spreedly.to_xml_params(:subscription_plan => {:id => subscription_id}))
       case result.code
       when /2../
