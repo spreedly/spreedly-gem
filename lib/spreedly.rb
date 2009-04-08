@@ -91,6 +91,7 @@ module Spreedly
       Spreedly.delete('/subscribers.xml')
     end
     
+    # This will DELETE individual subscribers from the site. Pass in the customer_id
     def self.delete!(id)
       Spreedly.delete("/subscribers/#{id}.xml")
     end
@@ -129,7 +130,7 @@ module Spreedly
     
     # Allows you to give a complimentary subscription (if the
     # subscriber is inactive) or a complimentary time extension (if
-    # the subscriber is inactive). Automatically figures out which
+    # the subscriber is active). Automatically figures out which
     # to do.
     #
     # Note: units must be one of "days" or "months" (Spreedly
@@ -151,6 +152,25 @@ module Spreedly
         raise "Could not comp subscriber: result code #{result.code}."
       end
     end
+    
+    # Activates a free trial on the subscriber.
+    # Requires customer_id and subscription_id of the free trial plan
+    def activate_free_trial(customer_id, subscription_id)
+      result = Spreedly.post("/subscribers/#{customer_id}/subscribe_to_free_trial.xml", :body => 
+        Spreedly.to_xml_params(:subscription_plan => {:id => subscription_id}))
+      case result.code
+      when /2../
+      when '404'
+        raise "Could not active free trial for subscriber: subscriber or subscription plan no longer exists."
+      when '422'
+        raise "Could not activate free trial for subscriber: validation failed. missing subscription plan id"
+      when '403'
+        raise "Could not activate free trial for subscriber: subscription plan either 1) isn't a free trial, 2) the subscriber is not eligible for a free trial, or 3) the subscription plan is not enabled."
+      else
+        raise "Could not activate free trial for subscriber: result code #{result.code}."
+      end
+    end
+    
   end
   
   class SubscriptionPlan < Resource
