@@ -90,6 +90,10 @@ module Spreedly
     def self.wipe!
       Spreedly.delete('/subscribers.xml')
     end
+    
+    def self.delete!(id)
+      Spreedly.delete("/subscribers/#{id}.xml")
+    end
 
     # Creates a new subscriber on Spreedly. The subscriber will NOT
     # be active - they have to pay or you have to comp them for that
