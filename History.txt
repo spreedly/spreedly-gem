@@ -1,3 +1,9 @@
+=== 1.1.0 / 2009-04-24
+
+* Compatibility with the latest hoe and HTTParty [seancribbs].
+* Added Subscriber.delete! [scottmotte].
+* Added Subscriber#activate_free_trial [scottmotte].
+
 === 1.0.0 / 2009-03-17
 
 * 1 major enhancement

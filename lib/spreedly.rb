@@ -86,12 +86,14 @@ module Spreedly
 
     # This will DELETE all the subscribers from the site.
     #
-    # Only works for tests sites (enforced on the Spreedly side).
+    # Only works for test sites (enforced on the Spreedly side).
     def self.wipe!
       Spreedly.delete('/subscribers.xml')
     end
     
-    # This will DELETE individual subscribers from the site. Pass in the customer_id
+    # This will DELETE individual subscribers from the site. Pass in the customer_id.
+    # 
+    # Only works for test sites (enforced on the Spreedly side).
     def self.delete!(id)
       Spreedly.delete("/subscribers/#{id}.xml")
     end
@@ -154,7 +156,7 @@ module Spreedly
     end
     
     # Activates a free trial on the subscriber.
-    # Requires customer_id and subscription_id of the free trial plan
+    # Requires subscription_id of the free trial plan
     def activate_free_trial(subscription_id)
       result = Spreedly.post("/subscribers/#{id}/subscribe_to_free_trial.xml", :body => 
         Spreedly.to_xml_params(:subscription_plan => {:id => subscription_id}))

@@ -2,6 +2,7 @@ History.txt
 Manifest.txt
 README.txt
 Rakefile
+TODO
 lib/spreedly.rb
 lib/spreedly/common.rb
 lib/spreedly/mock.rb
