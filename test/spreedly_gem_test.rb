@@ -29,7 +29,8 @@ class SpreedlyGemTest < Test::Unit::TestCase
       assert subscribers.size == 2
       Spreedly::Subscriber.delete!(one.id)
       subscribers = Spreedly::Subscriber.all
-      assert subscribers.size == 1 
+      assert subscribers.size == 1
+      assert_equal two.id, subscribers.first.id
     end
     
     should "add a subscriber" do

@@ -67,6 +67,10 @@ module Spreedly
       sub
     end
     
+    def self.delete!(id)
+      subscribers.delete(id)
+    end
+    
     def self.find(id)
       subscribers[id]
     end
