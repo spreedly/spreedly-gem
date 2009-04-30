@@ -185,5 +185,9 @@ module Spreedly
     def self.find(id)
       all.detect{|e| e.id.to_s == id.to_s}
     end
+    
+    def trial?
+      (plan_type == 'free_trial')
+    end
   end
 end

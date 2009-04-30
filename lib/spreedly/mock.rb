@@ -105,9 +105,10 @@ module Spreedly
       @attributes[:active] = true
     end
 
-    def activate_free_trial(subscription_id)
-      raise "Could not active free trial for subscriber: subscriber or subscription plan no longer exists." unless self.class.find(id)
-      raise "Could not activate free trial for subscriber: validation failed. missing subscription plan id" unless subscription_id
+    def activate_free_trial(plan_id)
+      raise "Could not activate free trial for subscriber: validation failed. missing subscription plan id" unless plan_id
+      raise "Could not active free trial for subscriber: subscriber or subscription plan no longer exists." unless self.class.find(id) && SubscriptionPlan.find(plan_id)
+      raise "Could not activate free trial for subscriber: subscription plan either 1) isn't a free trial, 2) the subscriber is not eligible for a free trial, or 3) the subscription plan is not enabled." if on_trial?
       @attributes[:active] = true
       @attributes[:on_trial] = true
     end
@@ -123,7 +124,11 @@ module Spreedly
     end
     
     def self.plans
-      @plans ||= {1 => new(:id => 1, :name => 'Default mock plan')}
+      @plans ||= {1 => new(:id => 1, :name => 'Default mock plan'), 2 => new(:id => 2, :name => 'Test Free Trial Plan', :plan_type => 'free_trial')}
+    end
+    
+    def trial?
+      (plan_type == "free_trial")
     end
   end
 end

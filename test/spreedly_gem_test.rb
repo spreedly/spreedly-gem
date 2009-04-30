@@ -155,6 +155,41 @@ class SpreedlyGemTest < Test::Unit::TestCase
       assert_equal plan.name, Spreedly::SubscriptionPlan.find(plan.id).name
     end
     
+    context "with a Free Trial plan" do
+      setup do
+        @trial = Spreedly::SubscriptionPlan.all.detect{|e| e.name == "Test Free Trial Plan" && e.trial?}
+        assert @trial, "For this test to pass in REAL mode you must have a trial plan in your Spreedly test site with the name \"Test Free Trial Plan\"."
+      end
+      
+      should "be able to activate free trial" do
+        sub = create_subscriber
+        assert !sub.active?
+        assert !sub.on_trial?
+        
+        sub.activate_free_trial(@trial.id)
+        sub = Spreedly::Subscriber.find(sub.id)
+        assert sub.active?
+        assert sub.on_trial?
+      end
+      
+      should "throw an error if a second trial is activated" do
+        sub = create_subscriber
+        sub.activate_free_trial(@trial.id)
+        ex = assert_raise(RuntimeError){sub.activate_free_trial(@trial.id)}
+        assert_match %r{not eligible}, ex.message
+      end
+      
+      should "throw errors on invalid free trial activation" do
+        sub = create_subscriber
+        
+        ex = assert_raise(RuntimeError){sub.activate_free_trial(0)}
+        assert_match %r{no longer exists}, ex.message
+
+        ex = assert_raise(RuntimeError){sub.activate_free_trial(nil)}
+        assert_match %r{missing}, ex.message
+      end
+    end
+    
     only_real do
       should "throw an error if comp is wrong type" do
         sub = create_subscriber
