@@ -50,6 +50,7 @@ module Spreedly
       :store_credit => proc{BigDecimal("0.0")},
       :active_until => proc{nil},
       :feature_level => proc{""},
+      :on_trial => proc{false}
     }
 
     def self.wipe! # :nodoc: all
@@ -98,6 +99,13 @@ module Spreedly
       end
       @attributes[:feature_level] = feature_level if feature_level
       @attributes[:active] = true
+    end
+
+    def activate_free_trial(subscription_id)
+      raise "Could not active free trial for subscriber: subscriber or subscription plan no longer exists." unless self.class.find(id)
+      raise "Could not activate free trial for subscriber: validation failed. missing subscription plan id" unless subscription_id
+      @attributes[:active] = true
+      @attributes[:on_trial] = true
     end
   end
   
