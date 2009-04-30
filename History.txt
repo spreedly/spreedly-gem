@@ -1,3 +1,7 @@
+=== 1.2.1 / 2009-04-30
+
+* A few documentation tweaks.
+
 === 1.2.0 / 2009-04-30
 
 * Added mock support for Subscriber#activate_free_trial [scottmotte].

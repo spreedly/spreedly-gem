@@ -36,6 +36,7 @@ Rake::RDocTask.new(:docs) do |rd|
   rd.options << "-t" << title << "-f" << "darkfish"
 end
 
+desc "Publish documentation."
 replace_task :publish_docs => [:clean, :docs] do
   host = "terralien@terralien.biz"
 
