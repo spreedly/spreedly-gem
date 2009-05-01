@@ -156,10 +156,10 @@ module Spreedly
     end
     
     # Activates a free trial on the subscriber.
-    # Requires subscription_id of the free trial plan
-    def activate_free_trial(subscription_id)
+    # Requires plan_id of the free trial plan
+    def activate_free_trial(plan_id)
       result = Spreedly.post("/subscribers/#{id}/subscribe_to_free_trial.xml", :body => 
-        Spreedly.to_xml_params(:subscription_plan => {:id => subscription_id}))
+        Spreedly.to_xml_params(:subscription_plan => {:id => plan_id}))
       case result.code
       when /2../
       when '404'
