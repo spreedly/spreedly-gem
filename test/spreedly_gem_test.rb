@@ -33,6 +33,15 @@ class SpreedlyGemTest < Test::Unit::TestCase
       assert_equal two.id, subscribers.first.id
     end
     
+    should "stop auto renew for subscriber" do
+      # set it to true - mimics user choosing a recurring plan
+      Spreedly::Subscriber.attributes.merge!({:recurring => proc{true}})
+      subscriber = create_subscriber
+      assert subscriber.recurring == true
+      subscriber.stop_auto_renew
+      assert subscriber.recurring == false
+    end
+    
     should "add a subscriber" do
       subscriber = Spreedly::Subscriber.create!('joe')
       assert_not_nil subscriber.token
@@ -49,6 +58,7 @@ class SpreedlyGemTest < Test::Unit::TestCase
       subscriber = create_subscriber
       assert_kind_of Time, subscriber.created_at
       assert_equal false, subscriber.active
+      assert_equal false, subscriber.recurring
       assert_equal BigDecimal('0.0'), subscriber.store_credit
     end
     

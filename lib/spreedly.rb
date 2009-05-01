@@ -173,6 +173,19 @@ module Spreedly
       end
     end
     
+    # Stop the auto renew of the subscriber such that their recurring subscription will no longer be renewed.
+    # usage: @subscriber.stop_auto_renew
+    def stop_auto_renew
+      result = Spreedly.post("/subscribers/#{id}/stop_auto_renew.xml")
+      case result.code
+      when /2../
+      when '404'
+        raise "Could not stop auto renew for subscriber: subscriber does notexist."
+      else
+        raise "Could not stop auto renew for subscriber: result code #{result.code}."
+      end
+    end
+    
   end
   
   class SubscriptionPlan < Resource

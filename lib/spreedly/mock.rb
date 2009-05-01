@@ -50,7 +50,8 @@ module Spreedly
       :store_credit => proc{BigDecimal("0.0")},
       :active_until => proc{nil},
       :feature_level => proc{""},
-      :on_trial => proc{false}
+      :on_trial => proc{false},
+      :recurring => proc{false}
     }
 
     def self.wipe! # :nodoc: all
@@ -111,6 +112,11 @@ module Spreedly
       raise "Could not activate free trial for subscriber: subscription plan either 1) isn't a free trial, 2) the subscriber is not eligible for a free trial, or 3) the subscription plan is not enabled." if on_trial?
       @attributes[:active] = true
       @attributes[:on_trial] = true
+    end
+
+    def stop_auto_renew
+      raise "Could not stop auto renew for subscriber: subscriber does not exist." unless self.class.find(id)
+      @attributes[:recurring] = false
     end
   end
   
