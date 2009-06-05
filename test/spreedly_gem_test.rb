@@ -1,3 +1,4 @@
+require 'rubygems'
 require 'test/unit'
 require 'shoulda'
 require 'yaml'
@@ -52,6 +53,10 @@ class SpreedlyGemTest < Test::Unit::TestCase
       id = create_subscriber.id
       subscriber = Spreedly::Subscriber.find(id)
       assert_nil subscriber.active_until
+    end
+    
+    should "return nil when getting a subscriber that does NOT exist" do
+      assert_nil Spreedly::Subscriber.find("junk")
     end
     
     should "expose and parse attributes" do

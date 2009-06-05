@@ -1,3 +1,11 @@
+===
+
+* Properly handle invalid Subscriber lookup [karnowski].
+
+=== 1.2.2 / 2009-05-11
+
+* Fixed an error in the README [karnowski].
+
 === 1.2.1 / 2009-04-30
 
 * A few documentation tweaks.

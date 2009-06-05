@@ -20,14 +20,14 @@ the http://spreedly.com API. Created by Terralien[http://terralien.com].
   # For real
   require 'spreedly'  
   Spreedly.configure('site short name', 'crazy hash token')
-  url = Spreedly.subscribe_url(:id => 'customer id', :plan => 'plan id')
+  url = Spreedly.subscribe_url('customer id', 'plan id')
   subscriber = Spreedly::Subscriber.find('customer id')
   subscriber.active?
   
   # For fast tests
   require 'spreedly/mock'
   Spreedly.configure('site short name', 'crazy hash token')
-  url = Spreedly.subscribe_url(:id => 'customer id', :plan => 'plan id')
+  url = Spreedly.subscribe_url('customer id', 'plan id')
   subscriber = Spreedly::Subscriber.find('customer id')
   subscriber.active?
   
