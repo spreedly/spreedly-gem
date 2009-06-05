@@ -1,4 +1,4 @@
-===
+=== 1.3.0 / 2009-06-04
 
 * Properly handle invalid Subscriber lookup [karnowski].
 * Added support for stopping auto renew [scottmotte, dsimard].

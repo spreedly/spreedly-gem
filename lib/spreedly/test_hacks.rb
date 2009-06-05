@@ -2,6 +2,8 @@ require 'mechanize'
 
 module Spreedly
   class Subscriber
+    # This method is *strictly* for use when testing, and will
+    # probably only work against a test Spreedly site anyhow.
     def subscribe(plan_id)
       agent = WWW::Mechanize.new
       page = agent.get(Spreedly.subscribe_url(id, plan_id))
