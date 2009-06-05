@@ -9,7 +9,7 @@ Hoe.new('spreedly', Spreedly::VERSION) do |project|
   project.rubyforge_name = 'terralien'
   project.developer('Nathaniel Talbott', 'nathaniel@terralien.com')
   project.test_globs = ["test/**/*_test.rb"]
-  project.extra_dev_deps = ["thoughtbot-shoulda"]
+  project.extra_dev_deps = ["thoughtbot-shoulda", "mechanize"]
 end
 
 def remove_task(*task_names)

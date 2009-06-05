@@ -181,7 +181,7 @@ module Spreedly
       case result.code
       when /2../
       when '404'
-        raise "Could not stop auto renew for subscriber: subscriber does notexist."
+        raise "Could not stop auto renew for subscriber: subscriber does not exist."
       else
         raise "Could not stop auto renew for subscriber: result code #{result.code}."
       end

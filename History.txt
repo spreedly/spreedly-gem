@@ -1,6 +1,7 @@
 ===
 
 * Properly handle invalid Subscriber lookup [karnowski].
+* Added support for stopping auto renew [scottmotte].
 
 === 1.2.2 / 2009-05-11
 

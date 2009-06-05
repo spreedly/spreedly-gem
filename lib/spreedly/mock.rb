@@ -118,6 +118,11 @@ module Spreedly
       raise "Could not stop auto renew for subscriber: subscriber does not exist." unless self.class.find(id)
       @attributes[:recurring] = false
     end
+    
+    def subscribe(plan_id)
+      @attributes[:active] = true
+      @attributes[:recurring] = true
+    end
   end
   
   class SubscriptionPlan < Resource
@@ -130,7 +135,11 @@ module Spreedly
     end
     
     def self.plans
-      @plans ||= {1 => new(:id => 1, :name => 'Default mock plan'), 2 => new(:id => 2, :name => 'Test Free Trial Plan', :plan_type => 'free_trial')}
+      @plans ||= {
+        1 => new(:id => 1, :name => 'Default mock plan'),
+        2 => new(:id => 2, :name => 'Test Free Trial Plan', :plan_type => 'free_trial'),
+        3 => new(:id => 3, :name => 'Test Regular Plan'),
+      }
     end
     
     def trial?

@@ -6,6 +6,7 @@ require 'pp'
 
 if ENV["SPREEDLY_TEST"] == "REAL"
   require 'spreedly'
+  require 'spreedly/test_hacks'
 else
   require 'spreedly/mock'
 end
@@ -32,15 +33,6 @@ class SpreedlyGemTest < Test::Unit::TestCase
       subscribers = Spreedly::Subscriber.all
       assert subscribers.size == 1
       assert_equal two.id, subscribers.first.id
-    end
-    
-    should "stop auto renew for subscriber" do
-      # set it to true - mimics user choosing a recurring plan
-      Spreedly::Subscriber.attributes.merge!({:recurring => proc{true}})
-      subscriber = create_subscriber
-      assert subscriber.recurring == true
-      subscriber.stop_auto_renew
-      assert subscriber.recurring == false
     end
     
     should "add a subscriber" do
@@ -202,6 +194,27 @@ class SpreedlyGemTest < Test::Unit::TestCase
 
         ex = assert_raise(RuntimeError){sub.activate_free_trial(nil)}
         assert_match %r{missing}, ex.message
+      end
+    end
+    
+    context "with a Regular plan" do
+      setup do
+        @regular_plan = Spreedly::SubscriptionPlan.all.detect{|e| e.name == "Test Regular Plan"}
+        assert @regular_plan, "For this test to pass in REAL mode you must have a regular plan in your Spreedly test site with the name \"Test Regular Plan\"."
+      end
+
+      should "stop auto renew for subscriber" do
+        subscriber = create_subscriber
+        subscriber.subscribe(@regular_plan.id)
+        
+        subscriber = Spreedly::Subscriber.find(subscriber.id)
+        assert subscriber.active?
+        assert subscriber.recurring
+
+        subscriber.stop_auto_renew
+        subscriber = Spreedly::Subscriber.find(subscriber.id)
+        assert subscriber.active?
+        assert !subscriber.recurring
       end
     end
     
