@@ -218,6 +218,12 @@ class SpreedlyGemTest < Test::Unit::TestCase
       end
     end
     
+    should "throw an error if stopping auto renew on a non-existent subscriber" do
+      sub = Spreedly::Subscriber.new('customer_id' => 'bogus')
+      ex = assert_raise(RuntimeError){sub.stop_auto_renew}
+      assert_match %r{does not exist}, ex.message
+    end
+
     only_real do
       should "throw an error if comp is wrong type" do
         sub = create_subscriber

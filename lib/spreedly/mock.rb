@@ -23,7 +23,7 @@ module Spreedly
     end
     
     def initialize(params={})
-      @attributes = params
+      @attributes = params.inject({}){|a,(k,v)| a[k.to_sym] = v; a}
       self.class.attributes.each{|k,v| @attributes[k] = v.call}
     end
     
@@ -59,7 +59,7 @@ module Spreedly
     end
     
     def self.create!(id, email=nil, screen_name=nil) # :nodoc: all
-      sub = new({:id => id, :email => email, :screen_name => screen_name})
+      sub = new({:customer_id => id, :email => email, :screen_name => screen_name})
 
       if subscribers[sub.id]
         raise "Could not create subscriber: already exists."
@@ -90,6 +90,10 @@ module Spreedly
       if !id || id == ''
         raise "Could not create subscriber: no id passed OR already exists."
       end
+    end
+    
+    def id
+      @attributes[:customer_id]
     end
     
     def comp(quantity, units, feature_level=nil)
