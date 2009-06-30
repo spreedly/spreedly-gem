@@ -101,9 +101,17 @@ module Spreedly
     # Creates a new subscriber on Spreedly. The subscriber will NOT
     # be active - they have to pay or you have to comp them for that
     # to happen.
-    def self.create!(id, email=nil, screen_name=nil)
-      result = Spreedly.post('/subscribers.xml', :body => 
-        Spreedly.to_xml_params(:subscriber => {:customer_id => id, :email => email, :screen_name => screen_name}))
+    #
+    # Usage:
+    #   Spreedly.Subscriber.create!(id, email)
+    #   Spreedly.Subscriber.create!(id, email, screen_name)
+    #   Spreedly.Subscriber.create!(id, :email => email, :screen_name => screen_name)
+    #   Spreedly.Subscriber.create!(id, email, screen_name, :billing_first_name => first_name)
+    def self.create!(id, *args)
+      optional_attrs = args.last.is_a?(::Hash) ? args.pop : {}
+      email, screen_name = args
+      subscriber = {:customer_id => id, :email => email, :screen_name => screen_name}.merge(optional_attrs)
+      result = Spreedly.post('/subscribers.xml', :body => Spreedly.to_xml_params(:subscriber => subscriber))
       case result.code.to_s
       when /2../
         new(result['subscriber'])

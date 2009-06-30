@@ -34,12 +34,29 @@ class SpreedlyGemTest < Test::Unit::TestCase
       assert subscribers.size == 1
       assert_equal two.id, subscribers.first.id
     end
+
+    context "adding a subscriber" do
+      should "generate a token" do
+        subscriber = Spreedly::Subscriber.create!('joe')
+        assert_not_nil subscriber.token
+        assert_equal subscriber.token, Spreedly::Subscriber.find('joe').token
+      end
     
-    should "add a subscriber" do
-      subscriber = Spreedly::Subscriber.create!('joe')
-      assert_not_nil subscriber.token
-      assert_equal subscriber.token, Spreedly::Subscriber.find('joe').token
-    end
+      should "accept email address as an argument" do
+        subscriber = Spreedly::Subscriber.create!('joe', 'a@b.cd')
+        assert_equal 'a@b.cd', Spreedly::Subscriber.find('joe').email
+      end
+
+      should "accept screen name as an argument" do
+        subscriber = Spreedly::Subscriber.create!('joe', 'a@b.cd', 'tuna')
+        assert_equal 'tuna', Spreedly::Subscriber.find('joe').screen_name
+      end
+
+      should "accept optional arguments: like billing first name" do
+        subscriber = Spreedly::Subscriber.create!('joe', {:billing_first_name => 'Joe'})
+        assert_equal 'Joe', Spreedly::Subscriber.find('joe').billing_first_name
+      end
+    end # adding a subscriber
     
     should "get a subscriber" do
       id = create_subscriber.id

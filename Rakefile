@@ -3,14 +3,12 @@ require './lib/spreedly/version.rb'
 
 ENV["COPYFILE_DISABLE"] = "true" # Lose all the fugly ._ files when tar'ing
 
-hoe = nil
-Hoe.new('spreedly', Spreedly::VERSION) do |project|
-  hoe = project
-  project.rubyforge_name = 'terralien'
-  project.developer('Nathaniel Talbott', 'nathaniel@terralien.com')
-  project.test_globs = ["test/**/*_test.rb"]
-  project.extra_deps = ["mechanize"]
-  project.extra_dev_deps = ["thoughtbot-shoulda"]
+hoe = Hoe.spec('spreedly') do
+  developer('Nathaniel Talbott', 'nathaniel@terralien.com')
+  self.rubyforge_name = 'terralien'
+  self.test_globs = ["test/**/*_test.rb"]
+  self.extra_deps << ["mechanize"]
+  self.extra_dev_deps << ["thoughtbot-shoulda"]
 end
 
 def remove_task(*task_names)

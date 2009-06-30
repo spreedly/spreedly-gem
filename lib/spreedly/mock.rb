@@ -58,8 +58,10 @@ module Spreedly
       @subscribers = nil
     end
     
-    def self.create!(id, email=nil, screen_name=nil) # :nodoc: all
-      sub = new({:customer_id => id, :email => email, :screen_name => screen_name})
+    def self.create!(id, *args) # :nodoc: all
+      optional_attrs = args.last.is_a?(::Hash) ? args.pop : {}
+      email, screen_name = args
+      sub = new({:customer_id => id, :email => email, :screen_name => screen_name}.merge(optional_attrs))
 
       if subscribers[sub.id]
         raise "Could not create subscriber: already exists."
