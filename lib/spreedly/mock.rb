@@ -23,8 +23,8 @@ module Spreedly
     end
     
     def initialize(params={})
-      @attributes = params.inject({}){|a,(k,v)| a[k.to_sym] = v; a}
-      self.class.attributes.each{|k,v| @attributes[k] = v.call}
+      @attributes = self.class.attributes.inject({}){|a,(k,v)| a[k.to_sym] = v.call; a}
+      params.each {|k,v| @attributes[k.to_sym] = v }
     end
     
     def id
@@ -132,6 +132,10 @@ module Spreedly
   end
   
   class SubscriptionPlan < Resource
+    self.attributes = {
+      :plan_type => proc{'regular'}
+    }
+    
     def self.all
       plans.values
     end
