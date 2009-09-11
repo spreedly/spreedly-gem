@@ -6,6 +6,7 @@ TODO
 lib/spreedly.rb
 lib/spreedly/common.rb
 lib/spreedly/mock.rb
+lib/spreedly/test_hacks.rb
 lib/spreedly/version.rb
 test/spreedly_gem_test.rb
 test/test_site.yml

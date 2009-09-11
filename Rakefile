@@ -37,7 +37,7 @@ end
 
 desc "Publish documentation."
 replace_task :publish_docs => [:clean, :docs] do
-  host = "terralien@terralien.biz"
+  host = "terralien@terralien.com"
 
   remote_dir = "/var/www/terralien/www/shared/static/projects/spreedly-gem"
   local_dir = 'doc'

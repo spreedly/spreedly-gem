@@ -1,6 +1,6 @@
 = Spreedly-Gem
 
-* Docs[http://terralien.com/static/projects/spreedly-gem/]
+* http://terralien.com/static/projects/spreedly-gem/
 * Source[http://github.com/terralien/spreedly-gem]
 
 == DESCRIPTION:
