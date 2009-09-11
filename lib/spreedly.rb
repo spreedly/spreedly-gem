@@ -125,7 +125,7 @@ module Spreedly
     # Looks a subscriber up by id.
     def self.find(id)
       xml = Spreedly.get("/subscribers/#{id}.xml")
-      (xml.nil? ? nil : new(xml['subscriber']))
+      (xml.nil? || xml.empty? ? nil : new(xml['subscriber']))
     end
     
     # Returns all the subscribers in your site.
@@ -169,7 +169,7 @@ module Spreedly
     def activate_free_trial(plan_id)
       result = Spreedly.post("/subscribers/#{id}/subscribe_to_free_trial.xml", :body => 
         Spreedly.to_xml_params(:subscription_plan => {:id => plan_id}))
-      case result.code
+      case result.code.to_s
       when /2../
       when '404'
         raise "Could not active free trial for subscriber: subscriber or subscription plan no longer exists."
@@ -186,7 +186,7 @@ module Spreedly
     # usage: @subscriber.stop_auto_renew
     def stop_auto_renew
       result = Spreedly.post("/subscribers/#{id}/stop_auto_renew.xml")
-      case result.code
+      case result.code.to_s
       when /2../
       when '404'
         raise "Could not stop auto renew for subscriber: subscriber does not exist."

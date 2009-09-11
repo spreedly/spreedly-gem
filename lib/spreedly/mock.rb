@@ -116,8 +116,9 @@ module Spreedly
       raise "Could not activate free trial for subscriber: validation failed. missing subscription plan id" unless plan_id
       raise "Could not active free trial for subscriber: subscriber or subscription plan no longer exists." unless self.class.find(id) && SubscriptionPlan.find(plan_id)
       raise "Could not activate free trial for subscriber: subscription plan either 1) isn't a free trial, 2) the subscriber is not eligible for a free trial, or 3) the subscription plan is not enabled." if on_trial?
-      @attributes[:active] = true
       @attributes[:on_trial] = true
+      plan = SubscriptionPlan.find(plan_id)
+      comp(plan.duration_quantity, plan.duration_units, plan.feature_level)
     end
 
     def stop_auto_renew
@@ -126,14 +127,16 @@ module Spreedly
     end
     
     def subscribe(plan_id)
-      @attributes[:active] = true
       @attributes[:recurring] = true
+      plan = SubscriptionPlan.find(plan_id)
+      comp(plan.duration_quantity, plan.duration_units, plan.feature_level)
     end
   end
   
   class SubscriptionPlan < Resource
     self.attributes = {
-      :plan_type => proc{'regular'}
+      :plan_type => proc{'regular'},
+      :feature_level => proc{''}
     }
     
     def self.all
@@ -146,9 +149,9 @@ module Spreedly
     
     def self.plans
       @plans ||= {
-        1 => new(:id => 1, :name => 'Default mock plan'),
-        2 => new(:id => 2, :name => 'Test Free Trial Plan', :plan_type => 'free_trial'),
-        3 => new(:id => 3, :name => 'Test Regular Plan'),
+        1 => new(:id => 1, :name => 'Default mock plan', :duration_quantity => 1, :duration_units => 'days'),
+        2 => new(:id => 2, :name => 'Test Free Trial Plan', :plan_type => 'free_trial', :duration_quantity => 1, :duration_units => 'days'),
+        3 => new(:id => 3, :name => 'Test Regular Plan', :duration_quantity => 1, :duration_units => 'days'),
       }
     end
     
