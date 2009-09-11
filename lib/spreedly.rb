@@ -116,7 +116,10 @@ module Spreedly
       when /2../
         new(result['subscriber'])
       when '403'
-        raise "Could not create subscriber: no id passed OR already exists."
+        raise "Could not create subscriber: already exists."
+      when '422'
+        errors = [*result['errors']].collect{|e| e.last}
+        raise "Could not create subscriber: #{errors.join(', ')}"
       else
         raise "Could not create subscriber: result code #{result.code}."
       end

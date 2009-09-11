@@ -90,7 +90,7 @@ module Spreedly
     def initialize(params={})
       super
       if !id || id == ''
-        raise "Could not create subscriber: no id passed OR already exists."
+        raise "Could not create subscriber: Customer ID can't be blank."
       end
     end
     
