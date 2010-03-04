@@ -107,7 +107,7 @@ module Spreedly
     #   Spreedly.Subscriber.create!(id, email, screen_name)
     #   Spreedly.Subscriber.create!(id, :email => email, :screen_name => screen_name)
     #   Spreedly.Subscriber.create!(id, email, screen_name, :billing_first_name => first_name)
-    def self.create!(id, *args)
+    def self.create!(id, *args)      
       optional_attrs = args.last.is_a?(::Hash) ? args.pop : {}
       email, screen_name = args
       subscriber = {:customer_id => id, :email => email, :screen_name => screen_name}.merge(optional_attrs)
@@ -198,6 +198,61 @@ module Spreedly
         raise "Could not stop auto renew for subscriber: result code #{result.code}."
       end
     end
+    
+    
+    
+    # Update a Subscriber
+    # usage: @subscriber.update(:email => email, :screen_name => screen_name)
+    def update(args)
+      result = Spreedly.put("/subscribers/#{id}.xml", :body => Spreedly.to_xml_params(:subscriber => args))
+
+      case result.code.to_s
+      when /2../
+      when '403'
+        raise "Could not update subscriber: new-customer-id is already in use."
+      when '404'
+        raise "Could not update subscriber: subscriber not found"
+      else
+        raise "Could not update subscriber: result code #{result.code}."
+      end
+    end
+
+
+    #  Allow Another Free Trial
+    # usage: @subscriber.allow_free_trial
+    
+    def allow_free_trial
+      result = Spreedly.post("/subscribers/#{id}/allow_free_trial.xml")
+
+      case result.code.to_s
+      when /2../
+      else
+        raise "Could not allow subscriber to another trial: result code #{result.code}."
+      end
+    end
+
+
+    # Add a Fee to a Subscriber
+    #
+    # usage: @subscriber.add_fee(:amount => amount, :group => group_name, :description => description, :name => name)
+
+    def add_fee(args)
+      result = Spreedly.post("/subscribers/#{id}/fees.xml", 
+        :body => Spreedly.to_xml_params(:fee => args))
+
+      case result.code.to_s
+      when /2../
+      when '404'
+        raise "Not Found"
+      when '422'
+        raise "Unprocessable Entity"
+      else
+        raise "Could not add fee to subscriber: result code #{result.code}."
+      end
+    end
+  
+    
+    
     
   end
   
