@@ -51,7 +51,8 @@ module Spreedly
       :active_until => proc{nil},
       :feature_level => proc{""},
       :on_trial => proc{false},
-      :recurring => proc{false}
+      :recurring => proc{false},
+      :eligible_for_free_trial => proc{false}
     }
 
     def self.wipe! # :nodoc: all
@@ -98,6 +99,14 @@ module Spreedly
       @attributes[:customer_id]
     end
     
+    def update(args)
+      args.each_pair do |key, value|
+        if @attributes.has_key?(key)
+          @attributes[key] = value
+        end
+      end
+    end
+    
     def comp(quantity, units, feature_level=nil)
       raise "Could not comp subscriber: no longer exists." unless self.class.find(id)
       raise "Could not comp subscriber: validation failed." unless units && quantity
@@ -115,10 +124,14 @@ module Spreedly
     def activate_free_trial(plan_id)
       raise "Could not activate free trial for subscriber: validation failed. missing subscription plan id" unless plan_id
       raise "Could not active free trial for subscriber: subscriber or subscription plan no longer exists." unless self.class.find(id) && SubscriptionPlan.find(plan_id)
-      raise "Could not activate free trial for subscriber: subscription plan either 1) isn't a free trial, 2) the subscriber is not eligible for a free trial, or 3) the subscription plan is not enabled." if on_trial?
+      raise "Could not activate free trial for subscriber: subscription plan either 1) isn't a free trial, 2) the subscriber is not eligible for a free trial, or 3) the subscription plan is not enabled." if (on_trial? and !eligible_for_free_trial?)
       @attributes[:on_trial] = true
       plan = SubscriptionPlan.find(plan_id)
       comp(plan.duration_quantity, plan.duration_units, plan.feature_level)
+    end
+    
+    def allow_free_trial
+      @attributes[:eligible_for_free_trial] = true  
     end
 
     def stop_auto_renew

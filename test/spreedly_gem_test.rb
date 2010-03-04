@@ -59,6 +59,15 @@ class SpreedlyGemTest < Test::Unit::TestCase
       end
     end # adding a subscriber
     
+    context "updating a subscriber" do
+      should "update subscriber" do
+        subscriber = Spreedly::Subscriber.create!('joe', :screen_name => "big-joe")
+        assert_equal "big-joe", Spreedly::Subscriber.find(subscriber.id).screen_name
+        subscriber.update(:screen_name => "small-joe")
+        assert_equal "small-joe", Spreedly::Subscriber.find(subscriber.id).screen_name
+      end
+    end
+    
     should "get a subscriber" do
       id = create_subscriber.id
       subscriber = Spreedly::Subscriber.find(id)
@@ -209,6 +218,16 @@ class SpreedlyGemTest < Test::Unit::TestCase
         sub.activate_free_trial(@trial.id)
         ex = assert_raise(RuntimeError){sub.activate_free_trial(@trial.id)}
         assert_match %r{not eligible}, ex.message
+      end
+      
+      should "allow second trial if 'allow_free_trial' is excecuted" do
+        sub = create_subscriber
+        sub.activate_free_trial(@trial.id)
+        sub.allow_free_trial
+        sub.activate_free_trial(@trial.id)
+        sub = Spreedly::Subscriber.find(sub.id)
+        assert sub.active?
+        assert sub.on_trial?
       end
       
       should "throw errors on invalid free trial activation" do
