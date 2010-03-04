@@ -59,13 +59,11 @@ class SpreedlyGemTest < Test::Unit::TestCase
       end
     end # adding a subscriber
     
-    context "updating a subscriber" do
-      should "update subscriber" do
-        subscriber = Spreedly::Subscriber.create!('joe', :screen_name => "big-joe")
-        assert_equal "big-joe", Spreedly::Subscriber.find(subscriber.id).screen_name
-        subscriber.update(:screen_name => "small-joe")
-        assert_equal "small-joe", Spreedly::Subscriber.find(subscriber.id).screen_name
-      end
+    should "update subscriber" do
+      subscriber = Spreedly::Subscriber.create!('joe', :screen_name => "big-joe")
+      assert_equal "big-joe", Spreedly::Subscriber.find(subscriber.id).screen_name
+      subscriber.update(:screen_name => "small-joe")
+      assert_equal "small-joe", Spreedly::Subscriber.find(subscriber.id).screen_name
     end
     
     should "get a subscriber" do
@@ -259,6 +257,21 @@ class SpreedlyGemTest < Test::Unit::TestCase
         subscriber = Spreedly::Subscriber.find(subscriber.id)
         assert subscriber.active?
         assert !subscriber.recurring
+      end
+    end
+    
+    context "adding fees" do
+      should "be able to add fee to user" do
+        sub = create_subscriber
+        sub.add_fee(:name => "Daily Bandwidth Charge", :amount => "2.34", :description => "313 MB used", :group => "Traffic Fees")
+      end
+    
+      should "throw an error when add fee with incomplete arguments" do
+        sub = create_subscriber
+        ex = assert_raise(RuntimeError) do 
+          sub.add_fee(:name => "Daily Bandwidth Charge", :description => "313 MB used", :group => "Traffic Fees")
+        end
+        assert_match %r{Unprocessable Entity}, ex.message        
       end
     end
     

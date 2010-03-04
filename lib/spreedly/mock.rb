@@ -144,6 +144,11 @@ module Spreedly
       plan = SubscriptionPlan.find(plan_id)
       comp(plan.duration_quantity, plan.duration_units, plan.feature_level)
     end
+    
+    def add_fee(args)
+      raise "Unprocessable Entity" unless (args.keys & [:amount, :group, :name]).size == 3
+      nil
+    end
   end
   
   class SubscriptionPlan < Resource
