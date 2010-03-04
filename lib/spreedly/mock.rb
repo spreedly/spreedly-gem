@@ -147,6 +147,7 @@ module Spreedly
     
     def add_fee(args)
       raise "Unprocessable Entity" unless (args.keys & [:amount, :group, :name]).size == 3
+      raise "Unprocessable Entity" unless active?
       nil
     end
   end

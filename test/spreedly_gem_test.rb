@@ -77,7 +77,7 @@ class SpreedlyGemTest < Test::Unit::TestCase
     end
     
     should "expose and parse attributes" do
-      subscriber = create_subscriber
+      subscriber = create_subscriber('bob')
       assert_kind_of Time, subscriber.created_at
       assert !subscriber.active
       assert !subscriber.recurring
@@ -261,13 +261,29 @@ class SpreedlyGemTest < Test::Unit::TestCase
     end
     
     context "adding fees" do
+      
+      setup do
+        @regular_plan = Spreedly::SubscriptionPlan.all.detect{|e| e.name == "Test Regular Plan"}
+        assert @regular_plan, "For this test to pass in REAL mode you must have a regular plan in your Spreedly test site with the name \"Test Regular Plan\"."
+      end
+      
       should "be able to add fee to user" do
         sub = create_subscriber
+        sub.subscribe(@regular_plan.id)
         sub.add_fee(:name => "Daily Bandwidth Charge", :amount => "2.34", :description => "313 MB used", :group => "Traffic Fees")
+      end
+    
+      should "throw an error when add fee to not active user" do
+        sub = create_subscriber
+        ex = assert_raise(RuntimeError) do 
+          sub.add_fee(:name => "Daily Bandwidth Charge", :amount => "2.34", :description => "313 MB used", :group => "Traffic Fees")
+        end
+        assert_match %r{Unprocessable Entity}, ex.message
       end
     
       should "throw an error when add fee with incomplete arguments" do
         sub = create_subscriber
+        sub.subscribe(@regular_plan.id)
         ex = assert_raise(RuntimeError) do 
           sub.add_fee(:name => "Daily Bandwidth Charge", :description => "313 MB used", :group => "Traffic Fees")
         end
