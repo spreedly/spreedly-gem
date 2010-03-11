@@ -152,6 +152,7 @@ module Spreedly
     def comp(quantity, units, feature_level=nil)
       params = {:duration_quantity => quantity, :duration_units => units}
       params[:feature_level] = feature_level if feature_level
+      raise "Feature level is required to comp an inactive subscriber" if !active? and !feature_level
       endpoint = (active? ? "complimentary_time_extensions" : "complimentary_subscriptions")
       result = Spreedly.post("/subscribers/#{id}/#{endpoint}.xml", :body => Spreedly.to_xml_params(endpoint[0..-2] => params))
       case result.code.to_s

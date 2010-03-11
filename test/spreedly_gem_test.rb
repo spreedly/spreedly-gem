@@ -71,8 +71,8 @@ class SpreedlyGemTest < Test::Unit::TestCase
     should "expose and parse attributes" do
       subscriber = create_subscriber
       assert_kind_of Time, subscriber.created_at
-      assert_equal false, subscriber.active
-      assert_equal false, subscriber.recurring
+      assert !subscriber.active
+      assert !subscriber.recurring
       assert_equal BigDecimal('0.0'), subscriber.store_credit
     end
     
@@ -140,7 +140,7 @@ class SpreedlyGemTest < Test::Unit::TestCase
     should "comp an active subscriber" do
       sub = create_subscriber
       assert !sub.active?
-      sub.comp(1, 'days')
+      sub.comp(1, 'days', 'Sweet!')
 
       sub = Spreedly::Subscriber.find(sub.id)
       assert sub.active?
@@ -156,7 +156,7 @@ class SpreedlyGemTest < Test::Unit::TestCase
       sub = create_subscriber
       Spreedly::Subscriber.wipe!
       ex = assert_raise(RuntimeError) do
-        sub.comp(1, 'days')
+        sub.comp(1, 'days', 'bogus')
       end
       assert_match(/exists/i, ex.message)
     end
@@ -164,7 +164,7 @@ class SpreedlyGemTest < Test::Unit::TestCase
     should "throw an error if comp is invalid" do
       sub = create_subscriber
       ex = assert_raise(RuntimeError) do
-        sub.comp(nil, nil)
+        sub.comp(nil, nil, 'bogus')
       end
       assert_match(/validation/i, ex.message)
       assert_raise(RuntimeError){sub.comp(1, nil)}
@@ -251,9 +251,9 @@ class SpreedlyGemTest < Test::Unit::TestCase
     only_real do
       should "throw an error if comp is wrong type" do
         sub = create_subscriber
-        sub.comp(1, 'days')
+        sub.comp(1, 'days', 'something')
         ex = assert_raise(RuntimeError) do
-          sub.comp(1, 'days')
+          sub.comp(1, 'days', 'something')
         end
         assert_match(/invalid/i, ex.message)
       end
