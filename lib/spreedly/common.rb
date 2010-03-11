@@ -10,9 +10,24 @@ require 'spreedly/version'
 
 module Spreedly
   # Generates a subscribe url for the given user id and plan.
-  def self.subscribe_url(id, plan, screen_name=nil)
-    screen_name = (screen_name ? URI.escape(screen_name) : "")
-    "https://spreedly.com/#{site_name}/subscribers/#{id}/subscribe/#{plan}/#{screen_name}"
+  # Options:
+  #   :screen_name => a screen name for the user (shows up in the admin UI)
+  #   :email => pre-populate the email field
+  #   :first_name => pre-populate the first name field
+  #   :last_name => pre-populate the last name field
+  def self.subscribe_url(id, plan, options={})
+    %w(screen_name email first_name last_name).each do |option|
+      options[option.to_sym] &&= URI.escape(options[option.to_sym])
+    end
+
+    screen_name = options.delete(:screen_name)
+    params = %w(email first_name last_name).select{|e| options[e.to_sym]}.collect{|e| "#{e}=#{options[e.to_sym]}"}.join('&')
+
+    url = "https://spreedly.com/#{site_name}/subscribers/#{id}/subscribe/#{plan}"
+    url << "/#{screen_name}" if screen_name
+    url << '?' << params unless params == ''
+
+    url
   end
   
   # Generates an edit subscriber for the given subscriber token. The

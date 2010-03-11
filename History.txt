@@ -1,3 +1,8 @@
+=== unreleased
+
+* Add support for pre-population of the subscribe page via the subscribe
+  url. [davemcp]
+
 === 1.3.1
 
 * Handle new error reporting when creating a subscriber.

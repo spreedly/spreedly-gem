@@ -108,9 +108,16 @@ class SpreedlyGemTest < Test::Unit::TestCase
     
     should "generate a subscribe url" do
       assert_equal "https://spreedly.com/terralien-test/subscribers/joe/subscribe/1/Joe%20Bob",
-        Spreedly.subscribe_url('joe', '1', "Joe Bob")
-      assert_equal "https://spreedly.com/terralien-test/subscribers/joe/subscribe/1/",
+        Spreedly.subscribe_url('joe', '1', :screen_name => "Joe Bob")
+      assert_equal "https://spreedly.com/terralien-test/subscribers/joe/subscribe/1",
         Spreedly.subscribe_url('joe', '1')
+    end
+    
+    should "generate a pre-populated subscribe url" do
+      assert_equal "https://spreedly.com/terralien-test/subscribers/joe/subscribe/1?email=joe.bob@test.com&first_name=Joe&last_name=Bob",
+        Spreedly.subscribe_url('joe', '1', :email => "joe.bob@test.com", :first_name => "Joe", :last_name => "Bob")
+      assert_equal "https://spreedly.com/terralien-test/subscribers/joe/subscribe/1?first_name=Joe&last_name=Bob",
+        Spreedly.subscribe_url('joe', '1', :first_name => "Joe", :last_name => "Bob")
     end
     
     should "generate an edit subscriber url" do
