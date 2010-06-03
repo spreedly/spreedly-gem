@@ -241,7 +241,7 @@ module Spreedly
       when '404'
         raise "Not Found"
       when '422'
-        raise "Unprocessable Entity"
+        raise "Unprocessable Entity - #{result.body}"
       else
         raise "Could not add fee to subscriber: result code #{result.code}."
       end
