@@ -8,7 +8,7 @@ hoe = Hoe.spec('spreedly') do
   self.rubyforge_name = 'terralien'
   self.test_globs = ["test/**/*_test.rb"]
   self.extra_deps << ["mechanize"]
-  self.extra_dev_deps << ["thoughtbot-shoulda"]
+  self.extra_dev_deps << ["shoulda"]
 end
 
 def remove_task(*task_names)
