@@ -220,7 +220,6 @@ module Spreedly
 
     #  Allow Another Free Trial
     # usage: @subscriber.allow_free_trial
-    
     def allow_free_trial
       result = Spreedly.post("/subscribers/#{id}/allow_free_trial.xml")
 
@@ -233,12 +232,9 @@ module Spreedly
 
 
     # Add a Fee to a Subscriber
-    #
     # usage: @subscriber.add_fee(:amount => amount, :group => group_name, :description => description, :name => name)
-
     def add_fee(args)
-      result = Spreedly.post("/subscribers/#{id}/fees.xml", 
-        :body => Spreedly.to_xml_params(:fee => args))
+      result = Spreedly.post("/subscribers/#{id}/fees.xml", :body => Spreedly.to_xml_params(:fee => args))
 
       case result.code.to_s
       when /2../
@@ -252,10 +248,9 @@ module Spreedly
     end
   
     
-    
-    
   end
-  
+ 
+
   class SubscriptionPlan < Resource
     # Returns all of the subscription plans defined in your site.
     def self.all

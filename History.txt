@@ -1,5 +1,9 @@
 === unreleased
 
+* Added methods on subscriber: update, allow_free_trial, 
+  add_fee [mateuszzawisza]
+* Fixing tests: generate spreedly url and edit url working with all 
+  site names [mateuszzawisza]
 * Add support for pre-population of the subscribe page via the subscribe
   url. [davemcp]
 
