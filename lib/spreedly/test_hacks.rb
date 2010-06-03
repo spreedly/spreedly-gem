@@ -5,7 +5,7 @@ module Spreedly
     # This method is *strictly* for use when testing, and will
     # probably only work against a test Spreedly site anyhow.
     def subscribe(plan_id)
-      agent = Mechanize::Mechanize.new
+      agent = Mechanize.new
       page = agent.get(Spreedly.subscribe_url(id, plan_id))
       page = page.forms.first.submit
       form = page.forms.first
