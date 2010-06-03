@@ -225,7 +225,7 @@ class SpreedlyGemTest < Test::Unit::TestCase
     context "with a Regular plan" do
       setup do
         @regular_plan = Spreedly::SubscriptionPlan.all.detect{|e| e.name == "Test Regular Plan"}
-        assert @regular_plan, "For this test to pass in REAL mode you must have a regular plan in your Spreedly test site with the name \"Test Regular Plan\"."
+        assert @regular_plan, "For this test to pass in REAL mode you must have a regular plan in your Spreedly test site with the name \"Test Regular Plan\". It must be an auto-recurring plan."
       end
 
       should "stop auto renew for subscriber" do
