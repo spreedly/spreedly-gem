@@ -16,12 +16,12 @@ module Spreedly
   #   :first_name => pre-populate the first name field
   #   :last_name => pre-populate the last name field
   def self.subscribe_url(id, plan, options={})
-    %w(screen_name email first_name last_name).each do |option|
+    %w(screen_name email first_name last_name return_url).each do |option|
       options[option.to_sym] &&= URI.escape(options[option.to_sym])
     end
 
     screen_name = options.delete(:screen_name)
-    params = %w(email first_name last_name).select{|e| options[e.to_sym]}.collect{|e| "#{e}=#{options[e.to_sym]}"}.join('&')
+    params = %w(email first_name last_name return_url).select{|e| options[e.to_sym]}.collect{|e| "#{e}=#{options[e.to_sym]}"}.join('&')
 
     url = "https://spreedly.com/#{site_name}/subscribers/#{id}/subscribe/#{plan}"
     url << "/#{screen_name}" if screen_name

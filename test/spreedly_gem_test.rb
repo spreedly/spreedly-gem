@@ -126,6 +126,8 @@ class SpreedlyGemTest < Test::Unit::TestCase
         Spreedly.subscribe_url('joe', '1', :email => "joe.bob@test.com", :first_name => "Joe", :last_name => "Bob")
       assert_equal "https://spreedly.com/#{Spreedly.site_name}/subscribers/joe/subscribe/1?first_name=Joe&last_name=Bob",
         Spreedly.subscribe_url('joe', '1', :first_name => "Joe", :last_name => "Bob")
+      assert_equal "https://spreedly.com/#{Spreedly.site_name}/subscribers/joe/subscribe/1?return_url=http://stuffo.example.com",
+        Spreedly.subscribe_url('joe', '1', :return_url => 'http://stuffo.example.com')
     end
     
     should "generate an edit subscriber url" do
