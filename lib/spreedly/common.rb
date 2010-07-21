@@ -33,7 +33,12 @@ module Spreedly
   # Generates an edit subscriber for the given subscriber token. The
   # token is returned with the subscriber info (i.e. by
   # Subscriber.find).
-  def self.edit_subscriber_url(token)
-    "https://spreedly.com/#{site_name}/subscriber_accounts/#{token}"
+  def self.edit_subscriber_url(token, return_url = nil)
+    "https://spreedly.com/#{site_name}/subscriber_accounts/#{token}" +
+        if return_url
+            "?return_url=#{URI.escape(return_url)}"
+        else
+            ''
+        end
   end
 end

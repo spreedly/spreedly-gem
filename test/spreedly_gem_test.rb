@@ -133,6 +133,8 @@ class SpreedlyGemTest < Test::Unit::TestCase
     should "generate an edit subscriber url" do
       assert_equal "https://spreedly.com/#{Spreedly.site_name}/subscriber_accounts/zetoken",
         Spreedly.edit_subscriber_url('zetoken')
+      assert_equal "https://spreedly.com/#{Spreedly.site_name}/subscriber_accounts/zetoken?return_url=http://stuffo.example.com",
+        Spreedly.edit_subscriber_url('zetoken', 'http://stuffo.example.com')
     end
     
     should "comp an inactive subscriber" do
