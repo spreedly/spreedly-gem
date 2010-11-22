@@ -160,7 +160,7 @@ module Spreedly
       when '404'
         raise "Could not comp subscriber: no longer exists."
       when '422'
-        raise "Could not comp subscriber: validation failed."
+        raise "Could not comp subscriber: validation failed (#{result.body})."
       when '403'
         raise "Could not comp subscriber: invalid comp type (#{endpoint})."
       else
