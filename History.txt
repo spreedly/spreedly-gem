@@ -1,3 +1,6 @@
+=== 1.3.4
+* Add result body to comp validation failure. [ntalbott]
+
 === 1.3.3
 * Add support for return_url in Spreedly.edit_subscriber_url [jjthrash]
 * Add support for return_url in Spreedly.subscribe_url [jjthrash]
