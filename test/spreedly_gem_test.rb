@@ -126,11 +126,15 @@ class SpreedlyGemTest < Test::Unit::TestCase
         Spreedly.subscribe_url('joe', '1', :email => "joe.bob@test.com", :first_name => "Joe", :last_name => "Bob")
       assert_equal "https://spreedly.com/#{Spreedly.site_name}/subscribers/joe/subscribe/1?first_name=Joe&last_name=Bob",
         Spreedly.subscribe_url('joe', '1', :first_name => "Joe", :last_name => "Bob")
+      assert_equal "https://spreedly.com/#{Spreedly.site_name}/subscribers/joe/subscribe/1?return_url=http://stuffo.example.com",
+        Spreedly.subscribe_url('joe', '1', :return_url => 'http://stuffo.example.com')
     end
     
     should "generate an edit subscriber url" do
       assert_equal "https://spreedly.com/#{Spreedly.site_name}/subscriber_accounts/zetoken",
         Spreedly.edit_subscriber_url('zetoken')
+      assert_equal "https://spreedly.com/#{Spreedly.site_name}/subscriber_accounts/zetoken?return_url=http://stuffo.example.com",
+        Spreedly.edit_subscriber_url('zetoken', 'http://stuffo.example.com')
     end
     
     should "comp an inactive subscriber" do
