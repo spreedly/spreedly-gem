@@ -1,10 +1,13 @@
 require 'spreedly/common'
 
+
 raise "Real Spreedly already required!" if defined?(Spreedly::REAL)
 
 module Spreedly
   MOCK = "mock"
   
+  class Error < Exception; end
+
   def self.configure(name, token)
     @site_name = name
   end
@@ -65,7 +68,7 @@ module Spreedly
       sub = new({:customer_id => id, :email => email, :screen_name => screen_name}.merge(optional_attrs))
 
       if subscribers[sub.id]
-        raise "Could not create subscriber: already exists."
+        raise Error.new "Could not create subscriber: already exists."
       end
 
       subscribers[sub.id] = sub
@@ -91,7 +94,7 @@ module Spreedly
     def initialize(params={})
       super
       if !id || id == ''
-        raise "Could not create subscriber: Customer ID can't be blank."
+        raise Error.new "Could not create subscriber: Customer ID can't be blank."
       end
     end
     
@@ -108,8 +111,8 @@ module Spreedly
     end
     
     def comp(quantity, units, feature_level=nil)
-      raise "Could not comp subscriber: no longer exists." unless self.class.find(id)
-      raise "Could not comp subscriber: validation failed." unless units && quantity
+      raise Error.new "Could not comp subscriber: no longer exists." unless self.class.find(id)
+      raise Error.new "Could not comp subscriber: validation failed." unless units && quantity
       current_active_until = (active_until || Time.now)
       @attributes[:active_until] = case units
       when 'days'
@@ -122,9 +125,9 @@ module Spreedly
     end
 
     def activate_free_trial(plan_id)
-      raise "Could not activate free trial for subscriber: validation failed. missing subscription plan id" unless plan_id
-      raise "Could not active free trial for subscriber: subscriber or subscription plan no longer exists." unless self.class.find(id) && SubscriptionPlan.find(plan_id)
-      raise "Could not activate free trial for subscriber: subscription plan either 1) isn't a free trial, 2) the subscriber is not eligible for a free trial, or 3) the subscription plan is not enabled." if (on_trial? and !eligible_for_free_trial?)
+      raise Error.new "Could not activate free trial for subscriber: validation failed. missing subscription plan id" unless plan_id
+      raise Error.new "Could not active free trial for subscriber: subscriber or subscription plan no longer exists." unless self.class.find(id) && SubscriptionPlan.find(plan_id)
+      raise Error.new "Could not activate free trial for subscriber: subscription plan either 1) isn't a free trial, 2) the subscriber is not eligible for a free trial, or 3) the subscription plan is not enabled." if (on_trial? and !eligible_for_free_trial?)
       @attributes[:on_trial] = true
       plan = SubscriptionPlan.find(plan_id)
       comp(plan.duration_quantity, plan.duration_units, plan.feature_level)
@@ -135,7 +138,7 @@ module Spreedly
     end
 
     def stop_auto_renew
-      raise "Could not stop auto renew for subscriber: subscriber does not exist." unless self.class.find(id)
+      raise Error.new "Could not stop auto renew for subscriber: subscriber does not exist." unless self.class.find(id)
       @attributes[:recurring] = false
     end
     
@@ -146,8 +149,8 @@ module Spreedly
     end
     
     def add_fee(args)
-      raise "Unprocessable Entity" unless (args.keys & [:amount, :group, :name]).size == 3
-      raise "Unprocessable Entity" unless active?
+      raise Error.new "Unprocessable Entity" unless (args.keys & [:amount, :group, :name]).size == 3
+      raise Error.new "Unprocessable Entity" unless active?
       nil
     end
   end
