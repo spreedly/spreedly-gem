@@ -114,7 +114,11 @@ module Spreedly
       result = Spreedly.post('/subscribers.xml', :body => Spreedly.to_xml_params(:subscriber => subscriber))
       case result.code.to_s
       when /2../
-        new(result['subscriber'])
+	unless result['subscriber'].nil?
+	  new(result['subscriber'])
+	else
+	  raise "Did not receive subscriber information from spreedly: #{result.inspect}"
+	end
       when '403'
         raise "Could not create subscriber: already exists."
       when '422'
