@@ -7,8 +7,8 @@ hoe = Hoe.spec('spreedly') do
   developer('Nathaniel Talbott', 'nathaniel@terralien.com')
   self.rubyforge_name = 'terralien'
   self.test_globs = ["test/**/*_test.rb"]
-  self.extra_deps << ["mechanize"]
   self.extra_dev_deps << ["shoulda"]
+  self.extra_dev_deps << ["mechanize"]
 end
 
 def remove_task(*task_names)
