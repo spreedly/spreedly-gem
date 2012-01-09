@@ -183,6 +183,25 @@ class SpreedlyGemTest < Test::Unit::TestCase
       assert_raise(RuntimeError){sub.comp(nil, 'days')}
     end
     
+    should "credit a subscriber" do
+      sub = create_subscriber
+      assert !sub.active?
+      sub.credit(5)
+      
+      sub = Spreedly::Subscriber.find(sub.id)
+      assert sub.store_credit == 5.0
+    end
+    
+    
+    should "throw an error if credit is against unknown subscriber" do
+      sub = create_subscriber
+      Spreedly::Subscriber.wipe!
+      ex = assert_raise(RuntimeError) do
+        sub.credit(5)
+      end
+      assert_match(/exists/i, ex.message)
+    end
+    
     should "return subscription plans" do
       assert !Spreedly::SubscriptionPlan.all.empty?
       assert_not_nil Spreedly::SubscriptionPlan.all.first.name
