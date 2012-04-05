@@ -1,6 +1,6 @@
 = Spreedly-Gem
 
-* Source[http://github.com/spreedly/spreedly-gem]
+* http://github.com/spreedly/spreedly-gem
 
 == DESCRIPTION:
 
