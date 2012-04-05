@@ -168,6 +168,23 @@ module Spreedly
       end
     end
     
+    # Allows you to give a credit to a subscriber.
+    def credit(amount)
+      params = {:amount => amount}
+      
+      endpoint = 'credits'
+      result = Spreedly.post("/subscribers/#{id}/#{endpoint}.xml", :body => Spreedly.to_xml_params(endpoint[0..-2] => params))
+      case result.code.to_s
+      when /2../
+      when '404'
+        raise "Could not add credit to subscriber: no longer exists."
+      when '422'
+        raise "Could not add credit to subscriber: validation failed (#{result.body})."
+      else
+        raise "Could not add credit to subscriber: result code #{result.code}."
+      end
+    end
+    
     # Activates a free trial on the subscriber.
     # Requires plan_id of the free trial plan
     def activate_free_trial(plan_id)
