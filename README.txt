@@ -1,12 +1,11 @@
 = Spreedly-Gem
 
-* http://terralien.com/static/projects/spreedly-gem/
-* Source[http://github.com/terralien/spreedly-gem]
+* Source[http://github.com/spreedly/spreedly-gem]
 
 == DESCRIPTION:
 
-The Spreedly gem provides a convenient Ruby wrapper for the goodness that is
-the http://spreedly.com API. Created by Terralien[http://terralien.com].
+The Spreedly gem provides a convenient Ruby wrapper for the Spreedly
+Subscriptions API.
 
 == FEATURES:
 
@@ -35,7 +34,7 @@ Yup, they're exactly the same except for the require and the speed!
 
 == REQUIREMENTS:
 
-* A (free) Spreedly account.
+* A (free) Spreedly Subscriptions account.
 * HTTParty (vendored for now).
 
 == INSTALL:
@@ -46,7 +45,7 @@ Yup, they're exactly the same except for the require and the speed!
 
 (The MIT License)
 
-Copyright (c) 2009 Nathaniel Talbott
+Copyright (c) 2009-2012 Spreedly, Inc.. All Rights Reserved.
 
 Permission is hereby granted, free of charge, to any person obtaining
 a copy of this software and associated documentation files (the
