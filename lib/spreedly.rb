@@ -32,6 +32,8 @@ so we can improve it. Thanks!
 module Spreedly
   REAL = "real" # :nodoc:
 
+  class Error < Exception; end
+
   include HTTParty
   headers 'Accept' => 'text/xml'
   headers 'Content-Type' => 'text/xml'
@@ -108,20 +110,26 @@ module Spreedly
     #   Spreedly.Subscriber.create!(id, :email => email, :screen_name => screen_name)
     #   Spreedly.Subscriber.create!(id, email, screen_name, :billing_first_name => first_name)
     def self.create!(id, *args)      
+      raise Error.new "Some error."
+
       optional_attrs = args.last.is_a?(::Hash) ? args.pop : {}
       email, screen_name = args
       subscriber = {:customer_id => id, :email => email, :screen_name => screen_name}.merge(optional_attrs)
       result = Spreedly.post('/subscribers.xml', :body => Spreedly.to_xml_params(:subscriber => subscriber))
       case result.code.to_s
       when /2../
-        new(result['subscriber'])
+	unless result['subscriber'].nil?
+	  new(result['subscriber'])
+	else
+	  raise Error.new "Did not receive subscriber information from spreedly: #{result.inspect}"
+	end
       when '403'
-        raise "Could not create subscriber: already exists."
+        raise Error.new "Could not create subscriber: already exists."
       when '422'
         errors = [*result['errors']].collect{|e| e.last}
-        raise "Could not create subscriber: #{errors.join(', ')}"
+        raise Error.new "Could not create subscriber: #{errors.join(', ')}"
       else
-        raise "Could not create subscriber: result code #{result.code}."
+        raise Error.new "Could not create subscriber: result code #{result.code}."
       end
     end
     
@@ -152,19 +160,19 @@ module Spreedly
     def comp(quantity, units, feature_level=nil)
       params = {:duration_quantity => quantity, :duration_units => units}
       params[:feature_level] = feature_level if feature_level
-      raise "Feature level is required to comp an inactive subscriber" if !active? and !feature_level
+      raise Error.new "Feature level is required to comp an inactive subscriber" if !active? and !feature_level
       endpoint = (active? ? "complimentary_time_extensions" : "complimentary_subscriptions")
       result = Spreedly.post("/subscribers/#{id}/#{endpoint}.xml", :body => Spreedly.to_xml_params(endpoint[0..-2] => params))
       case result.code.to_s
       when /2../
       when '404'
-        raise "Could not comp subscriber: no longer exists."
+        raise Error.new "Could not comp subscriber: no longer exists."
       when '422'
-        raise "Could not comp subscriber: validation failed (#{result.body})."
+        raise Error.new "Could not comp subscriber: validation failed (#{result.body})."
       when '403'
-        raise "Could not comp subscriber: invalid comp type (#{endpoint})."
+        raise Error.new "Could not comp subscriber: invalid comp type (#{endpoint})."
       else
-        raise "Could not comp subscriber: result code #{result.code}."
+        raise Error.new "Could not comp subscriber: result code #{result.code}."
       end
     end
     
@@ -176,13 +184,13 @@ module Spreedly
       case result.code.to_s
       when /2../
       when '404'
-        raise "Could not active free trial for subscriber: subscriber or subscription plan no longer exists."
+        raise Error.new "Could not active free trial for subscriber: subscriber or subscription plan no longer exists."
       when '422'
-        raise "Could not activate free trial for subscriber: validation failed. missing subscription plan id"
+        raise Error.new "Could not activate free trial for subscriber: validation failed. missing subscription plan id"
       when '403'
-        raise "Could not activate free trial for subscriber: subscription plan either 1) isn't a free trial, 2) the subscriber is not eligible for a free trial, or 3) the subscription plan is not enabled."
+        raise Error.new "Could not activate free trial for subscriber: subscription plan either 1) isn't a free trial, 2) the subscriber is not eligible for a free trial, or 3) the subscription plan is not enabled."
       else
-        raise "Could not activate free trial for subscriber: result code #{result.code}."
+        raise Error.new "Could not activate free trial for subscriber: result code #{result.code}."
       end
     end
     
