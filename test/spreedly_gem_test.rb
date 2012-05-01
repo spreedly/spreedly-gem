@@ -119,14 +119,16 @@ class SpreedlyGemTest < Test::Unit::TestCase
         Spreedly.subscribe_url('joe', '1', :screen_name => "Joe Bob")
       assert_equal "https://spreedly.com/#{Spreedly.site_name}/subscribers/joe/subscribe/1",
         Spreedly.subscribe_url('joe', '1')
+      assert_equal "https://spreedly.com/#{Spreedly.site_name}/subscribers/joe/subscribe/1?email=joe%2Btest%40example.com",
+        Spreedly.subscribe_url('joe', '1', :email => "joe+test@example.com")
     end
     
     should "generate a pre-populated subscribe url" do
-      assert_equal "https://spreedly.com/#{Spreedly.site_name}/subscribers/joe/subscribe/1?email=joe.bob@test.com&first_name=Joe&last_name=Bob",
+      assert_equal "https://spreedly.com/#{Spreedly.site_name}/subscribers/joe/subscribe/1?email=joe.bob%40test.com&first_name=Joe&last_name=Bob",
         Spreedly.subscribe_url('joe', '1', :email => "joe.bob@test.com", :first_name => "Joe", :last_name => "Bob")
       assert_equal "https://spreedly.com/#{Spreedly.site_name}/subscribers/joe/subscribe/1?first_name=Joe&last_name=Bob",
         Spreedly.subscribe_url('joe', '1', :first_name => "Joe", :last_name => "Bob")
-      assert_equal "https://spreedly.com/#{Spreedly.site_name}/subscribers/joe/subscribe/1?return_url=http://stuffo.example.com",
+      assert_equal "https://spreedly.com/#{Spreedly.site_name}/subscribers/joe/subscribe/1?return_url=http%3A%2F%2Fstuffo.example.com",
         Spreedly.subscribe_url('joe', '1', :return_url => 'http://stuffo.example.com')
     end
     

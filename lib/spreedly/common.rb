@@ -5,6 +5,7 @@ end
 
 require 'uri'
 require 'bigdecimal'
+require 'cgi'
 
 require 'spreedly/version'
 
@@ -21,7 +22,7 @@ module Spreedly
     end
 
     screen_name = options.delete(:screen_name)
-    params = %w(email first_name last_name return_url).select{|e| options[e.to_sym]}.collect{|e| "#{e}=#{options[e.to_sym]}"}.join('&')
+    params = %w(email first_name last_name return_url).select{|e| options[e.to_sym]}.collect{|e| "#{e}=#{CGI::escape(options[e.to_sym])}"}.join('&')
 
     url = "https://spreedly.com/#{site_name}/subscribers/#{id}/subscribe/#{plan}"
     url << "/#{screen_name}" if screen_name
