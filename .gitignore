@@ -1,5 +1,4 @@
+Gemfile.lock
 doc
 pkg
-.DS_Store
 test/test_site.yml
-

@@ -43,11 +43,11 @@ module Spreedly
     basic_auth token, 'X'
     @site_name = site_name
   end
-  
+
   def self.site_name # :nodoc:
     @site_name
   end
-  
+
   def self.to_xml_params(hash) # :nodoc:
     hash.collect do |key, value|
       tag = key.to_s.tr('_', '-')
@@ -61,16 +61,16 @@ module Spreedly
       result
     end.join('')
   end
-  
+
   class Resource # :nodoc: all
     def initialize(data)
       @data = data
     end
-    
+
     def id
       @data["id"]
     end
-    
+
     def method_missing(method, *args, &block)
       if method.to_s =~ /\?$/
         send(method.to_s[0..-2])
@@ -90,9 +90,9 @@ module Spreedly
     def self.wipe!
       Spreedly.delete('/subscribers.xml')
     end
-    
+
     # This will DELETE individual subscribers from the site. Pass in the customer_id.
-    # 
+    #
     # Only works for test sites (enforced on the Spreedly side).
     def self.delete!(id)
       Spreedly.delete("/subscribers/#{id}.xml")
@@ -107,7 +107,7 @@ module Spreedly
     #   Spreedly.Subscriber.create!(id, email, screen_name)
     #   Spreedly.Subscriber.create!(id, :email => email, :screen_name => screen_name)
     #   Spreedly.Subscriber.create!(id, email, screen_name, :billing_first_name => first_name)
-    def self.create!(id, *args)      
+    def self.create!(id, *args)
       optional_attrs = args.last.is_a?(::Hash) ? args.pop : {}
       email, screen_name = args
       subscriber = {:customer_id => id, :email => email, :screen_name => screen_name}.merge(optional_attrs)
@@ -124,24 +124,24 @@ module Spreedly
         raise "Could not create subscriber: result code #{result.code}."
       end
     end
-    
+
     # Looks a subscriber up by id.
     def self.find(id)
       xml = Spreedly.get("/subscribers/#{id}.xml")
       (xml.nil? || xml.empty? ? nil : new(xml['subscriber']))
     end
-    
+
     # Returns all the subscribers in your site.
     def self.all
       Spreedly.get('/subscribers.xml')['subscribers'].collect{|data| new(data)}
     end
-    
+
     # Spreedly calls your id for the user the "customer id". This
     # gives you a handy alias so you can just call it "id".
     def id
       customer_id
     end
-    
+
     # Allows you to give a complimentary subscription (if the
     # subscriber is inactive) or a complimentary time extension (if
     # the subscriber is active). Automatically figures out which
@@ -167,11 +167,11 @@ module Spreedly
         raise "Could not comp subscriber: result code #{result.code}."
       end
     end
-    
+
     # Activates a free trial on the subscriber.
     # Requires plan_id of the free trial plan
     def activate_free_trial(plan_id)
-      result = Spreedly.post("/subscribers/#{id}/subscribe_to_free_trial.xml", :body => 
+      result = Spreedly.post("/subscribers/#{id}/subscribe_to_free_trial.xml", :body =>
         Spreedly.to_xml_params(:subscription_plan => {:id => plan_id}))
       case result.code.to_s
       when /2../
@@ -185,7 +185,7 @@ module Spreedly
         raise "Could not activate free trial for subscriber: result code #{result.code}."
       end
     end
-    
+
     # Stop the auto renew of the subscriber such that their recurring subscription will no longer be renewed.
     # usage: @subscriber.stop_auto_renew
     def stop_auto_renew
@@ -198,9 +198,9 @@ module Spreedly
         raise "Could not stop auto renew for subscriber: result code #{result.code}."
       end
     end
-    
-    
-    
+
+
+
     # Update a Subscriber
     # usage: @subscriber.update(:email => email, :screen_name => screen_name)
     def update(args)
@@ -246,10 +246,10 @@ module Spreedly
         raise "Could not add fee to subscriber: result code #{result.code}."
       end
     end
-  
-    
+
+
   end
- 
+
 
   class SubscriptionPlan < Resource
     # Returns all of the subscription plans defined in your site.
@@ -261,7 +261,7 @@ module Spreedly
     def self.find(id)
       all.detect{|e| e.id.to_s == id.to_s}
     end
-    
+
     # Convenience method for determining if this plan is a free trial plan or not.
     def trial?
       (plan_type == 'free_trial')
