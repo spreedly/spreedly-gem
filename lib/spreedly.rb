@@ -128,7 +128,11 @@ module Spreedly
     # Looks a subscriber up by id.
     def self.find(id)
       xml = Spreedly.get("/subscribers/#{id}.xml")
-      (xml.nil? || xml.empty? ? nil : new(xml['subscriber']))
+      if [200, 404].include?(xml.code)
+        (xml.nil? || xml.empty? ? nil : new(xml['subscriber']))
+      else
+        raise "Could not find subscriber: result code #{xml.code}, body '#{xml.body}'"
+      end
     end
 
     # Returns all the subscribers in your site.
@@ -199,8 +203,6 @@ module Spreedly
       end
     end
 
-
-
     # Update a Subscriber
     # usage: @subscriber.update(:email => email, :screen_name => screen_name)
     def update(args)
@@ -217,7 +219,6 @@ module Spreedly
       end
     end
 
-
     #  Allow Another Free Trial
     # usage: @subscriber.allow_free_trial
     def allow_free_trial
@@ -229,7 +230,6 @@ module Spreedly
         raise "Could not allow subscriber to another trial: result code #{result.code}."
       end
     end
-
 
     # Add a Fee to a Subscriber
     # usage: @subscriber.add_fee(:amount => amount, :group => group_name, :description => description, :name => name)
@@ -246,15 +246,17 @@ module Spreedly
         raise "Could not add fee to subscriber: result code #{result.code}."
       end
     end
-
-
   end
-
 
   class SubscriptionPlan < Resource
     # Returns all of the subscription plans defined in your site.
     def self.all
-      Spreedly.get('/subscription_plans.xml')['subscription_plans'].collect{|data| new(data)}
+      xml = Spreedly.get('/subscription_plans.xml')
+      if xml.code == 200
+        xml['subscription_plans'].collect{|data| new(data)}
+      else
+        raise "Could not list subscription plans: result code #{xml.code}, body '#{xml.body}'"
+      end
     end
 
     # Returns the subscription plan with the given id.

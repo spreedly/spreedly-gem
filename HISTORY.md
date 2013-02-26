@@ -3,6 +3,7 @@
 ## 1.3.6
 
 * Modernize packaging
+* Improve handling of bad credentials
 
 ## 1.3.5
 
