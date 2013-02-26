@@ -10,7 +10,8 @@ Gem::Specification.new do |s|
   s.authors     = ["Spreedly"]
   s.email       = ["nathaniel@spreedly.com"]
   s.homepage    = "https://github.com/spreedly/spreedly-gem"
-  s.summary     = "The Spreedly gem provides a convenient Ruby wrapper for the Spreedly Subscriptions API."
+  s.summary     = "Provides a Ruby wrapper for the Spreedly Subscriptions API."
+  s.description = "The Spreedly gem provides a convenient Ruby wrapper for the Spreedly Subscriptions API."
 
   s.required_rubygems_version = ">= 1.8"
 
