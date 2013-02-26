@@ -12,6 +12,7 @@ Gem::Specification.new do |s|
   s.homepage    = "https://github.com/spreedly/spreedly-gem"
   s.summary     = "Provides a Ruby wrapper for the Spreedly Subscriptions API."
   s.description = "The Spreedly gem provides a convenient Ruby wrapper for the Spreedly Subscriptions API."
+  s.license     = "MIT"
 
   s.required_rubygems_version = ">= 1.8"
 
