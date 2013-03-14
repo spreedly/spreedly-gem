@@ -4,15 +4,15 @@ raise "Real Spreedly already required!" if defined?(Spreedly::REAL)
 
 module Spreedly
   MOCK = "mock"
-  
+
   def self.configure(name, token)
     @site_name = name
   end
-  
+
   def self.site_name
     @site_name
   end
-  
+
   class Resource
     def self.attributes
       @attributes ||= {}
@@ -21,12 +21,13 @@ module Spreedly
     def self.attributes=(value)
       @attributes = value
     end
-    
+
+    attr_reader :attributes
     def initialize(params={})
       @attributes = self.class.attributes.inject({}){|a,(k,v)| a[k.to_sym] = v.call; a}
       params.each {|k,v| @attributes[k.to_sym] = v }
     end
-    
+
     def id
       @attributes[:id]
     end
@@ -41,7 +42,7 @@ module Spreedly
       end
     end
   end
-  
+
   class Subscriber < Resource
     self.attributes = {
       :created_at => proc{Time.now},
@@ -58,7 +59,7 @@ module Spreedly
     def self.wipe! # :nodoc: all
       @subscribers = nil
     end
-    
+
     def self.create!(id, *args) # :nodoc: all
       optional_attrs = args.last.is_a?(::Hash) ? args.pop : {}
       email, screen_name = args
@@ -71,34 +72,35 @@ module Spreedly
       subscribers[sub.id] = sub
       sub
     end
-    
+
     def self.delete!(id)
       subscribers.delete(id)
     end
-    
+
     def self.find(id)
       subscribers[id]
     end
-    
+
     def self.subscribers
       @subscribers ||= {}
     end
-    
+
     def self.all
       @subscribers.values
     end
-    
+
     def initialize(params={})
       super
       if !id || id == ''
         raise "Could not create subscriber: Customer ID can't be blank."
       end
+      @invoices ||= []
     end
-    
+
     def id
       @attributes[:customer_id]
     end
-    
+
     def update(args)
       args.each_pair do |key, value|
         if @attributes.has_key?(key)
@@ -106,7 +108,7 @@ module Spreedly
         end
       end
     end
-    
+
     def comp(quantity, units, feature_level=nil)
       raise "Could not comp subscriber: no longer exists." unless self.class.find(id)
       raise "Could not comp subscriber: validation failed." unless units && quantity
@@ -129,51 +131,89 @@ module Spreedly
       plan = SubscriptionPlan.find(plan_id)
       comp(plan.duration_quantity, plan.duration_units, plan.feature_level)
     end
-    
+
     def allow_free_trial
-      @attributes[:eligible_for_free_trial] = true  
+      @attributes[:eligible_for_free_trial] = true
     end
 
     def stop_auto_renew
       raise "Could not stop auto renew for subscriber: subscriber does not exist." unless self.class.find(id)
       @attributes[:recurring] = false
     end
-    
-    def subscribe(plan_id)
-      @attributes[:recurring] = true
+
+    def subscribe(plan_id, card_number="4222222222222")
       plan = SubscriptionPlan.find(plan_id)
+      @invoices.unshift(Invoice.new(
+        amount: (@invoices.select{|invoice| invoice.closed?}.size > 0 ? 0 : plan.amount),
+        closed: false
+      ))
+
+      return unless card_number == "4222222222222"
+
+      @invoices.first.attributes[:closed] = true
+      @attributes[:recurring] = true
       comp(plan.duration_quantity, plan.duration_units, plan.feature_level)
     end
-    
+
     def add_fee(args)
       raise "Unprocessable Entity" unless (args.keys & [:amount, :group, :name]).size == 3
       raise "Unprocessable Entity" unless active?
       nil
     end
+
+    def invoices
+      @invoices
+    end
+
+    def last_successful_invoice
+      @invoices.detect{|invoice| invoice.closed?}
+    end
   end
-  
+
+  class Invoice < Resource
+  end
+
   class SubscriptionPlan < Resource
     self.attributes = {
       :plan_type => proc{'regular'},
       :feature_level => proc{''}
     }
-    
+
     def self.all
       plans.values
     end
-    
+
     def self.find(id)
       plans[id.to_i]
     end
-    
+
     def self.plans
       @plans ||= {
-        1 => new(:id => 1, :name => 'Default mock plan', :duration_quantity => 1, :duration_units => 'days'),
-        2 => new(:id => 2, :name => 'Test Free Trial Plan', :plan_type => 'free_trial', :duration_quantity => 1, :duration_units => 'days'),
-        3 => new(:id => 3, :name => 'Test Regular Plan', :duration_quantity => 1, :duration_units => 'days'),
+        1 => new(
+          :id => 1,
+          :name => 'Default mock plan',
+          :duration_quantity => 1,
+          :duration_units => 'days',
+          :amount => 6
+        ),
+        2 => new(
+          :id => 2,
+          :name => 'Test Free Trial Plan',
+          :plan_type => 'free_trial',
+          :duration_quantity => 1,
+          :duration_units => 'days',
+          :amount => 11
+        ),
+        3 => new(
+          :id => 3,
+          :name => 'Test Regular Plan',
+          :duration_quantity => 1,
+          :duration_units => 'days',
+          :amount => 17
+        )
       }
     end
-    
+
     def trial?
       (plan_type == "free_trial")
     end

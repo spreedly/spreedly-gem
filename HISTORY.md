@@ -1,5 +1,10 @@
 # Changelog
 
+## 1.4.0
+
+* Add accessor for invoices
+* Add accessor for last successful invoice
+
 ## 1.3.6
 
 * Modernize packaging

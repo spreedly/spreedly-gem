@@ -83,7 +83,6 @@ module Spreedly
   end
 
   class Subscriber < Resource
-
     # This will DELETE all the subscribers from the site.
     #
     # Only works for test sites (enforced on the Spreedly side).
@@ -219,7 +218,7 @@ module Spreedly
       end
     end
 
-    #  Allow Another Free Trial
+    # Allow Another Free Trial
     # usage: @subscriber.allow_free_trial
     def allow_free_trial
       result = Spreedly.post("/subscribers/#{id}/allow_free_trial.xml")
@@ -246,6 +245,21 @@ module Spreedly
         raise "Could not add fee to subscriber: result code #{result.code}."
       end
     end
+
+    # Get the invoices for the subscriber
+    def invoices
+      @invoices ||= @data["invoices"].collect{|i| Invoice.new(i)}
+    end
+
+    # Get the last successful invoice
+    def last_successful_invoice
+      invoices.detect do |invoice|
+        invoice.closed?
+      end
+    end
+  end
+
+  class Invoice < Resource
   end
 
   class SubscriptionPlan < Resource
