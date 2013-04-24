@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.0
+* This gem is now intended for the Spreedly API.  For the Spreedly
+  Subscriptions API, you can use the spreedly_subscriptions gem
+  which has everything that 1.4.0 had.
+
 ## 1.4.0
 
 * Add accessor for invoices

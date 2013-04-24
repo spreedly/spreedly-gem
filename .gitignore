@@ -1,5 +1,7 @@
 Gemfile.lock
-doc
+doc/
 pkg
-test/test_site.yml
 *.gem
+.bundle
+tmp
+vendor/ruby
