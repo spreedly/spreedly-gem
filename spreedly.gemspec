@@ -3,6 +3,7 @@ lib = File.expand_path('../lib', __FILE__)
 $LOAD_PATH.unshift(lib) unless $LOAD_PATH.include?(lib)
 require 'spreedly/version'
 
+
 Gem::Specification.new do |s|
   s.name          = "spreedly"
   s.version       = Spreedly::VERSION
@@ -17,7 +18,11 @@ Gem::Specification.new do |s|
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ["lib"]
 
+  s.add_dependency "nokogiri"
+
   s.add_development_dependency "bundler", "~> 1.3"
   s.add_development_dependency "rake"
+  s.add_development_dependency "log_buddy"
+  s.add_development_dependency "awesome_print"
 end
 
