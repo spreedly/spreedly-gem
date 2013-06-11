@@ -13,8 +13,17 @@ class FindPaymentMethodTest < Test::Unit::TestCase
       environment.find_payment_method(@card_token)
     end
 
-    assert_equal "Failed with 401 Unauthorized", error.message
     assert_equal "401", error.response.code
+    assert_equal "Failed with 401 Unauthorized", error.message
+  end
+
+  def test_payment_method_not_found
+    error = assert_raises(Spreedly::ResponseError) do
+      @environment.find_payment_method("SomeUnknownToken")
+    end
+
+    assert_equal "404", error.response.code
+    assert_equal "Failed with 404 Not Found", error.message
   end
 
   def test_successfully_find_card
@@ -40,7 +49,7 @@ class FindPaymentMethodTest < Test::Unit::TestCase
     assert_equal('201.344.7711', card.phone_number)
   end
 
-  def test_find_sprel
+  def test_successfully_find_sprel
     sprel = @environment.find_payment_method("WZf8ZQgvmgOfdWaRtAzMLXPSQbk")
     assert_kind_of(Spreedly::Sprel, sprel)
     assert_equal "WZf8ZQgvmgOfdWaRtAzMLXPSQbk", sprel.token

@@ -3,9 +3,8 @@ module Spreedly
   class ResponseError < StandardError
     attr_reader :response
 
-    def initialize(response, message = nil)
+    def initialize(response)
       @response = response
-      @message  = message
     end
 
     def to_s
