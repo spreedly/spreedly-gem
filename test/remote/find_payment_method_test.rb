@@ -49,6 +49,25 @@ class FindPaymentMethodTest < Test::Unit::TestCase
     assert_equal('201.344.7711', card.phone_number)
   end
 
+  def test_find_valid_card
+    card = @environment.find_payment_method(@card_token)
+    assert card.valid?
+    assert_equal({}, card.errors)
+  end
+
+  def test_find_invalid_card
+    card = @environment.find_payment_method('CrY4e6wa3Jf4SMUZlvjFelW2YnQ')
+    assert !card.valid?
+
+    expected_errors = {
+      'first_name' => { key: "errors.blank", text: "First name can't be blank" },
+      'last_name' => { key: "errors.blank", text: "Last name can't be blank" },
+      'year' => { key: "errors.invalid", text: "Year is invalid" }
+    }
+
+    assert_equal(expected_errors, card.errors)
+  end
+
   def test_successfully_find_sprel
     sprel = @environment.find_payment_method("WZf8ZQgvmgOfdWaRtAzMLXPSQbk")
     assert_kind_of(Spreedly::Sprel, sprel)

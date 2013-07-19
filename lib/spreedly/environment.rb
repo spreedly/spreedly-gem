@@ -39,7 +39,7 @@ module Spreedly
         if (node.elements.empty?)
           response[node.name.downcase.to_sym] = node.text
         else
-          response[node.name.downcase.to_sym] = node.elements.to_xml
+          response[node.name.downcase.to_sym] = node.elements.to_s
         end
       end
 
