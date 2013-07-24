@@ -1,5 +1,6 @@
 Gemfile.lock
 doc
 pkg
+tmp
 test/test_site.yml
 *.gem
