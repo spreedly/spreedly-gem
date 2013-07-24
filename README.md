@@ -193,6 +193,46 @@ Retain a payment method automatically if the purchase or authorize transaction s
     gateway.token     # => "2nQEJaaY3egcVkCvg2s9qT37xrb"
 
 
+## Error Handling
+
+When you make a call to the API, there are times when things don't go as expected.  This is an area of the docs we're still working on.  We'll be gradually filling
+it in with more details as we decide on Exception names, etc.
+
+#### Failure to find
+
+    env.find_transaction("Some Unknown Token")  # raises an exception.
+
+#### Invalid payment method
+
+    transaction = env.purchase_on_gateway(gateway_token, payment_method_token, 4432)
+
+    transaction.succeeded?  # => false
+    transaction.message     # => "The payment method is invalid."
+
+    transaction.payment_method.errors
+    # Returns => {
+    #    year: { key: "errors.invalid", text: "Year is invalid" },
+    #    number: { key: "errors.blank", text: "Number can't be blank" }
+    # }
+
+#### Declined purchase
+
+    transaction = env.purchase_on_gateway(gateway_token, payment_method_token, 4432)
+
+    transaction.succeeded?  # => false
+    transaction.message     # => "Unable to process the purchase transaction."
+
+#### Invalid environment credentials
+
+    env = Spreedly::Environment.new(environment_key, "some bogus secret")
+    env.purchase_on_gateway(gateway_token, payment_method_token, 4432) # Raises exception
+
+#### Unknown payment method
+
+    env.purchase_on_gateway(gateway_token, "Some Unknown Token", 4432) # Raises exception
+
+
 ## Contributing
 
 We're happy to consider [pull requests](https://help.github.com/articles/using-pull-requests).
+
