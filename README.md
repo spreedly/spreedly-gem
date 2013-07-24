@@ -43,7 +43,7 @@ The amount specified in that example was 4432.  Amounts are always in cents so i
 What if you don't have a gateway token yet?  It's pretty easy to create a test gateway:
 
     gateway = env.create_gateway(:test)
-    gateway.token             # => "DnbEJaaY2egcVkCvg3s8qT38xgt"
+    gateway.token     # => "DnbEJaaY2egcVkCvg3s8qT38xgt"
 
 
 #### Create a payment method
@@ -186,6 +186,11 @@ Retain a payment method automatically if the purchase or authorize transaction s
 #### Updating a payment method
 
     env.update_payment_method(payment_method_token, first_name: 'JimBob', last_name: 'Jones)
+
+#### Creating other types of gateways
+
+    gateway = env.create_gateway(:paypal, mode: 'delegate', email: 'fred@example.com')
+    gateway.token     # => "2nQEJaaY3egcVkCvg2s9qT37xrb"
 
 
 ## Contributing
