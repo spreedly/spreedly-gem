@@ -6,8 +6,10 @@ module Spreedly
 
     include SslRequester
 
+    attr_reader :key
+
     def initialize(environment_key, access_secret)
-      @environment_key, @access_secret = environment_key, access_secret
+      @key, @access_secret = environment_key, access_secret
     end
 
     def transparent_redirect_form_action
@@ -26,7 +28,7 @@ module Spreedly
 
     def headers
       {
-        'Authorization' => ('Basic ' + Base64.strict_encode64("#{@environment_key}:#{@access_secret}").chomp),
+        'Authorization' => ('Basic ' + Base64.strict_encode64("#{@key}:#{@access_secret}").chomp),
         'Content-Type' => 'text/xml'
       }
     end

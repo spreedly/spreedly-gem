@@ -30,7 +30,7 @@ module Spreedly
       @errors = {}
       doc = Nokogiri::XML("<errors>#{errors_xml}</errors>")
       doc.xpath("//errors/error").each do |each|
-        @errors[each.attributes['attribute'].to_s] = {
+        @errors[each.attributes['attribute'].to_s.to_sym] = {
           key: each.attributes['key'].to_s,
           text: each.text
         }

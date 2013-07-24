@@ -60,9 +60,10 @@ class FindPaymentMethodTest < Test::Unit::TestCase
     assert !card.valid?
 
     expected_errors = {
-      'first_name' => { key: "errors.blank", text: "First name can't be blank" },
-      'last_name' => { key: "errors.blank", text: "Last name can't be blank" },
-      'year' => { key: "errors.invalid", text: "Year is invalid" }
+      first_name: { key: "errors.blank", text: "First name can't be blank" },
+      last_name: { key: "errors.blank", text: "Last name can't be blank" },
+      year: { key: "errors.invalid", text: "Year is invalid" },
+      number: { key: "errors.blank", text: "Number can't be blank" }
     }
 
     assert_equal(expected_errors, card.errors)
