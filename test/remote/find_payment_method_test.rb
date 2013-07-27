@@ -9,21 +9,19 @@ class FindPaymentMethodTest < Test::Unit::TestCase
 
   def test_invalid_login
     environment = Spreedly::Environment.new("UnknownEnvironmentKey", "UnknownAccessSecret")
-    error = assert_raises(Spreedly::ResponseError) do
+    error = assert_raises(Spreedly::AuthenticationError) do
       environment.find_payment_method(@card_token)
     end
 
-    assert_equal "401", error.response.code
-    assert_equal "Failed with 401 Unauthorized", error.message
+    assert_equal "Unable to authenticate using the given access_token.", error.message
   end
 
   def test_payment_method_not_found
-    error = assert_raises(Spreedly::ResponseError) do
+    error = assert_raises(Spreedly::NotFoundError) do
       @environment.find_payment_method("SomeUnknownToken")
     end
 
-    assert_equal "404", error.response.code
-    assert_equal "Failed with 404 Not Found", error.message
+    assert_equal "Unable to find the specified payment method.", error.message
   end
 
   def test_successfully_find_card

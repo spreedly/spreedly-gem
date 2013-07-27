@@ -18,7 +18,11 @@ module Spreedly
 
     def find_payment_method(token)
       raw_response = ssl_get("#{base_url}/v1/payment_methods/#{token}.xml", headers)
-      payment_method_from(parse(raw_response))
+      payment_method_from(parse_xml(raw_response))
+    end
+
+    def purchase_on_gateway(gateway_token, payment_method_token, amount, options = {})
+
     end
 
     private
@@ -31,21 +35,6 @@ module Spreedly
         'Authorization' => ('Basic ' + Base64.strict_encode64("#{@key}:#{@access_secret}").chomp),
         'Content-Type' => 'text/xml'
       }
-    end
-
-    def parse(xml)
-      response = {}
-
-      doc = Nokogiri::XML(xml)
-      doc.root.xpath('*').each do |node|
-        if (node.elements.empty?)
-          response[node.name.downcase.to_sym] = node.text
-        else
-          response[node.name.downcase.to_sym] = node.elements.to_s
-        end
-      end
-
-      response
     end
 
     def payment_method_from(parsed_response)

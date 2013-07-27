@@ -28,10 +28,30 @@ module Spreedly
       case response.code.to_i
       when 200...300
         response.body
+      when 401
+        raise AuthenticationError.new
+      when 404
+        raise NotFoundError.new(parse_xml(response.body)[:error])
       else
         raise ResponseError.new(response)
       end
     end
+
+    def parse_xml(xml)
+      hash = {}
+
+      doc = Nokogiri::XML(xml)
+      doc.root.xpath('*').each do |node|
+        if (node.elements.empty?)
+          hash[node.name.downcase.to_sym] = node.text
+        else
+          hash[node.name.downcase.to_sym] = node.elements.to_s
+        end
+      end
+
+      hash
+    end
+
 
   end
 

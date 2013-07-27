@@ -1,6 +1,20 @@
 module Spreedly
+  class Error < StandardError
+  end
 
-  class ResponseError < StandardError
+  class AuthenticationError < Error
+    def initialize(message = "Unable to authenticate using the given access_token.")
+      super
+    end
+  end
+
+  class NotFoundError < Error
+    def initialize(message = "Unable to authenticate using the given access_token.")
+      super
+    end
+  end
+
+  class ResponseError < Error
     attr_reader :response
 
     def initialize(response)
@@ -13,3 +27,4 @@ module Spreedly
   end
 
 end
+
