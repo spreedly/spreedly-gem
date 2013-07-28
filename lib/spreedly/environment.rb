@@ -6,10 +6,11 @@ module Spreedly
 
     include SslRequester
 
-    attr_reader :key
+    attr_reader :key, :currency_code
 
-    def initialize(environment_key, access_secret)
+    def initialize(environment_key, access_secret, options={})
       @key, @access_secret = environment_key, access_secret
+      @currency_code = options[:currency_code] || 'USD'
     end
 
     def transparent_redirect_form_action
