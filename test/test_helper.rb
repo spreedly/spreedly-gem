@@ -1,5 +1,6 @@
 
 require 'test/unit'
+require 'mocha/setup'
 require 'awesome_print'
 require 'logger'
 require 'log_buddy'

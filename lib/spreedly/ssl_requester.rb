@@ -25,7 +25,6 @@ module Spreedly
     end
 
     def handle_response(response)
-      d { response.code }
       case response.code.to_i
       when 200...300
         response.body

@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class FindPaymentMethodTest < Test::Unit::TestCase
+class RemoteFindPaymentMethodTest < Test::Unit::TestCase
 
   def setup
     @environment = Spreedly::Environment.new("R7lHscqcYkZeDGGbthKp6GKMu15", "8sefxO5Q44sLWpmZpalQS3Qlqo03JbCemsqsWJR3YOLCuigOFRlaLSAn0WaL5dWU")
@@ -27,23 +27,8 @@ class FindPaymentMethodTest < Test::Unit::TestCase
   def test_successfully_find_card
     card = @environment.find_payment_method(@card_token)
     assert_kind_of(Spreedly::CreditCard, card)
-    assert_equal(@card_token, card.token)
     assert_equal("phil@example.com", card.email)
-    assert_equal("4444", card.last_four_digits)
     assert_equal('XXXX-XXXX-XXXX-4444', card.number)
-    assert_equal("<how_many>3</how_many>", card.data)
-    assert_equal(1366912152, card.created_at.to_i)
-    assert_equal(1366916044, card.updated_at.to_i)
-    assert_equal('master', card.card_type)
-    assert_equal('Phillip', card.first_name)
-    assert_equal('Jones', card.last_name)
-    assert_equal('9', card.month)
-    assert_equal('2019', card.year)
-    assert_equal('123 Main Street', card.address1)
-    assert_equal('Apt. 2', card.address2)
-    assert_equal('Wanaque', card.city)
-    assert_equal('NJ', card.state)
-    assert_equal('USA', card.country)
     assert_equal('201.344.7711', card.phone_number)
   end
 
@@ -75,6 +60,10 @@ class FindPaymentMethodTest < Test::Unit::TestCase
     assert_equal(1366981867, sprel.created_at.to_i)
     assert_equal(1366982301, sprel.updated_at.to_i)
     assert_equal("Some Pretty Data", sprel.data)
+  end
+
+  def test_successfully_find_paypal
+
   end
 
 end

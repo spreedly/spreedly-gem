@@ -18,11 +18,12 @@ Gem::Specification.new do |s|
   s.test_files    = s.files.grep(%r{^(test|spec|features)/})
   s.require_paths = ["lib"]
 
-  s.add_dependency "nokogiri"
+  s.add_dependency 'nokogiri'
 
-  s.add_development_dependency "bundler", "~> 1.3"
-  s.add_development_dependency "rake"
-  s.add_development_dependency "log_buddy"
-  s.add_development_dependency "awesome_print"
+  s.add_development_dependency 'bundler', '~> 1.3'
+  s.add_development_dependency 'rake'
+  s.add_development_dependency 'mocha'
+  s.add_development_dependency 'log_buddy'
+  s.add_development_dependency 'awesome_print'
 end
 
