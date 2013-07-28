@@ -9,9 +9,9 @@ module Spreedly
   end
 
   class NotFoundError < Error
-    def initialize(message = "Unable to authenticate using the given access_token.")
-      super
-    end
+  end
+
+  class TransactionCreationError < Error
   end
 
   class ResponseError < Error

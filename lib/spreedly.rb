@@ -6,6 +6,7 @@ require 'spreedly/payment_methods/payment_method'
 require 'spreedly/payment_methods/credit_card'
 require 'spreedly/payment_methods/paypal'
 require 'spreedly/payment_methods/sprel'
+require 'spreedly/transactions/transaction'
 require 'spreedly/error'
 
 module Spreedly

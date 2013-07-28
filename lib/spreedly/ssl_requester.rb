@@ -25,6 +25,7 @@ module Spreedly
     end
 
     def handle_response(response)
+      d { response.code }
       case response.code.to_i
       when 200...300
         response.body
@@ -32,7 +33,18 @@ module Spreedly
         raise AuthenticationError.new
       when 404
         raise NotFoundError.new(parse_xml(response.body)[:error])
+      when 402
+        raise "Need to handle this better.  PaymentRequiredError perhaps."
+      when 422
+        parsed = parse_xml(response.body)
+        if parsed[:error]
+          raise TransactionCreationError.new(parsed[:error])
+        else
+          response.body
+        end
       else
+        # Not sure we want to do this here. Hmmm.  Maybe UnexpectedResponseError?
+        d { response.body }
         raise ResponseError.new(response)
       end
     end
