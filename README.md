@@ -225,7 +225,7 @@ env.find_transaction_transcript(transaction_token)
 #### Updating a payment method
 
 ``` ruby
-env.update_payment_method(payment_method_token, first_name: 'JimBob', last_name: 'Jones)
+env.update_payment_method(payment_method_token, first_name: 'JimBob', last_name: 'Jones')
 ```
 
 #### Creating other types of gateways
