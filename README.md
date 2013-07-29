@@ -151,7 +151,7 @@ For Purchase, Authorize, Capture, Credit, and Void calls, you can specify additi
 ``` ruby
 env.purchase_on_gateway(gateway_token, payment_method_token, amount,
                         order_id: "123",
-                        description: "The Description"
+                        description: "The Description",
                         ip: "192.31.123.112",
                         currency_code: "GBP",
                         merchant_name_descriptor: "SuperDuper Corp",
