@@ -30,20 +30,24 @@ Otherwise gem install:
 
 Let's start with a simple purchase when you already have a gateway token and a payment method token:
 
-    env = Spreedly::Environment.new(environment_key, access_secret)
+``` ruby
+env = Spreedly::Environment.new(environment_key, access_secret)
 
-    transaction = env.purchase_on_gateway(gateway_token, payment_method_token, 4432)
+transaction = env.purchase_on_gateway(gateway_token, payment_method_token, 4432)
 
-    transaction.succeeded?    # => true
-    transaction.token         # => "aGJlY5srn7TFeYKxO5pmwi3CyJd"
+transaction.succeeded?    # => true
+transaction.token         # => "aGJlY5srn7TFeYKxO5pmwi3CyJd"
+```
 
 The amount specified in that example was 4432.  Amounts are always in cents so in this case, we're charging $44.32.
 
 #### Create a gateway
 What if you don't have a gateway token yet?  It's pretty easy to create a test gateway:
 
-    gateway = env.create_gateway(:test)
-    gateway.token     # => "DnbEJaaY2egcVkCvg3s8qT38xgt"
+``` ruby
+gateway = env.create_gateway(:test)
+gateway.token     # => "DnbEJaaY2egcVkCvg3s8qT38xgt"
+```
 
 
 #### Create a payment method
@@ -51,26 +55,28 @@ Need a payment method token to try things out?  With Spreedly it's pretty straig
 [transparent redirect](https://core.spreedly.com/manual/quickstart#submit-payment-form) to give you a
 payment method token.  A payment form in your application could look something like this:
 
-    <form action="<%= env.transparent_redirect_form_action %>" method="POST">
-      <fieldset>
-        <input name="redirect_url" type="hidden" value="http://yourdomain.com/transparent_redirect_done" />
-        <input name="environment_key" type="hidden" value="<%= env.key %>" />
-        <label for="credit_card_full_name">Name</label>
-        <input id="credit_card_full_name" name="credit_card[full_name]" type="text" />
+``` html
+<form action="<%= env.transparent_redirect_form_action %>" method="POST">
+  <fieldset>
+    <input name="redirect_url" type="hidden" value="http://yourdomain.com/transparent_redirect_done" />
+    <input name="environment_key" type="hidden" value="<%= env.key %>" />
+    <label for="credit_card_full_name">Name</label>
+    <input id="credit_card_full_name" name="credit_card[full_name]" type="text" />
 
-        <label for="credit_card_number">Card Number</label>
-        <input id="credit_card_number" name="credit_card[number]" type="text" />
+    <label for="credit_card_number">Card Number</label>
+    <input id="credit_card_number" name="credit_card[number]" type="text" />
 
-        <label for="credit_card_verification_value">Security Code</label>
-        <input id="credit_card_verification_value" name="credit_card[verification_value]" type="text" />
+    <label for="credit_card_verification_value">Security Code</label>
+    <input id="credit_card_verification_value" name="credit_card[verification_value]" type="text" />
 
-        <label for="credit_card_month">Expires on</label>
-        <input id="credit_card_month" name="credit_card[month]" type="text" />
-        <input id="credit_card_year" name="credit_card[year]" type="text" />
+    <label for="credit_card_month">Expires on</label>
+    <input id="credit_card_month" name="credit_card[month]" type="text" />
+    <input id="credit_card_year" name="credit_card[year]" type="text" />
 
-        <button type='submit'>Submit Payment</button>
-      </fieldset>
-    </form>
+    <button type='submit'>Submit Payment</button>
+  </fieldset>
+</form>
+```
 
 Notice that we can ask the environment for the form action url and that the environment knows its key to use in the hidden field.
 
@@ -83,115 +89,151 @@ Once you have the payment method token (OEj2G2QJZM4C10AfTLYTrsKIsZH in this case
 #### Retrieve a payment method
 Let's say you'd like some additional information about the payment method.  You can do so like this:
 
-    credit_card = env.find_payment_method(token)
-    credit_card.last_name      # => "Jones"
-    credit_card.valid?         # => false
+``` ruby
+credit_card = env.find_payment_method(token)
+credit_card.last_name      # => "Jones"
+credit_card.valid?         # => false
 
-    credit_card.errors
-    # Returns => {
-    #    last_name: { key: "errors.blank", text: "Last name can't be blank" },
-    #    year: { key: "errors.invalid", text: "Year is invalid" }
-    # }
+credit_card.errors
+# Returns => {
+#    last_name: { key: "errors.blank", text: "Last name can't be blank" },
+#    year: { key: "errors.invalid", text: "Year is invalid" }
+# }
+```
 
 #### Authorize and Capture
 
-    auth_transaction = env.authorize_on_gateway(gateway_token, payment_method_token, 250)
+``` ruby
+auth_transaction = env.authorize_on_gateway(gateway_token, payment_method_token, 250)
 
-    if auth_transaction.succeeded?
-      capture_transaction = env.capture_on_gateway(gateway_token, auth_transaction.token)
-    end
+if auth_transaction.succeeded?
+  capture_transaction = env.capture_on_gateway(gateway_token, auth_transaction.token)
+end
+```
 
 #### Void and refund
-    transaction = env.void_transaction(transaction_token)
 
-    # Refund the entire amount
-    transaction = env.refund_transaction(transaction_token)
+``` ruby
+transaction = env.void_transaction(transaction_token)
 
-    # Specify an amount to be refunded
-    transaction = env.refund_transaction(transaction_token, 104)
+# Refund the entire amount
+transaction = env.refund_transaction(transaction_token)
+
+# Specify an amount to be refunded
+transaction = env.refund_transaction(transaction_token, 104)
+```
 
 #### Retain and redact
-    transaction = env.retain_payment_method(payment_method_token)
 
-    transaction = env.redact_payment_method(payment_method_token)
+``` ruby
+transaction = env.retain_payment_method(payment_method_token)
+
+transaction = env.redact_payment_method(payment_method_token)
+```
 
 #### Currencies
 When you instantiate an environment, you can specify a default currency code like so:
 
-    env = Spreedly::Environment.new(environment_key, access_secret, currency_code: 'EUR')
+``` ruby
+env = Spreedly::Environment.new(environment_key, access_secret, currency_code: 'EUR')
+```
 
 If you don't specify a default currency code, we default to 'USD'.  Calls requiring a currency code by default use the environment's currency code.  And of course, you can always override it for a particular call like so:
 
-    env.purchase_on_gateway(gateway_token, payment_method_token, amount, currency_code: "GBP")
+``` ruby
+env.purchase_on_gateway(gateway_token, payment_method_token, amount, currency_code: "GBP")
+```
 
 
 #### Extra options for the basic operations
 For Purchase, Authorize, Capture, Credit, and Void calls, you can specify additional options:
 
-    env.purchase_on_gateway(gateway_token, payment_method_token, amount,
-                            order_id: "123",
-                            description: "The Description"
-                            ip: "192.31.123.112",
-                            currency_code: "GBP",
-                            merchant_name_descriptor: "SuperDuper Corp",
-                            merchant_location_descriptor: "http://super.com"
-                           )
+``` ruby
+env.purchase_on_gateway(gateway_token, payment_method_token, amount,
+                        order_id: "123",
+                        description: "The Description"
+                        ip: "192.31.123.112",
+                        currency_code: "GBP",
+                        merchant_name_descriptor: "SuperDuper Corp",
+                        merchant_location_descriptor: "http://super.com"
+                       )
+```
 
 #### Retain on success
 Retain a payment method automatically if the purchase or authorize transaction succeeded.  Saves you a separate call to retain:
 
-    env.purchase_on_gateway(gateway_token, payment_method_token, amount, retain_on_success: true)
+``` ruby
+env.purchase_on_gateway(gateway_token, payment_method_token, amount, retain_on_success: true)
+```
 
 #### Retrieving gateways
-    gateways = env.find_gateways
 
-    # Iterate over the next chunk
-    next_set = env.find_gateways(gateways.last.token)
+``` ruby
+gateways = env.find_gateways
+
+# Iterate over the next chunk
+next_set = env.find_gateways(gateways.last.token)
+```
 
 #### Retrieving payment methods
 
-    payment_methods = env.find_payment_methods
+``` ruby
+payment_methods = env.find_payment_methods
 
-    # Iterate over the next chunk
-    next_set = env.find_payment_methods(payment_methods.last.token)
+# Iterate over the next chunk
+next_set = env.find_payment_methods(payment_methods.last.token)
+```
 
 #### Retrieving transactions
 
-    transactions = env.find_transactions
+``` ruby
+transactions = env.find_transactions
 
-    # Iterate over the next chunk
-    next_set = env.find_transactions(transactions.last.token)
+# Iterate over the next chunk
+next_set = env.find_transactions(transactions.last.token)
+```
 
 #### Retrieving transactions for a payment method
 
-    transactions = env.find_transactions(nil, payment_method_token)
+``` ruby
+transactions = env.find_transactions(nil, payment_method_token)
 
-    # Iterate over the next chunk
-    next_set = env.find_transactions(transactions.last.token, payment_method_token)
+# Iterate over the next chunk
+next_set = env.find_transactions(transactions.last.token, payment_method_token)
+```
 
 #### Retrieving one gateway
 
-    gateway = env.find_gateway(token)
-    gateway.gateway_type      # => 'paypal'
+``` ruby
+gateway = env.find_gateway(token)
+gateway.gateway_type      # => 'paypal'
+```
 
 #### Retrieving one transaction
 
-    transaction = env.find_transaction(token)
-    transaction.order_id      # => '30-9904-31114'
+``` ruby
+transaction = env.find_transaction(token)
+transaction.order_id      # => '30-9904-31114'
+```
 
 #### Retrieving the transcript for a transaction
 
-    env.find_transaction_transcript(transaction_token)
+``` ruby
+env.find_transaction_transcript(transaction_token)
+```
 
 #### Updating a payment method
 
-    env.update_payment_method(payment_method_token, first_name: 'JimBob', last_name: 'Jones)
+``` ruby
+env.update_payment_method(payment_method_token, first_name: 'JimBob', last_name: 'Jones)
+```
 
 #### Creating other types of gateways
 
-    gateway = env.create_gateway(:paypal, mode: 'delegate', email: 'fred@example.com')
-    gateway.token     # => "2nQEJaaY3egcVkCvg2s9qT37xrb"
-
+``` ruby
+gateway = env.create_gateway(:paypal, mode: 'delegate', email: 'fred@example.com')
+gateway.token     # => "2nQEJaaY3egcVkCvg2s9qT37xrb"
+```
 
 ## Error Handling
 
@@ -200,36 +242,46 @@ it in with more details as we decide on Exception names, etc.
 
 #### Failure to find
 
-    env.find_transaction("Some Unknown Token")  # raises an exception.
+``` ruby
+env.find_transaction("Some Unknown Token")  # raises an exception.
+```
 
 #### Invalid payment method
 
-    transaction = env.purchase_on_gateway(gateway_token, payment_method_token, 4432)
+``` ruby
+transaction = env.purchase_on_gateway(gateway_token, payment_method_token, 4432)
 
-    transaction.succeeded?  # => false
-    transaction.message     # => "The payment method is invalid."
+transaction.succeeded?  # => false
+transaction.message     # => "The payment method is invalid."
 
-    transaction.payment_method.errors
-    # Returns => {
-    #    year: { key: "errors.invalid", text: "Year is invalid" },
-    #    number: { key: "errors.blank", text: "Number can't be blank" }
-    # }
+transaction.payment_method.errors
+# Returns => {
+#    year: { key: "errors.invalid", text: "Year is invalid" },
+#    number: { key: "errors.blank", text: "Number can't be blank" }
+# }
+```
 
 #### Declined purchase
 
-    transaction = env.purchase_on_gateway(gateway_token, payment_method_token, 4432)
+``` ruby
+transaction = env.purchase_on_gateway(gateway_token, payment_method_token, 4432)
 
-    transaction.succeeded?  # => false
-    transaction.message     # => "Unable to process the purchase transaction."
+transaction.succeeded?  # => false
+transaction.message     # => "Unable to process the purchase transaction."
+```
 
 #### Invalid environment credentials
 
-    env = Spreedly::Environment.new(environment_key, "some bogus secret")
-    env.purchase_on_gateway(gateway_token, payment_method_token, 4432) # Raises exception
+``` ruby
+env = Spreedly::Environment.new(environment_key, "some bogus secret")
+env.purchase_on_gateway(gateway_token, payment_method_token, 4432) # Raises exception
+```
 
 #### Unknown payment method
 
-    env.purchase_on_gateway(gateway_token, "Some Unknown Token", 4432) # Raises exception
+``` ruby
+env.purchase_on_gateway(gateway_token, "Some Unknown Token", 4432) # Raises exception
+```
 
 
 ## Contributing
