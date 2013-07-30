@@ -25,44 +25,31 @@ module Spreedly
     end
 
     def handle_response(response)
+      xml_doc = Nokogiri::XML(response.body)
+
       case response.code.to_i
       when 200...300
-        response.body
+        xml_doc
       when 401
         raise AuthenticationError.new
       when 404
-        raise NotFoundError.new(parse_xml(response.body)[:error])
+        raise NotFoundError.new(error_from(xml_doc))
       when 402
-        raise PaymentRequiredError.new(parse_xml(response.body)[:error])
+        raise PaymentRequiredError.new(error_from(xml_doc))
       when 422
-        parsed = parse_xml(response.body)
-        if parsed[:error]
-          raise TransactionCreationError.new(parsed[:error])
+        if xml_doc.at_xpath('//error')
+          raise TraansactionCreationError.new(error_from(xml_doc))
         else
-          response.body
+          xml_doc
         end
       else
-        # Not sure we want to do this here. Hmmm.  Maybe UnexpectedResponseError?
-        d { response.body }
-        raise ResponseError.new(response)
+        raise UnexpectedResponseError.new(response)
       end
     end
 
-    def parse_xml(xml)
-      hash = {}
-
-      doc = Nokogiri::XML(xml)
-      doc.root.xpath('*').each do |node|
-        if (node.elements.empty?)
-          hash[node.name.downcase.to_sym] = node.text
-        else
-          hash[node.name.downcase.to_sym] = node.elements.to_s
-        end
-      end
-
-      hash
+    def error_from(xml_doc)
+      xml_doc.xpath('//error').inner_text
     end
-
 
   end
 

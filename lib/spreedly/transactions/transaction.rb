@@ -7,16 +7,16 @@ module Spreedly
     field :token, :created_at, :updated_at, :succeeded
     field :message
 
-    def initialize(parsed_response)
-      initialize_fields(parsed_response)
+    def initialize(xml_doc)
+      initialize_fields(xml_doc)
     end
 
-    def self.new_from(parsed_response)
-      case parsed_response[:transaction_type]
+    def self.new_from(xml_doc)
+      case xml_doc.xpath('//transaction_type').inner_text
       when 'AddPaymentMethod'
-        return AddPaymentMethod.new(parsed_response)
+        return AddPaymentMethod.new(xml_doc)
       else
-        Transaction.new(parsed_response)
+        Transaction.new(xml_doc)
       end
     end
 

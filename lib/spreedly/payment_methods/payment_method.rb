@@ -5,21 +5,20 @@ module Spreedly
   class PaymentMethod
     include Fields
 
-    field :token, :email, :data, :created_at, :updated_at
+    field :token, :email, :created_at, :updated_at, :data
     attr_reader :errors
 
-
-    def initialize(parsed_response)
-      initialize_fields(parsed_response)
-      initialize_errors(parsed_response[:errors])
+    def initialize(xml_doc)
+      initialize_fields(xml_doc)
+      initialize_errors(xml_doc)
     end
 
-    def self.new_from(parsed_response)
-      case parsed_response[:payment_method_type]
+    def self.new_from(xml_doc)
+      case xml_doc.xpath('//payment_method_type').inner_text
       when 'credit_card'
-        return CreditCard.new(parsed_response)
+        return CreditCard.new(xml_doc)
       when 'sprel'
-        return Sprel.new(parsed_response)
+        return Sprel.new(xml_doc)
       end
     end
 
@@ -36,10 +35,9 @@ module Spreedly
     end
 
     private
-    def initialize_errors(errors_xml)
+    def initialize_errors(xml_doc)
       @errors = {}
-      doc = Nokogiri::XML("<errors>#{errors_xml}</errors>")
-      doc.xpath("//errors/error").each do |each|
+      xml_doc.xpath("//errors/error").each do |each|
         @errors[each.attributes['attribute'].to_s.to_sym] = {
           key: each.attributes['key'].to_s,
           text: each.text

@@ -29,9 +29,9 @@ module Spreedly
       end
     end
 
-    def initialize_fields(attributes)
+    def initialize_fields(xml_doc)
       self.class.fields.each do |field|
-        instance_variable_set("@#{field}", attributes[field])
+        instance_variable_set("@#{field}", xml_doc.xpath("//#{field}").inner_html.strip)
       end
     end
 

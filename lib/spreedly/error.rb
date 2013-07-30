@@ -17,7 +17,7 @@ module Spreedly
   class PaymentRequiredError < Error
   end
 
-  class ResponseError < Error
+  class UnexpectedResponseError < Error
     attr_reader :response
 
     def initialize(response)

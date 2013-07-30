@@ -18,20 +18,20 @@ module Spreedly
     end
 
     def find_payment_method(token)
-      raw_response = ssl_get("#{base_url}/v1/payment_methods/#{token}.xml", headers)
-      PaymentMethod.new_from(parse_xml(raw_response))
+      xml_doc = ssl_get("#{base_url}/v1/payment_methods/#{token}.xml", headers)
+      PaymentMethod.new_from(xml_doc)
     end
 
     def purchase_on_gateway(gateway_token, payment_method_token, amount, options = {})
       body = auth_purchase_body(amount, payment_method_token, options)
-      raw_response = ssl_post("#{base_url}/v1/gateways/#{gateway_token}/purchase.xml", body, headers)
-      Transaction.new_from(parse_xml(raw_response))
+      xml_doc = ssl_post("#{base_url}/v1/gateways/#{gateway_token}/purchase.xml", body, headers)
+      Transaction.new_from(xml_doc)
     end
 
     def create_credit_card(options)
       body = create_credit_card_body(options)
-      raw_response = ssl_post("#{base_url}/v1/payment_methods.xml", body, headers)
-      Transaction.new_from(parse_xml(raw_response))
+      xml_doc = ssl_post("#{base_url}/v1/payment_methods.xml", body, headers)
+      Transaction.new_from(xml_doc)
     end
 
     private
