@@ -19,13 +19,19 @@ module Spreedly
 
     def find_payment_method(token)
       raw_response = ssl_get("#{base_url}/v1/payment_methods/#{token}.xml", headers)
-      payment_method_from(parse_xml(raw_response))
+      PaymentMethod.new_from(parse_xml(raw_response))
     end
 
     def purchase_on_gateway(gateway_token, payment_method_token, amount, options = {})
       body = auth_purchase_body(amount, payment_method_token, options)
       raw_response = ssl_post("#{base_url}/v1/gateways/#{gateway_token}/purchase.xml", body, headers)
-      transaction_from(parse_xml(raw_response))
+      Transaction.new_from(parse_xml(raw_response))
+    end
+
+    def create_credit_card(options)
+      body = create_credit_card_body(options)
+      raw_response = ssl_post("#{base_url}/v1/payment_methods.xml", body, headers)
+      Transaction.new_from(parse_xml(raw_response))
     end
 
     private
@@ -40,24 +46,25 @@ module Spreedly
       }
     end
 
-    def payment_method_from(parsed_response)
-      case parsed_response[:payment_method_type]
-      when 'credit_card'
-        return CreditCard.new(parsed_response)
-      when 'sprel'
-        return Sprel.new(parsed_response)
-      end
-    end
-
-    def transaction_from(parsed_response)
-      Transaction.new(parsed_response)
-    end
-
     def auth_purchase_body(amount, payment_method_token, options)
       build_xml_request('transaction') do |doc|
         doc.amount amount
         doc.currency_code(options[:currency_code] || currency_code)
         doc.payment_method_token(payment_method_token)
+      end
+    end
+
+    def create_credit_card_body(options)
+      build_xml_request('payment_method') do |doc|
+        doc.email options[:email]
+        doc.retained options[:retained] if options[:retained]
+        doc.credit_card do
+          doc.number options[:number]
+          doc.month options[:month]
+          doc.first_name options[:first_name]
+          doc.last_name options[:last_name]
+          doc.year options[:year]
+        end
       end
     end
 
