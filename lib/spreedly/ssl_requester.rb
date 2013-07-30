@@ -33,7 +33,7 @@ module Spreedly
       when 404
         raise NotFoundError.new(parse_xml(response.body)[:error])
       when 402
-        raise "Need to handle this better.  PaymentRequiredError perhaps."
+        raise PaymentRequiredError.new(parse_xml(response.body)[:error])
       when 422
         parsed = parse_xml(response.body)
         if parsed[:error]

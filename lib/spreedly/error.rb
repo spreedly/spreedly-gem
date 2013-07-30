@@ -14,6 +14,9 @@ module Spreedly
   class TransactionCreationError < Error
   end
 
+  class PaymentRequiredError < Error
+  end
+
   class ResponseError < Error
     attr_reader :response
 
