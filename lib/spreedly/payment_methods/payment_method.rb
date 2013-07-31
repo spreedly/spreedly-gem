@@ -14,7 +14,7 @@ module Spreedly
     end
 
     def self.new_from(xml_doc)
-      case xml_doc.xpath('//payment_method_type').inner_text
+      case xml_doc.at_xpath('//payment_method_type').inner_text
       when 'credit_card'
         return CreditCard.new(xml_doc)
       when 'sprel'

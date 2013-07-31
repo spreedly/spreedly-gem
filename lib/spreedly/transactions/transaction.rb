@@ -12,7 +12,7 @@ module Spreedly
     end
 
     def self.new_from(xml_doc)
-      case xml_doc.xpath('//transaction_type').inner_text
+      case xml_doc.at_xpath('//transaction_type').inner_text
       when 'AddPaymentMethod'
         return AddPaymentMethod.new(xml_doc)
       else

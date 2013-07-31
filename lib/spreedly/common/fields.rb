@@ -31,7 +31,7 @@ module Spreedly
 
     def initialize_fields(xml_doc)
       self.class.fields.each do |field|
-        instance_variable_set("@#{field}", xml_doc.xpath("//#{field}").inner_html.strip)
+        instance_variable_set("@#{field}", xml_doc.at_xpath("//#{field}").inner_html.strip)
       end
     end
 
