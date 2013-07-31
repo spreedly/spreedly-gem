@@ -1,4 +1,5 @@
 require 'spreedly/ssl_requester'
+require 'spreedly/urls'
 require 'spreedly/environment'
 require 'spreedly/connection'
 require 'spreedly/common/fields'

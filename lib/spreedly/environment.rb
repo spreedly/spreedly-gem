@@ -5,6 +5,7 @@ module Spreedly
   class Environment
 
     include SslRequester
+    include Urls
 
     attr_reader :key, :currency_code
 
@@ -18,27 +19,23 @@ module Spreedly
     end
 
     def find_payment_method(token)
-      xml_doc = ssl_get("#{base_url}/v1/payment_methods/#{token}.xml", headers)
+      xml_doc = ssl_get(find_payment_method_url(token), headers)
       PaymentMethod.new_from(xml_doc)
     end
 
     def purchase_on_gateway(gateway_token, payment_method_token, amount, options = {})
       body = auth_purchase_body(amount, payment_method_token, options)
-      xml_doc = ssl_post("#{base_url}/v1/gateways/#{gateway_token}/purchase.xml", body, headers)
+      xml_doc = ssl_post(purchase_url(gateway_token), body, headers)
       Transaction.new_from(xml_doc)
     end
 
     def create_credit_card(options)
       body = create_credit_card_body(options)
-      xml_doc = ssl_post("#{base_url}/v1/payment_methods.xml", body, headers)
+      xml_doc = ssl_post(add_payment_method_url, body, headers)
       Transaction.new_from(xml_doc)
     end
 
     private
-    def base_url
-      "https://core.spreedly.com"
-    end
-
     def headers
       {
         'Authorization' => ('Basic ' + Base64.strict_encode64("#{@key}:#{@access_secret}").chomp),

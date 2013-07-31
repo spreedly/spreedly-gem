@@ -26,6 +26,7 @@ class RemoteFindPaymentMethodTest < Test::Unit::TestCase
     assert_equal('Aybara', found.last_name)
   end
 
+
   private
   def credit_card_deets
     {
