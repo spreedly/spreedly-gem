@@ -11,22 +11,18 @@ module Spreedly
     end
 
     def request(method, body, headers = {})
-      result = nil
-
-      result = case method
-         when :get
-           http.get(endpoint.request_uri, headers)
-         when :post
-           http.post(endpoint.request_uri, body, headers)
-         when :put
-           http.put(endpoint.request_uri, body, headers)
-         when :delete
-           http.delete(endpoint.request_uri, headers)
-         else
-           raise ArgumentError, "Unsupported request method #{method.to_s.upcase}"
-         end
-
-      result
+      case method
+      when :get
+        http.get(endpoint.request_uri, headers)
+      when :post
+        http.post(endpoint.request_uri, body, headers)
+      when :put
+        http.put(endpoint.request_uri, body, headers)
+      when :delete
+        http.delete(endpoint.request_uri, headers)
+      else
+        raise ArgumentError, "Unsupported request method #{method.to_s.upcase}"
+      end
     end
 
     private
