@@ -8,18 +8,13 @@ class RemoteFindPaymentMethodTest < Test::Unit::TestCase
 
   def test_invalid_login
     environment = Spreedly::Environment.new("UnknownEnvironmentKey", "UnknownAccessSecret")
-    error = assert_raises(Spreedly::AuthenticationError) do
-      environment.find_payment_method("SomeToken")
-    end
 
+    error = assert_raises(Spreedly::AuthenticationError) { environment.find_payment_method("SomeToken") }
     assert_equal "Unable to authenticate using the given access_token.", error.message
   end
 
   def test_payment_method_not_found
-    error = assert_raises(Spreedly::NotFoundError) do
-      @environment.find_payment_method("SomeUnknownToken")
-    end
-
+    error = assert_raises(Spreedly::NotFoundError) { @environment.find_payment_method("SomeUnknownToken") }
     assert_equal "Unable to find the specified payment method.", error.message
   end
 
@@ -29,11 +24,6 @@ class RemoteFindPaymentMethodTest < Test::Unit::TestCase
     assert_equal("perrin@wot.com", found.email)
     assert_equal('XXXX-XXXX-XXXX-4444', found.number)
     assert_equal('Aybara', found.last_name)
-  end
-
-
-  def test_successfully_find_paypal
-
   end
 
   private

@@ -65,6 +65,18 @@ class FindPaymentMethodTest < Test::Unit::TestCase
     assert_equal("cached", sprel.storage_state)
   end
 
+  def test_successfully_find_paypal
+    paypal = find_using(successful_get_paypal_response)
+
+    assert_kind_of(Spreedly::Paypal, paypal)
+    assert_equal "X7DkJT3NUMNMJ0ZVvRMJBEyUe9B", paypal.token
+    assert_equal "shaun@mason.com", paypal.email
+    assert_equal(1375288019, paypal.created_at.to_i)
+    assert_equal(1375288046, paypal.updated_at.to_i)
+    assert_equal("", paypal.data)
+    assert_equal("retained", paypal.storage_state)
+  end
+
   private
   def find_using(response)
     @environment.stubs(:raw_ssl_request).returns(response)
@@ -154,6 +166,22 @@ class FindPaymentMethodTest < Test::Unit::TestCase
         <data>Some Pretty Data</data>
         <storage_state>cached</storage_state>
         <payment_method_type>sprel</payment_method_type>
+        <errors>
+        </errors>
+      </payment_method>
+    XML
+  end
+
+  def successful_get_paypal_response
+    StubResponse.succeeded <<-XML
+      <payment_method>
+        <token>X7DkJT3NUMNMJ0ZVvRMJBEyUe9B</token>
+        <created_at type="datetime">2013-07-31T16:26:59Z</created_at>
+        <updated_at type="datetime">2013-07-31T16:27:26Z</updated_at>
+        <email>shaun@mason.com</email>
+        <data nil="true"/>
+        <storage_state>retained</storage_state>
+        <payment_method_type>paypal</payment_method_type>
         <errors>
         </errors>
       </payment_method>
