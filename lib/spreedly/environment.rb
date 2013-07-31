@@ -29,10 +29,16 @@ module Spreedly
       Transaction.new_from(xml_doc)
     end
 
-    def create_credit_card(options)
-      body = create_credit_card_body(options)
+    def add_credit_card(options)
+      body = add_credit_card_body(options)
       xml_doc = ssl_post(add_payment_method_url, body, headers)
       Transaction.new_from(xml_doc)
+    end
+
+    def add_gateway(gateway_type, options = {})
+      body = add_gateway_body(gateway_type, options)
+      xml_doc = ssl_post(add_gateway_url, body, headers)
+      Gateway.new(xml_doc)
     end
 
     private
@@ -51,7 +57,13 @@ module Spreedly
       end
     end
 
-    def create_credit_card_body(options)
+    def add_gateway_body(gateway_type, options)
+      build_xml_request('gateway') do |doc|
+        doc.gateway_type gateway_type
+      end
+    end
+
+    def add_credit_card_body(options)
       build_xml_request('payment_method') do |doc|
         doc.email options[:email]
         doc.retained options[:retained] if options[:retained]

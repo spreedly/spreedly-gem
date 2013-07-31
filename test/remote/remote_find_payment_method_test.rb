@@ -36,6 +36,6 @@ class RemoteFindPaymentMethodTest < Test::Unit::TestCase
   end
 
   def create_card
-    @environment.create_credit_card(credit_card_deets).payment_method
+    @environment.add_credit_card(credit_card_deets).payment_method
   end
 end

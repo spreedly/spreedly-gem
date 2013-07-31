@@ -18,6 +18,10 @@ module Spreedly
       "#{base_url}/v1/payment_methods.xml"
     end
 
+    def add_gateway_url
+      "#{base_url}/v1/gateways.xml"
+    end
+
   end
 
 end

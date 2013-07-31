@@ -6,6 +6,7 @@ require 'logger'
 require 'log_buddy'
 require 'spreedly'
 require 'credentials/test_credentials'
+require 'helpers/stub_response'
 
 LogBuddy.init(use_awesome_print: true, logger: Logger.new(nil))
 
