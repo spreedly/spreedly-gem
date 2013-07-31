@@ -37,7 +37,7 @@ module Spreedly
       when 402
         raise PaymentRequiredError.new(error_from(xml_doc))
       when 422
-        error = xml_doc.at_xpath('//error')
+        error = xml_doc.at_xpath('.//error')
         if error
           raise TransactionCreationError.new(error.inner_text)
         else
@@ -49,7 +49,8 @@ module Spreedly
     end
 
     def error_from(xml_doc)
-      xml_doc.xpath('//error').inner_text
+      xml_doc.xpath('.//error').inner_text
+    end
     end
 
   end
