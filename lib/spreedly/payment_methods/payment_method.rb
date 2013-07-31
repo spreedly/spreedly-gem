@@ -5,7 +5,7 @@ module Spreedly
   class PaymentMethod
     include Fields
 
-    field :token, :email, :created_at, :updated_at, :data
+    field :token, :email, :created_at, :updated_at, :storage_state, :data
     attr_reader :errors
 
     def initialize(xml_doc)
@@ -36,9 +36,9 @@ module Spreedly
 
     private
     def initialize_errors(xml_doc)
-      @errors = {}
-      xml_doc.xpath("//errors/error").each do |each|
-        @errors[each.attributes['attribute'].to_s.to_sym] = {
+      @errors = xml_doc.xpath(".//errors/error").map do |each|
+        {
+          attribute: each.attributes['attribute'].to_s,
           key: each.attributes['key'].to_s,
           text: each.text
         }

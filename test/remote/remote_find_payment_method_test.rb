@@ -25,45 +25,27 @@ class RemoteFindPaymentMethodTest < Test::Unit::TestCase
   end
 
   def test_successfully_find_card
-    card = @environment.find_payment_method(@card_token)
-    assert_kind_of(Spreedly::CreditCard, card)
-    assert_equal("phil@example.com", card.email)
-    assert_equal('XXXX-XXXX-XXXX-4444', card.number)
-    assert_equal('201.344.7711', card.phone_number)
+    found = @environment.find_payment_method(create_card.token)
+    assert_kind_of(Spreedly::CreditCard, found)
+    assert_equal("perrin@wot.com", found.email)
+    assert_equal('XXXX-XXXX-XXXX-4444', found.number)
+    assert_equal('Aybara', found.last_name)
   end
 
-  def test_find_valid_card
-    card = @environment.find_payment_method(@card_token)
-    assert card.valid?
-    assert_equal({}, card.errors)
-  end
-
-  def test_find_invalid_card
-    card = @environment.find_payment_method('CrY4e6wa3Jf4SMUZlvjFelW2YnQ')
-    assert !card.valid?
-
-    expected_errors = {
-      first_name: { key: "errors.blank", text: "First name can't be blank" },
-      last_name: { key: "errors.blank", text: "Last name can't be blank" },
-      year: { key: "errors.invalid", text: "Year is invalid" },
-      number: { key: "errors.blank", text: "Number can't be blank" }
-    }
-
-    assert_equal(expected_errors, card.errors)
-  end
-
-  def test_successfully_find_sprel
-    sprel = @environment.find_payment_method("WZf8ZQgvmgOfdWaRtAzMLXPSQbk")
-    assert_kind_of(Spreedly::Sprel, sprel)
-    assert_equal "WZf8ZQgvmgOfdWaRtAzMLXPSQbk", sprel.token
-    assert_equal "samuel@example.com", sprel.email
-    assert_equal(1366981867, sprel.created_at.to_i)
-    assert_equal(1366982301, sprel.updated_at.to_i)
-    assert_equal("Some Pretty Data", sprel.data)
-  end
 
   def test_successfully_find_paypal
 
   end
 
+  private
+  def credit_card_deets
+    {
+      email: 'perrin@wot.com', number: '5555555555554444', month: 1, year: 2019,
+      last_name: 'Aybara', first_name: 'Perrin', retained: true
+    }
+  end
+
+  def create_card
+    @environment.create_credit_card(credit_card_deets).payment_method
+  end
 end

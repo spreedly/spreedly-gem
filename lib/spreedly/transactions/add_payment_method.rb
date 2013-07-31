@@ -4,9 +4,9 @@ module Spreedly
 
     attr_reader :payment_method
 
-    def initialize(parsed_response)
+    def initialize(xml_doc)
       super
-      # @payment_method = PaymentMethod.new_from(parsed_response[:payment_method])
+      @payment_method = PaymentMethod.new_from(xml_doc.at_xpath('.//payment_method'))
     end
 
   end
