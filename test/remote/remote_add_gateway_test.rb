@@ -9,15 +9,15 @@ class RemoteAddGatewayTest < Test::Unit::TestCase
   end
 
   def test_invalid_login
-    environment = Spreedly::Environment.new("UnknownEnvironmentKey", "UnknownAccessSecret")
-
-    error = assert_raises(Spreedly::AuthenticationError) { environment.add_gateway(:test) }
-    assert_equal "Unable to authenticate using the given access_token.", error.message
+    assert_invalid_login do |environment|
+      environment.add_gateway(:test)
+    end
   end
 
   def test_non_existent_gateway_type
-    error = assert_raises(Spreedly::TransactionCreationError) { @environment.add_gateway(:non_existent) }
-    assert_equal "The gateway_type parameter is invalid.", error.message
+    assert_raise_with_message(Spreedly::TransactionCreationError, "The gateway_type parameter is invalid.") do
+      @environment.add_gateway(:non_existent)
+    end
   end
 
   def test_add_test_gateway

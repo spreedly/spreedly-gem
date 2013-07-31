@@ -7,35 +7,23 @@ class RemoteFindPaymentMethodTest < Test::Unit::TestCase
   end
 
   def test_invalid_login
-    environment = Spreedly::Environment.new("UnknownEnvironmentKey", "UnknownAccessSecret")
-
-    error = assert_raises(Spreedly::AuthenticationError) { environment.find_payment_method("SomeToken") }
-    assert_equal "Unable to authenticate using the given access_token.", error.message
+    assert_invalid_login do |environment|
+      environment.find_payment_method("SomeToken")
+    end
   end
 
   def test_payment_method_not_found
-    error = assert_raises(Spreedly::NotFoundError) { @environment.find_payment_method("SomeUnknownToken") }
-    assert_equal "Unable to find the specified payment method.", error.message
+    assert_raise_with_message(Spreedly::NotFoundError, "Unable to find the specified payment method.") do
+       @environment.find_payment_method("SomeUnknownToken")
+    end
   end
 
   def test_successfully_find_card
-    found = @environment.find_payment_method(create_card.token)
+    found = @environment.find_payment_method(create_card_on(@environment).token)
     assert_kind_of(Spreedly::CreditCard, found)
     assert_equal("perrin@wot.com", found.email)
     assert_equal('XXXX-XXXX-XXXX-4444', found.number)
     assert_equal('Aybara', found.last_name)
   end
 
-
-  private
-  def credit_card_deets
-    {
-      email: 'perrin@wot.com', number: '5555555555554444', month: 1, year: 2019,
-      last_name: 'Aybara', first_name: 'Perrin', retained: true
-    }
-  end
-
-  def create_card
-    @environment.add_credit_card(credit_card_deets).payment_method
-  end
 end

@@ -42,7 +42,7 @@ module Spreedly
         {
           attribute: each.attributes['attribute'].to_s,
           key: each.attributes['key'].to_s,
-          text: each.text
+          message: each.text
         }
       end
     end

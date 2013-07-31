@@ -4,7 +4,7 @@ module Spreedly
   class Transaction
     include Fields
 
-    field :token, :created_at, :updated_at, :succeeded
+    field :token, :created_at, :updated_at, :succeeded, :state
     field :message
 
     def initialize(xml_doc)
@@ -15,6 +15,8 @@ module Spreedly
       case xml_doc.at_xpath('.//transaction_type').inner_text
       when 'AddPaymentMethod'
         return AddPaymentMethod.new(xml_doc)
+      when 'Purchase'
+        return Purchase.new(xml_doc)
       else
         Transaction.new(xml_doc)
       end
@@ -28,9 +30,10 @@ module Spreedly
       Time.parse(@updated_at) if @updated_at
     end
 
-    def succeeded?
-      "true" == succeeded
+    def succeeded
+      "true" == @succeeded
     end
+    alias_method :succeeded?, :succeeded
 
   end
 
