@@ -3,14 +3,13 @@ require 'test_helper'
 class RemoteFindPaymentMethodTest < Test::Unit::TestCase
 
   def setup
-    @environment = Spreedly::Environment.new("R7lHscqcYkZeDGGbthKp6GKMu15", "8sefxO5Q44sLWpmZpalQS3Qlqo03JbCemsqsWJR3YOLCuigOFRlaLSAn0WaL5dWU")
-    @card_token = "FOGJFe88QtbJL7QvjaJNMH0UG50"
+    @environment = Spreedly::Environment.new(remote_test_environment_key, remote_test_access_secret)
   end
 
   def test_invalid_login
     environment = Spreedly::Environment.new("UnknownEnvironmentKey", "UnknownAccessSecret")
     error = assert_raises(Spreedly::AuthenticationError) do
-      environment.find_payment_method(@card_token)
+      environment.find_payment_method("SomeToken")
     end
 
     assert_equal "Unable to authenticate using the given access_token.", error.message
