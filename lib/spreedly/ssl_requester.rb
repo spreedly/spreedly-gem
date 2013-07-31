@@ -16,7 +16,9 @@ module Spreedly
 
     private
     def ssl_request(method, endpoint, body, headers)
-      handle_response(raw_ssl_request(method, endpoint, body, headers))
+      raw_response = raw_ssl_request(method, endpoint, body, headers)
+      show_raw_response(raw_response)
+      handle_response(raw_response)
     end
 
     def raw_ssl_request(method, endpoint, body, headers = {})
@@ -51,6 +53,10 @@ module Spreedly
     def error_from(xml_doc)
       xml_doc.xpath('.//error').inner_text
     end
+
+    def show_raw_response(raw_response)
+      return unless ENV['SHOW_RAW_RESPONSE'] == 'true'
+      puts "raw_response.code: #{raw_response.code}\nraw_response.body:\n#{raw_response.body}"
     end
 
   end
