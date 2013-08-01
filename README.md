@@ -41,16 +41,16 @@ transaction.token         # => "aGJlY5srn7TFeYKxO5pmwi3CyJd"
 
 The amount specified in that example was 4432.  Amounts are always in cents so in this case, we're charging $44.32.
 
-#### Create a gateway
+#### Add a gateway
 What if you don't have a gateway token yet?  It's pretty easy to create a test gateway:
 
 ``` ruby
-gateway = env.create_gateway(:test)
+gateway = env.add_gateway(:test)
 gateway.token     # => "DnbEJaaY2egcVkCvg3s8qT38xgt"
 ```
 
 
-#### Create a payment method
+#### Add a payment method
 Need a payment method token to try things out?  With Spreedly it's pretty straightforward to use a
 [transparent redirect](https://core.spreedly.com/manual/quickstart#submit-payment-form) to give you a
 payment method token.  A payment form in your application could look something like this:
@@ -95,10 +95,12 @@ credit_card.last_name      # => "Jones"
 credit_card.valid?         # => false
 
 credit_card.errors
-# Returns => {
-#    last_name: { key: "errors.blank", text: "Last name can't be blank" },
-#    year: { key: "errors.invalid", text: "Year is invalid" }
-# }
+# Returns => [
+#      { attribute: "first_name", key: "errors.blank", message: "First name can't be blank" },
+#      { attribute: "year", key: "errors.expired", message: "Year is expired" },
+#      { attribute: "year", key: "errors.invalid", message: "Year is invalid" },
+#      { attribute: "number", key: "errors.blank", message: "Number can't be blank" }
+#    ]
 ```
 
 #### Authorize and Capture
@@ -231,7 +233,7 @@ env.update_payment_method(payment_method_token, first_name: 'JimBob', last_name:
 #### Creating other types of gateways
 
 ``` ruby
-gateway = env.create_gateway(:paypal, mode: 'delegate', email: 'fred@example.com')
+gateway = env.add_gateway(:paypal, mode: 'delegate', email: 'fred@example.com')
 gateway.token     # => "2nQEJaaY3egcVkCvg2s9qT37xrb"
 ```
 
