@@ -239,13 +239,18 @@ gateway.token     # => "2nQEJaaY3egcVkCvg2s9qT37xrb"
 
 ## Error Handling
 
-When you make a call to the API, there are times when things don't go as expected.  This is an area of the docs we're still working on.  We'll be gradually filling
-it in with more details as we decide on Exception names, etc.
+When you make a call to the API, there are times when things don't go as expected.  For the most part, when a call is made, a Transaction is created behind the scenes at Spreedly.  In general,
+you can inquire whether that transaction succeeded? or not and get it's message.  There are times when a Transaction cannot be created, and in general, an exception is raised for these cases.
 
-#### Failure to find
+You can be as specific as you'd like in handling these exceptions or, you could simply rescue Spreedly::Error to handle all of them.
+
+#### Declined purchase
 
 ``` ruby
-env.find_transaction("Some Unknown Token")  # raises an exception.
+transaction = env.purchase_on_gateway(gateway_token, payment_method_token, 4432)
+
+transaction.succeeded?  # => false
+transaction.message     # => "Unable to process the purchase transaction."
 ```
 
 #### Invalid payment method
@@ -257,32 +262,40 @@ transaction.succeeded?  # => false
 transaction.message     # => "The payment method is invalid."
 
 transaction.payment_method.errors
-# Returns => {
-#    year: { key: "errors.invalid", text: "Year is invalid" },
-#    number: { key: "errors.blank", text: "Number can't be blank" }
-# }
+transaction.payment_method.errors
+# Returns => [
+#      { attribute: "last_name", key: "errors.blank", message: "Last name can't be blank" },
+#      { attribute: "number", key: "errors.blank", message: "Number can't be blank" }
+#    ]
+
 ```
 
-#### Declined purchase
+#### Failure to find
 
 ``` ruby
-transaction = env.purchase_on_gateway(gateway_token, payment_method_token, 4432)
-
-transaction.succeeded?  # => false
-transaction.message     # => "Unable to process the purchase transaction."
+env.find_transaction("Some Unknown Token")  # raises a NotFoundError
 ```
 
 #### Invalid environment credentials
 
 ``` ruby
 env = Spreedly::Environment.new(environment_key, "some bogus secret")
-env.purchase_on_gateway(gateway_token, payment_method_token, 4432) # Raises exception
+env.purchase_on_gateway(gateway_token, payment_method_token, 4432) # Raises an AuthenticationError
 ```
 
-#### Unknown payment method
+#### Unknown payment method trying to make a purchase
 
 ``` ruby
-env.purchase_on_gateway(gateway_token, "Some Unknown Token", 4432) # Raises exception
+env.purchase_on_gateway(gateway_token, "Some Unknown Token", 4432) # Raises a TransactionCreationError
+```
+
+#### Trying to use a non-test gateway or a non-test payment method with an inactive account
+
+You're free to use [test card data](https://core.spreedly.com/manual/test-data) and a [Test gateway](https://core.spreedly.com/manual/payment-gateways/test) to integrate Spreedly without having a
+paid Spreedly account.  If you try to use a real card or a real gateway when your account isn't yet paid for, we'll raise an exception:
+
+``` ruby
+env.purchase_on_gateway(gateway_token, "Payment Method Token for a real card", 4432) # Raises a PaymentRequiredError
 ```
 
 
