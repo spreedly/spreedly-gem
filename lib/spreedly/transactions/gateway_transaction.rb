@@ -4,6 +4,7 @@ module Spreedly
 
     field :order_id, :ip, :description, :gateway_token
     field :merchant_name_descriptor, :merchant_location_descriptor
+    field :on_test_gateway, type: :boolean
 
     attr_reader :response
 

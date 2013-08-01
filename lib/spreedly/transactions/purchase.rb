@@ -4,7 +4,6 @@ module Spreedly
 
     field :currency_code
     field :amount, type: :integer
-    field :on_test_gateway, type: :boolean
 
     attr_reader :payment_method
 

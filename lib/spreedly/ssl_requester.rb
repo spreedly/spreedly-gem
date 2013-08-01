@@ -56,7 +56,7 @@ module Spreedly
 
     def show_raw_response(raw_response)
       return unless ENV['SHOW_RAW_RESPONSE'] == 'true'
-      puts "raw_response.code: #{raw_response.code}\nraw_response.body:\n#{raw_response.body}"
+      puts "\nraw_response.code: #{raw_response.code}\nraw_response.body:\n#{raw_response.body}"
     end
 
   end

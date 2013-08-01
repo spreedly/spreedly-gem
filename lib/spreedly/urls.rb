@@ -22,6 +22,10 @@ module Spreedly
       "#{base_url}/v1/gateways.xml"
     end
 
+    def void_transaction_url(token)
+      "#{base_url}/v1/transactions/#{token}/void.xml"
+    end
+
   end
 
 end

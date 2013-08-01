@@ -41,6 +41,11 @@ module Spreedly
       Gateway.new(xml_doc)
     end
 
+    def void_transaction(token)
+      xml_doc = ssl_post(void_transaction_url(token), '', headers)
+      Transaction.new_from(xml_doc)
+    end
+
     private
     def headers
       {
