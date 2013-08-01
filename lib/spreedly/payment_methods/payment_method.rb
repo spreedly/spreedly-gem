@@ -2,16 +2,14 @@ require 'time'
 
 module Spreedly
 
-  class PaymentMethod
-    include Fields
+  class PaymentMethod < Model
 
-    field :token, :email, :storage_state, :data
-    field :created_at, :updated_at, type: :date_time
+    field :email, :storage_state, :data
 
     attr_reader :errors
 
     def initialize(xml_doc)
-      initialize_fields(xml_doc)
+      super
       initialize_errors(xml_doc)
     end
 

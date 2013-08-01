@@ -1,16 +1,10 @@
 
 module Spreedly
 
-  class Transaction
-    include Fields
+  class Transaction < Model
 
-    field :token, :state, :message
-    field :created_at, :updated_at, type: :date_time
+    field :state, :message
     field :succeeded, type: :boolean
-
-    def initialize(xml_doc)
-      initialize_fields(xml_doc)
-    end
 
     def self.new_from(xml_doc)
       case xml_doc.at_xpath('.//transaction_type').inner_text
