@@ -5,7 +5,9 @@ module Spreedly
   class PaymentMethod
     include Fields
 
-    field :token, :email, :created_at, :updated_at, :storage_state, :data
+    field :token, :email, :storage_state, :data
+    field :created_at, :updated_at, type: :date_time
+
     attr_reader :errors
 
     def initialize(xml_doc)
@@ -22,14 +24,6 @@ module Spreedly
       when 'sprel'
         return Sprel.new(xml_doc)
       end
-    end
-
-    def created_at
-      Time.parse(@created_at) if @created_at
-    end
-
-    def updated_at
-      Time.parse(@updated_at) if @updated_at
     end
 
     def valid?
