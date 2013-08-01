@@ -28,7 +28,18 @@ class PurchaseTest < Test::Unit::TestCase
     assert_equal 'YOaCn5a9xRaBTGgmGAWbkgWUuqv', t.gateway_token
     assert_equal '8xXXIPGXTaPXysDA5OUpgnjTEjK', t.payment_method.token
 
-    # TODO handle response
+    assert_equal true, t.response.success
+    assert_equal 'Successful purchase', t.response.message
+    assert_equal '22', t.response.avs_code
+    assert_equal 'I will be back', t.response.avs_message
+    assert_equal '31', t.response.cvv_code
+    assert_equal 'Rutabaga', t.response.cvv_message
+    assert_equal false, t.response.pending
+    assert_equal '899', t.response.error_code
+    assert_equal 'The eagle lives!', t.response.error_detail
+    assert_equal false, t.response.cancelled
+    assert_equal Time.parse('2013-07-31T19:46:26Z'), t.response.created_at
+    assert_equal Time.parse('2013-07-31T19:46:27Z'), t.response.updated_at
   end
 
   def test_failed_purchase
@@ -41,7 +52,7 @@ class PurchaseTest < Test::Unit::TestCase
     assert_equal false, t.succeeded?
     assert_equal 'gateway_processing_failed', t.state
 
-    # TODO handle response
+    assert_equal 'The eagle is dead Jim.', t.response.error_detail
   end
 
   private
@@ -74,16 +85,16 @@ class PurchaseTest < Test::Unit::TestCase
         <response>
           <success type="boolean">true</success>
           <message>Successful purchase</message>
-          <avs_code nil="true"/>
-          <avs_message nil="true"/>
-          <cvv_code nil="true"/>
-          <cvv_message nil="true"/>
+          <avs_code>22</avs_code>
+          <avs_message nil="true">I will be back</avs_message>
+          <cvv_code>31</cvv_code>
+          <cvv_message nil="true">Rutabaga</cvv_message>
           <pending type="boolean">false</pending>
-          <error_code></error_code>
-          <error_detail nil="true"/>
+          <error_code>899</error_code>
+          <error_detail nil="true">The eagle lives!</error_detail>
           <cancelled type="boolean">false</cancelled>
           <created_at type="datetime">2013-07-31T19:46:26Z</created_at>
-          <updated_at type="datetime">2013-07-31T19:46:26Z</updated_at>
+          <updated_at type="datetime">2013-07-31T19:46:27Z</updated_at>
         </response>
         <payment_method>
           <token>8xXXIPGXTaPXysDA5OUpgnjTEjK</token>
@@ -148,7 +159,7 @@ class PurchaseTest < Test::Unit::TestCase
           <cvv_message nil="true"/>
           <pending type="boolean">false</pending>
           <error_code></error_code>
-          <error_detail nil="true"/>
+          <error_detail nil="true">The eagle is dead Jim.</error_detail>
           <cancelled type="boolean">false</cancelled>
           <created_at type="datetime">2013-07-31T19:51:57Z</created_at>
           <updated_at type="datetime">2013-07-31T19:51:57Z</updated_at>
