@@ -19,7 +19,7 @@ class RemoteVoidTest < Test::Unit::TestCase
   end
 
   def test_needs_succeeded_reference
-    gateway_token = create_test_gateway_on(@environment).token
+    gateway_token = @environment.add_gateway(:test).token
     card_token = create_failed_card_on(@environment).token
     transaction = @environment.purchase_on_gateway(gateway_token, card_token, 144)
     assert_equal false, transaction.succeeded?
@@ -30,7 +30,7 @@ class RemoteVoidTest < Test::Unit::TestCase
   end
 
   def test_successful_void
-    gateway_token = create_test_gateway_on(@environment).token
+    gateway_token = @environment.add_gateway(:test).token
     card_token = create_card_on(@environment).token
     purchase = @environment.purchase_on_gateway(gateway_token, card_token, 144)
     assert_equal true, purchase.succeeded?

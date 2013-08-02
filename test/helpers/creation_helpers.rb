@@ -13,10 +13,6 @@ module Spreedly
       environment.add_credit_card(deets).payment_method
     end
 
-    def create_test_gateway_on(environment, options = {})
-      environment.add_gateway(:test)
-    end
-
 
     private
     def default_card_deets

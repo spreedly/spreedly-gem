@@ -26,7 +26,7 @@ class RemotePurchaseTest < Test::Unit::TestCase
   end
 
   def test_successful_purchase
-    gateway_token = create_test_gateway_on(@environment).token
+    gateway_token = @environment.add_gateway(:test).token
     card_token = create_card_on(@environment).token
 
     transaction = @environment.purchase_on_gateway(gateway_token, card_token, 144)
@@ -35,7 +35,7 @@ class RemotePurchaseTest < Test::Unit::TestCase
   end
 
   def test_failed_purchase
-    gateway_token = create_test_gateway_on(@environment).token
+    gateway_token = @environment.add_gateway(:test).token
     card_token = create_failed_card_on(@environment).token
 
     transaction = @environment.purchase_on_gateway(gateway_token, card_token, 144)
