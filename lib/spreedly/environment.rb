@@ -71,6 +71,7 @@ module Spreedly
     def add_credit_card_body(options)
       build_xml_request('payment_method') do |doc|
         doc.email options[:email]
+        doc.data options[:data]
         doc.retained options[:retained] if options[:retained]
         doc.credit_card do
           doc.number options[:number]

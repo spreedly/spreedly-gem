@@ -86,4 +86,5 @@ class FindPaymentMethodTest < Test::Unit::TestCase
     @environment.find_payment_method("IgnoredTokenSinceResponseIsStubbed")
   end
 
+
 end

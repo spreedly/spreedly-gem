@@ -2,6 +2,8 @@ module Spreedly
 
   class AddPaymentMethod < Transaction
 
+    field :retained, type: :boolean
+
     attr_reader :payment_method
 
     def initialize(xml_doc)
