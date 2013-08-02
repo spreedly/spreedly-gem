@@ -1,7 +1,7 @@
 
 module Spreedly
 
-  module CreationHelpers
+  module CreationHelper
 
     def create_card_on(environment, options = {})
       deets = default_card_deets.merge(options)
