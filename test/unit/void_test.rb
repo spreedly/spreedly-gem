@@ -16,8 +16,7 @@ class VoidTest < Test::Unit::TestCase
     assert_equal 'YutwWIoICGiFvSWUQbb9LTyjfnF', t.token
     assert_equal Time.parse('2013-08-01T19:05:53Z'), t.created_at
     assert_equal Time.parse('2013-08-01T19:05:53Z'), t.updated_at
-    assert_equal true, t.on_test_gateway
-    assert_equal true, t.on_test_gateway?
+    assert t.on_test_gateway?
     assert t.succeeded?
     assert_equal 'succeeded', t.state
     assert_equal '49J', t.order_id
@@ -27,16 +26,16 @@ class VoidTest < Test::Unit::TestCase
     assert_equal 'EuXlDMZEMZfrHSvE9tkRzaW8j0z', t.gateway_token
     assert_equal 'CjedAratpuiT3CMmln4t3oZFvOS', t.reference_token
 
-    assert_equal true, t.response.success
+    assert t.response.success?
     assert_equal 'Successful void', t.response.message
     assert_equal '', t.response.avs_code
     assert_equal '', t.response.avs_message
     assert_equal '', t.response.cvv_code
     assert_equal '', t.response.cvv_message
-    assert_equal false, t.response.pending
+    assert !t.response.pending?
     assert_equal '', t.response.error_code
     assert_equal '', t.response.error_detail
-    assert_equal false, t.response.cancelled
+    assert !t.response.cancelled?
     assert_equal Time.parse('2013-08-01T19:05:53Z'), t.response.created_at
     assert_equal Time.parse('2013-08-01T19:05:53Z'), t.response.updated_at
   end
@@ -50,7 +49,7 @@ class VoidTest < Test::Unit::TestCase
     assert_equal 'gateway_processing_failed', t.state
     assert_equal 'Transaction id is invalid.', t.message
     assert_equal '10609', t.response.error_code
-    assert_equal false, t.on_test_gateway
+    assert !t.on_test_gateway?
   end
 
   private

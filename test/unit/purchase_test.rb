@@ -15,8 +15,7 @@ class PurchaseTest < Test::Unit::TestCase
     assert_kind_of(Spreedly::Purchase, t)
     assert_equal 'Btcyks35m4JLSNOs9ymJoNQLjeX', t.token
     assert_equal 144, t.amount
-    assert_equal true, t.on_test_gateway
-    assert_equal true, t.on_test_gateway?
+    assert t.on_test_gateway?
     assert_equal Time.parse("2013-07-31 19:46:26 UTC"), t.created_at
     assert_equal Time.parse("2013-07-31 19:46:32 UTC"), t.updated_at
     assert_equal 'USD', t.currency_code
@@ -30,16 +29,16 @@ class PurchaseTest < Test::Unit::TestCase
     assert_equal 'YOaCn5a9xRaBTGgmGAWbkgWUuqv', t.gateway_token
     assert_equal '8xXXIPGXTaPXysDA5OUpgnjTEjK', t.payment_method.token
 
-    assert_equal true, t.response.success
+    assert t.response.success
     assert_equal 'Successful purchase', t.response.message
     assert_equal '22', t.response.avs_code
     assert_equal 'I will be back', t.response.avs_message
     assert_equal '31', t.response.cvv_code
     assert_equal 'Rutabaga', t.response.cvv_message
-    assert_equal false, t.response.pending
+    assert !t.response.pending
     assert_equal '899', t.response.error_code
     assert_equal 'The eagle lives!', t.response.error_detail
-    assert_equal false, t.response.cancelled
+    assert !t.response.cancelled
     assert_equal Time.parse('2013-07-31T19:46:26Z'), t.response.created_at
     assert_equal Time.parse('2013-07-31T19:46:27Z'), t.response.updated_at
   end
