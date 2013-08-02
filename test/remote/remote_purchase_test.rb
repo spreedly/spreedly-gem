@@ -30,7 +30,7 @@ class RemotePurchaseTest < Test::Unit::TestCase
     card_token = create_card_on(@environment).token
 
     transaction = @environment.purchase_on_gateway(gateway_token, card_token, 144)
-    assert_equal true, transaction.succeeded?
+    assert transaction.succeeded?
     assert_equal card_token, transaction.payment_method.token
     assert_equal 144, transaction.amount
   end
@@ -40,7 +40,7 @@ class RemotePurchaseTest < Test::Unit::TestCase
     card_token = create_failed_card_on(@environment).token
 
     transaction = @environment.purchase_on_gateway(gateway_token, card_token, 144)
-    assert_equal false, transaction.succeeded?
+    assert !transaction.succeeded?
     assert_equal "Unable to process the purchase transaction.", transaction.message
     assert_equal gateway_token, transaction.gateway_token
   end

@@ -18,8 +18,7 @@ class VoidTest < Test::Unit::TestCase
     assert_equal Time.parse('2013-08-01T19:05:53Z'), t.updated_at
     assert_equal true, t.on_test_gateway
     assert_equal true, t.on_test_gateway?
-    assert_equal true, t.succeeded
-    assert_equal true, t.succeeded?
+    assert t.succeeded?
     assert_equal 'succeeded', t.state
     assert_equal '49J', t.order_id
     assert_equal '102.122.012.111', t.ip
@@ -47,7 +46,7 @@ class VoidTest < Test::Unit::TestCase
 
     assert_kind_of(Spreedly::Void, t)
     assert_equal '39gMhrti9KGiuLXa9suYL3kn3st', t.token
-    assert_equal false, t.succeeded?
+    assert !t.succeeded?
     assert_equal 'gateway_processing_failed', t.state
     assert_equal 'Transaction id is invalid.', t.message
     assert_equal '10609', t.response.error_code

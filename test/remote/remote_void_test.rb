@@ -22,7 +22,7 @@ class RemoteVoidTest < Test::Unit::TestCase
     gateway_token = @environment.add_gateway(:test).token
     card_token = create_failed_card_on(@environment).token
     transaction = @environment.purchase_on_gateway(gateway_token, card_token, 144)
-    assert_equal false, transaction.succeeded?
+    assert !transaction.succeeded?
 
     assert_raise_with_message(Spreedly::TransactionCreationError, "The reference transaction did not succeed. Only successful reference transactions are permitted.") do
       @environment.void_transaction(transaction.token)
@@ -33,10 +33,10 @@ class RemoteVoidTest < Test::Unit::TestCase
     gateway_token = @environment.add_gateway(:test).token
     card_token = create_card_on(@environment).token
     purchase = @environment.purchase_on_gateway(gateway_token, card_token, 144)
-    assert_equal true, purchase.succeeded?
+    assert purchase.succeeded?
 
     void = @environment.void_transaction(purchase.token)
-    assert_equal true, void.succeeded?
+    assert void.succeeded?
     assert_equal "Succeeded!", void.message
     assert_equal gateway_token, void.gateway_token
   end

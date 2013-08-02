@@ -20,8 +20,7 @@ class PurchaseTest < Test::Unit::TestCase
     assert_equal Time.parse("2013-07-31 19:46:26 UTC"), t.created_at
     assert_equal Time.parse("2013-07-31 19:46:32 UTC"), t.updated_at
     assert_equal 'USD', t.currency_code
-    assert_equal true, t.succeeded
-    assert_equal true, t.succeeded?
+    assert t.succeeded?
     assert_equal 'succeeded', t.state
     assert_equal '187A', t.order_id
     assert_equal '', t.ip
@@ -51,8 +50,7 @@ class PurchaseTest < Test::Unit::TestCase
     assert_kind_of(Spreedly::Purchase, t)
     assert_equal 'RxkxK78ZlvDiXRQRnyuJM5ee0Ww', t.token
     assert_equal 5148, t.amount
-    assert_equal false, t.succeeded
-    assert_equal false, t.succeeded?
+    assert !t.succeeded?
     assert_equal 'gateway_processing_failed', t.state
 
     assert_equal 'The eagle is dead Jim.', t.response.error_detail
