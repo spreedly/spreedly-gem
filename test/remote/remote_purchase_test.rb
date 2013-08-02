@@ -32,6 +32,7 @@ class RemotePurchaseTest < Test::Unit::TestCase
     transaction = @environment.purchase_on_gateway(gateway_token, card_token, 144)
     assert_equal true, transaction.succeeded?
     assert_equal card_token, transaction.payment_method.token
+    assert_equal 144, transaction.amount
   end
 
   def test_failed_purchase
