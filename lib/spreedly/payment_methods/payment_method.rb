@@ -4,13 +4,14 @@ module Spreedly
 
   class PaymentMethod < Model
 
-    field :email, :storage_state, :data
+    include ErrorsParser
 
+    field :email, :storage_state, :data
     attr_reader :errors
 
     def initialize(xml_doc)
       super
-      initialize_errors(xml_doc)
+      @errors = errors_from(xml_doc)
     end
 
     def self.new_from(xml_doc)
@@ -26,17 +27,6 @@ module Spreedly
 
     def valid?
       @errors.empty?
-    end
-
-    private
-    def initialize_errors(xml_doc)
-      @errors = xml_doc.xpath(".//errors/error").map do |each|
-        {
-          attribute: each.attributes['attribute'].to_s,
-          key: each.attributes['key'].to_s,
-          message: each.text
-        }
-      end
     end
 
   end

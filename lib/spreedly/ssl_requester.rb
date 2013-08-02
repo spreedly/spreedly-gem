@@ -33,25 +33,20 @@ module Spreedly
       when 200...300
         xml_doc
       when 401
-        raise AuthenticationError.new
+        raise AuthenticationError.new(xml_doc)
       when 404
-        raise NotFoundError.new(error_from(xml_doc))
+        raise NotFoundError.new(xml_doc)
       when 402
-        raise PaymentRequiredError.new(error_from(xml_doc))
+        raise PaymentRequiredError.new(xml_doc)
       when 422
-        error = xml_doc.at_xpath('.//error')
-        if error
-          raise TransactionCreationError.new(error.inner_text)
+        if xml_doc.at_xpath('.//errors/error')
+          raise TransactionCreationError.new(xml_doc)
         else
           xml_doc
         end
       else
         raise UnexpectedResponseError.new(response)
       end
-    end
-
-    def error_from(xml_doc)
-      xml_doc.xpath('.//error').inner_text
     end
 
     def show_raw_response(raw_response)

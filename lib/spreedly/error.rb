@@ -2,19 +2,29 @@ module Spreedly
   class Error < StandardError
   end
 
-  class AuthenticationError < Error
-    def initialize(message = "Unable to authenticate using the given access_token.")
-      super
+  class XmlErrorsList < Error
+    attr_reader :errors
+    include ErrorsParser
+
+    def initialize(xml_doc)
+      @errors = errors_from(xml_doc)
+    end
+
+    def message
+      @errors.map { |each| each[:message] }.join("\n")
     end
   end
 
-  class NotFoundError < Error
+  class AuthenticationError < XmlErrorsList
   end
 
-  class TransactionCreationError < Error
+  class NotFoundError < XmlErrorsList
   end
 
-  class PaymentRequiredError < Error
+  class TransactionCreationError < XmlErrorsList
+  end
+
+  class PaymentRequiredError < XmlErrorsList
   end
 
   class UnexpectedResponseError < Error
