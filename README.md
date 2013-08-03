@@ -249,7 +249,7 @@ Here's how you can do it:
 
 ``` ruby
 transaction = env.add_credit_card(email: 'perrin@wot.com', number: '5555555555554444', month: 1, year: 2019,
-                           last_name: 'Aybara', first_name: 'Perrin', data: "occupation: Blacksmith")
+                                  last_name: 'Aybara', first_name: 'Perrin', data: "occupation: Blacksmith")
 
 transaction.token                 # => "2nQEJaaY3egcVkCvg2s9qT37xrb"
 transaction.card.token            # => "7rbEKaaY0egcBkCrg2sbqTo7Qrb"
@@ -260,10 +260,10 @@ You can also retain the card immediately like so:
 
 ``` ruby
 transaction = env.add_credit_card(email: 'perrin@wot.com', number: '5555555555554444', month: 1, year: 2019,
-                           last_name: 'Aybara', first_name: 'Perrin', data: "occupation: Blacksmith",
-                           retained: true)
+                                  last_name: 'Aybara', first_name: 'Perrin', data: "occupation: Blacksmith",
+                                  retained: true)
 
-transaction.card.storage_state          # => "retained"
+transaction.card.storage_state    # => "retained"
 ```
 
 And you might want to specify a number of other details like the billing address, etc:
