@@ -239,9 +239,9 @@ gateway.token     # => "2nQEJaaY3egcVkCvg2s9qT37xrb"
 
 #### Creating credit cards
 
-The primary mechanism to add a payment method is to use the transparent redirect payment form. This allows all of the sensitive information to be captured without ever touching your servers.
+The primary mechanism to add a credit card is to use the transparent redirect payment form. This allows all of the sensitive information to be captured without ever touching your servers.
 
-There are times though when you may want to create a payment method in a more "manual" fashion with an API call.
+There are times though when you may want to create a credit card in a more "manual" fashion with an API call.
 
 PLEASE NOTE: Using this API call can significantly increase your PCI compliance requirements.
 
