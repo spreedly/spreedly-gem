@@ -248,8 +248,10 @@ PLEASE NOTE: Using this API call can significantly increase your PCI compliance 
 Here's how you can do it:
 
 ``` ruby
-transaction = env.add_credit_card(email: 'perrin@wot.com', number: '5555555555554444', month: 1, year: 2019,
-                                  last_name: 'Aybara', first_name: 'Perrin', data: "occupation: Blacksmith")
+options = {
+email: 'perrin@wot.com', number: '5555555555554444', month: 1, year: 2019, last_name: 'Aybara', first_name: 'Perrin', data: "occupation: Blacksmith"
+}
+transaction = env.add_credit_card(options)
 
 transaction.token                 # => "2nQEJaaY3egcVkCvg2s9qT37xrb"
 transaction.card.token            # => "7rbEKaaY0egcBkCrg2sbqTo7Qrb"
@@ -259,9 +261,10 @@ transaction.card.last_name        # => "Aybara"
 You can also retain the card immediately like so:
 
 ``` ruby
-transaction = env.add_credit_card(email: 'perrin@wot.com', number: '5555555555554444', month: 1, year: 2019,
-                                  last_name: 'Aybara', first_name: 'Perrin', data: "occupation: Blacksmith",
-                                  retained: true)
+options = {
+email: 'perrin@wot.com', number: '5555555555554444', month: 1, year: 2019, last_name: 'Aybara', first_name: 'Perrin', data: "occupation: Blacksmith", retained: true
+}
+transaction = env.add_credit_card(options)
 
 transaction.card.storage_state    # => "retained"
 ```
@@ -269,12 +272,14 @@ transaction.card.storage_state    # => "retained"
 And you might want to specify a number of other details like the billing address, etc:
 
 ``` ruby
-transaction = env.add_credit_card(email: 'leavenworth@free.com', number: '9555555555554444', month: 3, year: 2021,
-                                  last_name: 'Smedry', first_name: 'Leavenworth', data: "talent: Late",
-                                  address1: '10 Dragon Lane', address2: 'Suite 9', city: 'Tuki Tuki', state: 'Mokia',
-                                  zip: '1122', country: 'Free Kingdoms', phone_number: '81Ab', retained: true)
+options = {
+email: 'leavenworth@free.com', number: '9555555555554444', month: 3, year: 2021, last_name: 'Smedry', first_name: 'Leavenworth', data: "talent: Late", address1: '10 Dragon Lane', address2: 'Suite 9', city: 'Tuki Tuki', state: 'Mokia', zip: '1122', country: 'Free Kingdoms', phone_number: '81Ab', retained: true
+}
+
+transaction = env.add_credit_card(options)
 
 transaction.card.last_name      # => "Smedry"
+
 ```
 
 
