@@ -17,6 +17,12 @@ module Spreedly
       end
     end
 
+    def assert_xpaths_in(xml_doc, *xpaths)
+      xpaths.each do |xpath, expected_text|
+        assert_equal expected_text, xml_doc.xpath(xpath).text
+      end
+    end
+
   end
 
 
