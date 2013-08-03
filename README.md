@@ -42,7 +42,7 @@ transaction.token         # => "aGJlY5srn7TFeYKxO5pmwi3CyJd"
 The amount specified in that example was 4432.  Amounts are always in cents so in this case, we're charging $44.32.
 
 #### Add a gateway
-What if you don't have a gateway token yet?  It's pretty easy to create a test gateway:
+What if you don't have a gateway token yet?  It's pretty easy to add a test gateway:
 
 ``` ruby
 gateway = env.add_gateway(:test)
@@ -230,18 +230,18 @@ env.find_transaction_transcript(transaction_token)
 env.update_payment_method(payment_method_token, first_name: 'JimBob', last_name: 'Jones')
 ```
 
-#### Creating other types of gateways
+#### Adding other types of gateways
 
 ``` ruby
 gateway = env.add_gateway(:paypal, mode: 'delegate', email: 'fred@example.com')
 gateway.token     # => "2nQEJaaY3egcVkCvg2s9qT37xrb"
 ```
 
-#### Creating credit cards
+#### Adding credit cards
 
 The primary mechanism to add a credit card is to use the transparent redirect payment form. This allows all of the sensitive information to be captured without ever touching your servers.
 
-There are times though when you may want to create a credit card in a more "manual" fashion with an API call.
+There are times though when you may want to add a credit card in a more "manual" fashion with an API call.
 
 PLEASE NOTE: Using this API call can significantly increase your PCI compliance requirements.
 
