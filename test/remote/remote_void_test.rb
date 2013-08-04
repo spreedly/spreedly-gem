@@ -41,5 +41,24 @@ class RemoteVoidTest < Test::Unit::TestCase
     assert_equal gateway_token, void.gateway_token
   end
 
+  def test_optional_arguments
+    gateway_token = @environment.add_gateway(:test).token
+    card_token = create_card_on(@environment).token
+    purchase = @environment.purchase_on_gateway(gateway_token, card_token, 144)
+    assert purchase.succeeded?
+
+    void = @environment.void_transaction(purchase.token, order_id: "8675",
+                                                   description: "SuperDuper",
+                                                   ip: "183.128.100.103",
+                                                   merchant_name_descriptor: "Real Stuff",
+                                                   merchant_location_descriptor: "Raleigh")
+
+    assert void.succeeded?
+    assert_equal "8675", void.order_id
+    assert_equal "SuperDuper", void.description
+    assert_equal "183.128.100.103", void.ip
+    assert_equal "Real Stuff", void.merchant_name_descriptor
+    assert_equal "Raleigh", void.merchant_location_descriptor
+  end
 
 end

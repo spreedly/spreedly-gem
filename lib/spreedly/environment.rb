@@ -41,8 +41,9 @@ module Spreedly
       Gateway.new(xml_doc)
     end
 
-    def void_transaction(token)
-      xml_doc = ssl_post(void_transaction_url(token), '', headers)
+    def void_transaction(token, options = {})
+      body = void_body(options)
+      xml_doc = ssl_post(void_transaction_url(token), body, headers)
       Transaction.new_from(xml_doc)
     end
 
@@ -59,9 +60,15 @@ module Spreedly
         doc.amount amount
         doc.currency_code(options[:currency_code] || currency_code)
         doc.payment_method_token(payment_method_token)
+        add_extra_options_for_basic_ops(doc, options)
+      end
+    end
 
-        add_to_doc(doc, options, :order_id, :description, :ip, :merchant_name_descriptor,
-                                 :merchant_location_descriptor)
+    def void_body(options)
+      return '' if options.empty?
+
+      build_xml_request('transaction') do |doc|
+        add_extra_options_for_basic_ops(doc, options)
       end
     end
 
@@ -85,6 +92,11 @@ module Spreedly
       attributes.each do |attr|
         doc.send(attr, options[attr.to_sym]) if options[attr.to_sym]
       end
+    end
+
+    def add_extra_options_for_basic_ops(doc, options)
+      add_to_doc(doc, options, :order_id, :description, :ip, :merchant_name_descriptor,
+                               :merchant_location_descriptor)
     end
 
     def build_xml_request(root)

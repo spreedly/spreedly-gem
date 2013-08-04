@@ -18,11 +18,13 @@ class VoidTest < Test::Unit::TestCase
     assert_equal Time.parse('2013-08-01T19:05:53Z'), t.updated_at
     assert t.on_test_gateway?
     assert t.succeeded?
+    assert_equal 'Succeeded!', t.message
     assert_equal 'succeeded', t.state
     assert_equal '49J', t.order_id
     assert_equal '102.122.012.111', t.ip
+    assert_equal 'Wonderful Description', t.description
     assert_equal 'DopeCorp', t.merchant_name_descriptor
-    assert_equal '', t.merchant_location_descriptor
+    assert_equal 'Somewhere', t.merchant_location_descriptor
     assert_equal 'EuXlDMZEMZfrHSvE9tkRzaW8j0z', t.gateway_token
     assert_equal 'CjedAratpuiT3CMmln4t3oZFvOS', t.reference_token
 
@@ -52,10 +54,42 @@ class VoidTest < Test::Unit::TestCase
     assert !t.on_test_gateway?
   end
 
+  def test_empty_request_body_params
+    body = get_request_body(successful_void_response) do
+      @environment.void_transaction("TransactionToken")
+    end
+
+    assert_nil body.root
+  end
+
+  def test_request_body_params
+    body = get_request_body(successful_void_response) do
+      @environment.void_transaction("TransactionToken", all_possible_options)
+    end
+
+    transaction = body.xpath('./transaction')
+    assert_xpaths_in transaction,
+      [ './order_id', '8675' ],
+      [ './description', 'Change of heart' ],
+      [ './ip', '183.128.100.103' ],
+      [ './merchant_name_descriptor', 'Zombie, Inc.' ],
+      [ './merchant_location_descriptor', 'Durham, NC' ]
+  end
+
   private
   def void_using(response)
     @environment.stubs(:raw_ssl_request).returns(response)
     @environment.void_transaction("IgnoredTransactionTokenSinceResponseIsStubbed")
+  end
+
+  def all_possible_options
+    {
+      order_id: "8675",
+      description: "Change of heart",
+      ip: "183.128.100.103",
+      merchant_name_descriptor: "Zombie, Inc.",
+      merchant_location_descriptor: "Durham, NC"
+    }
   end
 
 end

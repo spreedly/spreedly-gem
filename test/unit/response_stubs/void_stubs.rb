@@ -14,9 +14,9 @@ module VoidStubs
         <transaction_type>Void</transaction_type>
         <order_id>49J</order_id>
         <ip>102.122.012.111</ip>
-        <description nil="true"/>
+        <description>Wonderful Description</description>
         <merchant_name_descriptor>DopeCorp</merchant_name_descriptor>
-        <merchant_location_descriptor nil="true"/>
+        <merchant_location_descriptor>Somewhere</merchant_location_descriptor>
         <message key="messages.transaction_succeeded">Succeeded!</message>
         <gateway_token>EuXlDMZEMZfrHSvE9tkRzaW8j0z</gateway_token>
         <reference_token>CjedAratpuiT3CMmln4t3oZFvOS</reference_token>
