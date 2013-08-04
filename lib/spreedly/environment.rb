@@ -59,6 +59,9 @@ module Spreedly
         doc.amount amount
         doc.currency_code(options[:currency_code] || currency_code)
         doc.payment_method_token(payment_method_token)
+
+        add_to_doc(doc, options, :order_id, :description, :ip, :merchant_name_descriptor,
+                                 :merchant_location_descriptor)
       end
     end
 

@@ -19,7 +19,7 @@ module Spreedly
 
     def assert_xpaths_in(xml_doc, *xpaths)
       xpaths.each do |xpath, expected_text|
-        assert_equal expected_text, xml_doc.xpath(xpath).text
+        assert_equal expected_text, xml_doc.xpath(xpath).text, "Looking for the text of the following xpath: #{xpath}"
       end
     end
 

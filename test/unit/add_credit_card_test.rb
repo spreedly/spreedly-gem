@@ -27,7 +27,7 @@ class AddGatewayTest < Test::Unit::TestCase
     assert_equal "Don't test everything here, since find_payment_method tests it all.", t.payment_method.data
   end
 
-  def test_all_request_body_params_sent
+  def test_request_body_params
     body = get_request_body(successful_add_credit_card_response) do
       @environment.add_credit_card(full_card_details)
     end

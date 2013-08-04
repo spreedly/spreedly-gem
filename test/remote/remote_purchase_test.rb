@@ -45,4 +45,23 @@ class RemotePurchaseTest < Test::Unit::TestCase
     assert_equal gateway_token, transaction.gateway_token
   end
 
+  def test_optional_arguments
+    gateway_token = @environment.add_gateway(:test).token
+    card_token = create_card_on(@environment).token
+
+    transaction = @environment.purchase_on_gateway(gateway_token, card_token, 344,
+                                                   order_id: "8675",
+                                                   description: "SuperDuper",
+                                                   ip: "183.128.100.103",
+                                                   merchant_name_descriptor: "Real Stuff",
+                                                   merchant_location_descriptor: "Raleigh")
+
+    assert transaction.succeeded?
+    assert_equal "8675", transaction.order_id
+    assert_equal "SuperDuper", transaction.description
+    assert_equal "183.128.100.103", transaction.ip
+    assert_equal "Real Stuff", transaction.merchant_name_descriptor
+    assert_equal "Raleigh", transaction.merchant_location_descriptor
+  end
+
 end

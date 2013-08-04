@@ -55,10 +55,39 @@ class PurchaseTest < Test::Unit::TestCase
     assert_equal 'The eagle is dead Jim.', t.response.error_detail
   end
 
+  def test_request_body_params
+    body = get_request_body(successful_purchase_response) do
+      @environment.purchase_on_gateway("TheGatewayToken", "TheCardToken", 2001, all_possible_options)
+    end
+
+    transaction = body.xpath('./transaction')
+    assert_xpaths_in transaction,
+      [ './amount', '2001' ],
+      [ './currency_code', 'EUR' ],
+      [ './payment_method_token', 'TheCardToken' ],
+      [ './order_id', '8675' ],
+      [ './description', 'SuperDuper' ],
+      [ './ip', '183.128.100.103' ],
+      [ './merchant_name_descriptor', 'Real Stuff' ],
+      [ './merchant_location_descriptor', 'Raleigh' ]
+  end
+
+
   private
   def purchase_using(response)
     @environment.stubs(:raw_ssl_request).returns(response)
     @environment.purchase_on_gateway("IgnoredGatewayTokenSinceResponseIsStubbed", "IgnoredPaymentMethodTokenSinceResponseIsStubbed", 5921)
+  end
+
+  def all_possible_options
+    {
+      currency_code: "EUR",
+      order_id: "8675",
+      description: "SuperDuper",
+      ip: "183.128.100.103",
+      merchant_name_descriptor: "Real Stuff",
+      merchant_location_descriptor: "Raleigh"
+    }
   end
 
 end
