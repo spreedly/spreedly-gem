@@ -26,6 +26,12 @@ class RemoteAddCreditCardTest < Test::Unit::TestCase
     assert_equal "First name can't be blank\nLast name can't be blank", error.message
   end
 
+  def test_payment_required
+    assert_raise_with_message(Spreedly::PaymentRequiredError, "Your account has not been activated for real transactions. Please update your subscription settings.") do
+      @environment.add_credit_card(card_deets(number: '343'))
+    end
+  end
+
   def test_successful_add_card
     t = @environment.add_credit_card(card_deets)
 
