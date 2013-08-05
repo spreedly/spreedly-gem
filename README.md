@@ -155,7 +155,7 @@ env.purchase_on_gateway(gateway_token, payment_method_token, amount, currency_co
 
 
 #### Extra options for the basic operations
-For Purchase, Authorize, Capture, Credit, and Void calls, you can specify additional options:
+For Purchase, Authorize, Capture, Refund, and Void calls, you can specify additional options:
 
 ``` ruby
 env.purchase_on_gateway(gateway_token, payment_method_token, amount,

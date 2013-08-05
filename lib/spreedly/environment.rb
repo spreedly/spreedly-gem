@@ -25,26 +25,24 @@ module Spreedly
 
     def purchase_on_gateway(gateway_token, payment_method_token, amount, options = {})
       body = auth_purchase_body(amount, payment_method_token, options)
-      xml_doc = ssl_post(purchase_url(gateway_token), body, headers)
-      Transaction.new_from(xml_doc)
+      api_post(purchase_url(gateway_token), body)
     end
 
     def authorize_on_gateway(gateway_token, payment_method_token, amount, options = {})
       body = auth_purchase_body(amount, payment_method_token, options)
-      xml_doc = ssl_post(authorize_url(gateway_token), body, headers)
-      Transaction.new_from(xml_doc)
+      api_post(authorize_url(gateway_token), body)
     end
 
     def capture_transaction(authorization_token, options = {})
-      body = capture_body(options)
-      xml_doc = ssl_post(capture_url(authorization_token), body, headers)
-      Transaction.new_from(xml_doc)
+      api_post(capture_url(authorization_token), capture_body(options))
     end
 
     def add_credit_card(options)
-      body = add_credit_card_body(options)
-      xml_doc = ssl_post(add_payment_method_url, body, headers)
-      Transaction.new_from(xml_doc)
+      api_post(add_payment_method_url, add_credit_card_body(options))
+    end
+
+    def void_transaction(token, options = {})
+      api_post(void_transaction_url(token), void_body(options))
     end
 
     def add_gateway(gateway_type, options = {})
@@ -53,11 +51,6 @@ module Spreedly
       Gateway.new(xml_doc)
     end
 
-    def void_transaction(token, options = {})
-      body = void_body(options)
-      xml_doc = ssl_post(void_transaction_url(token), body, headers)
-      Transaction.new_from(xml_doc)
-    end
 
     private
     def headers
@@ -126,6 +119,11 @@ module Spreedly
         yield(doc)
       end
       builder.to_xml
+    end
+
+    def api_post(url, body)
+      xml_doc = ssl_post(url, body, headers)
+      Transaction.new_from(xml_doc)
     end
 
   end
