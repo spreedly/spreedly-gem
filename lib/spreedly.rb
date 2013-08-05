@@ -14,6 +14,7 @@ require 'spreedly/transactions/gateway_transaction'
 require 'spreedly/transactions/add_payment_method'
 require 'spreedly/transactions/purchase'
 require 'spreedly/transactions/void'
+require 'spreedly/transactions/authorization'
 require 'spreedly/gateway'
 require 'spreedly/error'
 

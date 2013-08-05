@@ -14,6 +14,10 @@ module Spreedly
       "#{base_url}/v1/gateways/#{gateway_token}/purchase.xml"
     end
 
+    def authorize_url(gateway_token)
+      "#{base_url}/v1/gateways/#{gateway_token}/authorize.xml"
+    end
+
     def add_payment_method_url
       "#{base_url}/v1/payment_methods.xml"
     end

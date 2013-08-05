@@ -12,6 +12,8 @@ module Spreedly
         return AddPaymentMethod.new(xml_doc)
       when 'Purchase'
         return Purchase.new(xml_doc)
+      when 'Authorization'
+        return Authorization.new(xml_doc)
       when 'Void'
         return Void.new(xml_doc)
       else

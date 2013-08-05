@@ -29,6 +29,12 @@ module Spreedly
       Transaction.new_from(xml_doc)
     end
 
+    def authorize_on_gateway(gateway_token, payment_method_token, amount, options = {})
+      body = auth_purchase_body(amount, payment_method_token, options)
+      xml_doc = ssl_post(authorize_url(gateway_token), body, headers)
+      Transaction.new_from(xml_doc)
+    end
+
     def add_credit_card(options)
       body = add_credit_card_body(options)
       xml_doc = ssl_post(add_payment_method_url, body, headers)
