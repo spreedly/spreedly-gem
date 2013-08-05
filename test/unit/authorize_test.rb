@@ -61,7 +61,8 @@ class AuthorizeTest < Test::Unit::TestCase
       [ './description', 'Gold Farmin' ],
       [ './ip', '183.128.100.102' ],
       [ './merchant_name_descriptor', 'TRain' ],
-      [ './merchant_location_descriptor', 'British Colombia' ]
+      [ './merchant_location_descriptor', 'British Colombia' ],
+      [ './retain_on_success', 'true' ]
   end
 
 
@@ -78,7 +79,8 @@ class AuthorizeTest < Test::Unit::TestCase
       description: "Gold Farmin",
       ip: "183.128.100.102",
       merchant_name_descriptor: "TRain",
-      merchant_location_descriptor: "British Colombia"
+      merchant_location_descriptor: "British Colombia",
+      retain_on_success: true
     }
   end
 

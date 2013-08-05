@@ -80,6 +80,7 @@ module Spreedly
         doc.amount amount
         doc.currency_code(options[:currency_code] || currency_code)
         doc.payment_method_token(payment_method_token)
+        add_to_doc(doc, options, :retain_on_success)
         add_extra_options_for_basic_ops(doc, options)
       end
     end

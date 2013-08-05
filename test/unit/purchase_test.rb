@@ -69,7 +69,8 @@ class PurchaseTest < Test::Unit::TestCase
       [ './description', 'SuperDuper' ],
       [ './ip', '183.128.100.103' ],
       [ './merchant_name_descriptor', 'Real Stuff' ],
-      [ './merchant_location_descriptor', 'Raleigh' ]
+      [ './merchant_location_descriptor', 'Raleigh' ],
+      [ './retain_on_success', 'true' ]
   end
 
 
@@ -86,7 +87,8 @@ class PurchaseTest < Test::Unit::TestCase
       description: "SuperDuper",
       ip: "183.128.100.103",
       merchant_name_descriptor: "Real Stuff",
-      merchant_location_descriptor: "Raleigh"
+      merchant_location_descriptor: "Raleigh",
+      retain_on_success: true
     }
   end
 
