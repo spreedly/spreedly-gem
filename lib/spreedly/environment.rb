@@ -49,6 +49,17 @@ module Spreedly
       api_post(add_payment_method_url, add_credit_card_body(options))
     end
 
+    def retain_payment_method(payment_method_token)
+      xml_doc = ssl_put(retain_payment_method_url(payment_method_token), '', headers)
+      Transaction.new_from(xml_doc)
+    end
+
+    def redact_payment_method(payment_method_token, options = {})
+      body = redact_payment_method_body(options)
+      xml_doc = ssl_put(redact_payment_method_url(payment_method_token), body, headers)
+      Transaction.new_from(xml_doc)
+    end
+
     def add_gateway(gateway_type, options = {})
       body = add_gateway_body(gateway_type, options)
       xml_doc = ssl_post(add_gateway_url, body, headers)
@@ -96,6 +107,13 @@ module Spreedly
       build_xml_request('transaction') do |doc|
         add_to_doc(doc, options, :amount, :currency_code)
         add_extra_options_for_basic_ops(doc, options)
+      end
+    end
+
+    def redact_payment_method_body(options)
+      return '' if options.empty?
+      build_xml_request('transaction') do |doc|
+        add_to_doc(doc, options, :remove_from_gateway)
       end
     end
 

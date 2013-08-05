@@ -26,6 +26,14 @@ module Spreedly
       "#{base_url}/v1/payment_methods.xml"
     end
 
+    def retain_payment_method_url(payment_method_token)
+      "#{base_url}/v1/payment_methods/#{payment_method_token}/retain.xml"
+    end
+
+    def redact_payment_method_url(payment_method_token)
+      "#{base_url}/v1/payment_methods/#{payment_method_token}/redact.xml"
+    end
+
     def add_gateway_url
       "#{base_url}/v1/gateways.xml"
     end

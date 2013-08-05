@@ -18,6 +18,8 @@ require 'spreedly/transactions/void'
 require 'spreedly/transactions/authorization'
 require 'spreedly/transactions/capture'
 require 'spreedly/transactions/refund'
+require 'spreedly/transactions/retain_payment_method'
+require 'spreedly/transactions/redact_payment_method'
 require 'spreedly/gateway'
 require 'spreedly/error'
 
