@@ -17,6 +17,7 @@ require 'spreedly/transactions/purchase'
 require 'spreedly/transactions/void'
 require 'spreedly/transactions/authorization'
 require 'spreedly/transactions/capture'
+require 'spreedly/transactions/refund'
 require 'spreedly/gateway'
 require 'spreedly/error'
 

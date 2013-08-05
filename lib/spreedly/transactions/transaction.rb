@@ -16,6 +16,8 @@ module Spreedly
         return Authorization.new(xml_doc)
       when 'Capture'
         return Capture.new(xml_doc)
+      when 'Credit'
+        return Refund.new(xml_doc)
       when 'Void'
         return Void.new(xml_doc)
       else

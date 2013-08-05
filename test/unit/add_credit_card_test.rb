@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'unit/response_stubs/add_credit_card_stubs'
 
-class AddGatewayTest < Test::Unit::TestCase
+class AddCreditCreditCardTest < Test::Unit::TestCase
 
   include AddCreditCardStubs
 

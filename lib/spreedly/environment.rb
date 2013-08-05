@@ -37,12 +37,16 @@ module Spreedly
       api_post(capture_url(authorization_token), capture_body(options))
     end
 
-    def add_credit_card(options)
-      api_post(add_payment_method_url, add_credit_card_body(options))
-    end
-
     def void_transaction(token, options = {})
       api_post(void_transaction_url(token), void_body(options))
+    end
+
+    def refund_transaction(token, options = {})
+      api_post(refund_transaction_url(token), refund_body(options))
+    end
+
+    def add_credit_card(options)
+      api_post(add_payment_method_url, add_credit_card_body(options))
     end
 
     def add_gateway(gateway_type, options = {})
@@ -82,6 +86,15 @@ module Spreedly
       return '' if options.empty?
 
       build_xml_request('transaction') do |doc|
+        add_extra_options_for_basic_ops(doc, options)
+      end
+    end
+
+    def refund_body(options)
+      return '' if options.empty?
+
+      build_xml_request('transaction') do |doc|
+        add_to_doc(doc, options, :amount, :currency_code)
         add_extra_options_for_basic_ops(doc, options)
       end
     end

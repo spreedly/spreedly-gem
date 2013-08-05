@@ -34,6 +34,10 @@ module Spreedly
       "#{base_url}/v1/transactions/#{token}/void.xml"
     end
 
+    def refund_transaction_url(token)
+      "#{base_url}/v1/transactions/#{token}/credit.xml"
+    end
+
   end
 
 end
