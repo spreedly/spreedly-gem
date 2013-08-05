@@ -18,6 +18,10 @@ module Spreedly
       "#{base_url}/v1/gateways/#{gateway_token}/authorize.xml"
     end
 
+    def capture_url(authorization_token)
+      "#{base_url}/v1/transactions/#{authorization_token}/capture.xml"
+    end
+
     def add_payment_method_url
       "#{base_url}/v1/payment_methods.xml"
     end

@@ -35,6 +35,12 @@ module Spreedly
       Transaction.new_from(xml_doc)
     end
 
+    def capture_transaction(authorization_token, options = {})
+      body = capture_body(options)
+      xml_doc = ssl_post(capture_url(authorization_token), body, headers)
+      Transaction.new_from(xml_doc)
+    end
+
     def add_credit_card(options)
       body = add_credit_card_body(options)
       xml_doc = ssl_post(add_payment_method_url, body, headers)
@@ -66,6 +72,15 @@ module Spreedly
         doc.amount amount
         doc.currency_code(options[:currency_code] || currency_code)
         doc.payment_method_token(payment_method_token)
+        add_extra_options_for_basic_ops(doc, options)
+      end
+    end
+
+    def capture_body(options)
+      return '' if options.empty?
+
+      build_xml_request('transaction') do |doc|
+        add_to_doc(doc, options, :amount, :currency_code)
         add_extra_options_for_basic_ops(doc, options)
       end
     end

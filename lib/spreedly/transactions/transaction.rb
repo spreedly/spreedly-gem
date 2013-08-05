@@ -14,6 +14,8 @@ module Spreedly
         return Purchase.new(xml_doc)
       when 'Authorization'
         return Authorization.new(xml_doc)
+      when 'Capture'
+        return Capture.new(xml_doc)
       when 'Void'
         return Void.new(xml_doc)
       else

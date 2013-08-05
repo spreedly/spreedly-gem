@@ -14,7 +14,7 @@ class RemotePurchaseTest < Test::Unit::TestCase
 
   def test_payment_method_not_found
     assert_raise_with_message(Spreedly::TransactionCreationError, "There is no payment method corresponding to the specified payment method token.") do
-      @environment.purchase_on_gateway('unknown_gateway', 'ptoken', 100)
+      @environment.purchase_on_gateway('gateway_token', 'unknown_payment_method', 100)
     end
   end
 

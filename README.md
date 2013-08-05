@@ -109,9 +109,16 @@ credit_card.errors
 auth_transaction = env.authorize_on_gateway(gateway_token, payment_method_token, 250)
 
 if auth_transaction.succeeded?
-  capture_transaction = env.capture_on_gateway(gateway_token, auth_transaction.token)
+  capture_transaction = env.capture_transaction(auth_transaction.token)
 end
 ```
+
+You can also specify an optional amount to capture.
+
+``` ruby
+capture_transaction = env.capture_transaction(auth_transaction.token, amount: 100)
+```
+
 
 #### Void and refund
 
