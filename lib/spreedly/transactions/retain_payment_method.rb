@@ -1,6 +1,5 @@
 module Spreedly
 
-
   class RetainPaymentMethod < Transaction
 
     attr_reader :payment_method

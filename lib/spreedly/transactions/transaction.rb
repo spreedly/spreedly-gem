@@ -29,6 +29,13 @@ module Spreedly
       end
     end
 
+    def self.new_list_from(xml_doc)
+      transactions = xml_doc.xpath('.//transactions/transaction')
+      transactions.map do |each|
+        self.new_from(each)
+      end
+    end
+
   end
 
 end

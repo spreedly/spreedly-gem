@@ -26,8 +26,12 @@ module Spreedly
       "#{base_url}/v1/transactions/#{authorization_token}/capture.xml"
     end
 
-    def add_payment_method_url
-      "#{base_url}/v1/payment_methods.xml"
+    def void_transaction_url(token)
+      "#{base_url}/v1/transactions/#{token}/void.xml"
+    end
+
+    def refund_transaction_url(token)
+      "#{base_url}/v1/transactions/#{token}/credit.xml"
     end
 
     def retain_payment_method_url(payment_method_token)
@@ -38,16 +42,17 @@ module Spreedly
       "#{base_url}/v1/payment_methods/#{payment_method_token}/redact.xml"
     end
 
+    def list_transactions_url(since_token)
+      since_param = "?since_token=#{since_token}" if since_token
+      "#{base_url}/v1/transactions.xml#{since_param}"
+    end
+
     def add_gateway_url
       "#{base_url}/v1/gateways.xml"
     end
 
-    def void_transaction_url(token)
-      "#{base_url}/v1/transactions/#{token}/void.xml"
-    end
-
-    def refund_transaction_url(token)
-      "#{base_url}/v1/transactions/#{token}/credit.xml"
+    def add_payment_method_url
+      "#{base_url}/v1/payment_methods.xml"
     end
 
   end

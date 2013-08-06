@@ -187,28 +187,28 @@ next_set = env.find_gateways(gateways.last.token)
 #### Retrieving payment methods
 
 ``` ruby
-payment_methods = env.find_payment_methods
+payment_methods = env.list_payment_methods
 
 # Iterate over the next chunk
-next_set = env.find_payment_methods(payment_methods.last.token)
+next_set = env.list_payment_methods(payment_methods.last.token)
 ```
 
 #### Retrieving transactions
 
 ``` ruby
-transactions = env.find_transactions
+transactions = env.list_transactions
 
 # Iterate over the next chunk
-next_set = env.find_transactions(transactions.last.token)
+next_set = env.list_transactions(transactions.last.token)
 ```
 
 #### Retrieving transactions for a payment method
 
 ``` ruby
-transactions = env.find_transactions(nil, payment_method_token)
+transactions = env.list_transactions(nil, payment_method_token)
 
 # Iterate over the next chunk
-next_set = env.find_transactions(transactions.last.token, payment_method_token)
+next_set = env.list_transactions(transactions.last.token, payment_method_token)
 ```
 
 #### Retrieving one gateway
