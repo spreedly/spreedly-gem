@@ -365,3 +365,9 @@ env.purchase_on_gateway(gateway_token, payment_method_token, 802) # Raises Spree
 
 We're happy to consider [pull requests](https://help.github.com/articles/using-pull-requests).
 
+There are two rake tasks to help run the tests:
+
+```
+rake test:remote  # Run remote tests that actually hit the Spreedly site
+rake test:units   # Run unit tests
+```
