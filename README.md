@@ -359,6 +359,9 @@ handle the case of Spreedly itself not responding.  Here's an example:
 env.purchase_on_gateway(gateway_token, payment_method_token, 802) # Raises Spreedly::TimeoutError
 ```
 
+## Sample applications using the gem
+
+There are some sample applications with source code using this gem.  You can [find them here](https://core.spreedly.com/manual/sample_applications).
 
 ## Contributing
 

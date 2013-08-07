@@ -28,7 +28,6 @@ module Spreedly
     private
     def http
       http = Net::HTTP.new(endpoint.host, endpoint.port)
-      # http.set_debug_output(wiredump_device)
       http.open_timeout = 60
       http.read_timeout = 60
       http.use_ssl = true
