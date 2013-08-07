@@ -14,6 +14,10 @@ module Spreedly
       "#{base_url}/v1/transactions/#{token}.xml"
     end
 
+    def find_gateway_url(token)
+      "#{base_url}/v1/gateways/#{token}.xml"
+    end
+
     def purchase_url(gateway_token)
       "#{base_url}/v1/gateways/#{gateway_token}/purchase.xml"
     end

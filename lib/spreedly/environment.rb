@@ -28,6 +28,11 @@ module Spreedly
       Transaction.new_from(xml_doc)
     end
 
+    def find_gateway(token)
+      xml_doc = ssl_get(find_gateway_url(token), headers)
+      Gateway.new(xml_doc)
+    end
+
     def purchase_on_gateway(gateway_token, payment_method_token, amount, options = {})
       body = auth_purchase_body(amount, payment_method_token, options)
       api_post(purchase_url(gateway_token), body)
