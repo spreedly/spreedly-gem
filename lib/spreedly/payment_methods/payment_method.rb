@@ -1,0 +1,34 @@
+require 'time'
+
+module Spreedly
+
+  class PaymentMethod < Model
+
+    include ErrorsParser
+
+    field :email, :storage_state, :data
+    attr_reader :errors
+
+    def initialize(xml_doc)
+      super
+      @errors = errors_from(xml_doc)
+    end
+
+    def self.new_from(xml_doc)
+      case xml_doc.at_xpath('.//payment_method_type').inner_text
+      when 'credit_card'
+        return CreditCard.new(xml_doc)
+      when 'paypal'
+        return Paypal.new(xml_doc)
+      when 'sprel'
+        return Sprel.new(xml_doc)
+      end
+    end
+
+    def valid?
+      @errors.empty?
+    end
+
+  end
+
+end

@@ -1,6 +1,8 @@
 Gemfile.lock
-doc
+doc/
 pkg
-tmp
-test/test_site.yml
 *.gem
+.bundle
+tmp
+vendor/ruby
+test/credentials/personal_credentials.yml
