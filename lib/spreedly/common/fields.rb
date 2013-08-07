@@ -12,6 +12,13 @@ module Spreedly
       end
     end
 
+    def field_hash
+      self.class.fields.inject({}) do |hash, each|
+        hash[each] = send(each)
+        hash
+      end
+    end
+
     module ClassMethods
       def field(*fields_to_add)
         options = fields_to_add.extract_options!
