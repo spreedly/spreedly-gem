@@ -16,9 +16,15 @@ module Spreedly
 
     private
     def ssl_request(method, endpoint, body, headers)
-      raw_response = raw_ssl_request(method, endpoint, body, headers)
+      raw_response = Timeout::timeout(70) do
+        raw_ssl_request(method, endpoint, body, headers)
+      end
+
       show_raw_response(raw_response)
       handle_response(raw_response)
+
+    rescue Timeout::Error => e
+      raise Spreedly::TimeoutError.new
     end
 
     def raw_ssl_request(method, endpoint, body, headers = {})

@@ -326,20 +326,20 @@ transaction.payment_method.errors
 #### Failure to find
 
 ``` ruby
-env.find_transaction("Some Unknown Token")  # raises a NotFoundError
+env.find_transaction("Some Unknown Token")  # raises a Spreedly::NotFoundError
 ```
 
 #### Invalid environment credentials
 
 ``` ruby
 env = Spreedly::Environment.new(environment_key, "some bogus secret")
-env.purchase_on_gateway(gateway_token, payment_method_token, 4432) # Raises an AuthenticationError
+env.purchase_on_gateway(gateway_token, payment_method_token, 4432) # Raises a Spreedly::AuthenticationError
 ```
 
 #### Unknown payment method trying to make a purchase
 
 ``` ruby
-env.purchase_on_gateway(gateway_token, "Some Unknown Token", 4432) # Raises a TransactionCreationError
+env.purchase_on_gateway(gateway_token, "Some Unknown Token", 4432) # Raises a Spreedly::TransactionCreationError
 ```
 
 #### Trying to use a non-test gateway or a non-test payment method with an inactive account
@@ -348,7 +348,16 @@ You're free to use [test card data](https://core.spreedly.com/manual/test-data) 
 paid Spreedly account.  If you try to use a real card or a real gateway when your account isn't yet paid for, we'll raise an exception:
 
 ``` ruby
-env.purchase_on_gateway(gateway_token, "Payment Method Token for a real card", 4432) # Raises a PaymentRequiredError
+env.purchase_on_gateway(gateway_token, "Payment Method Token for a real card", 4432) # Raises a Spreedly::PaymentRequiredError
+```
+
+#### Timeout errors
+
+If Spreedly is not responding, we'll raise an exception.  Spreedly itself has a timeout so that if a gateway isn't responding, it'll reflect that in the response.  The gem has its own timeout to
+handle the case of Spreedly itself not responding.  Here's an example:
+
+``` ruby
+env.purchase_on_gateway(gateway_token, payment_method_token, 802) # Raises a Spreedly::TimeoutError
 ```
 
 

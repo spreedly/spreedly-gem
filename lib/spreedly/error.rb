@@ -27,6 +27,12 @@ module Spreedly
   class PaymentRequiredError < XmlErrorsList
   end
 
+  class TimeoutError < Error
+    def initialize(message = "The payment system is not responding.")
+      super
+    end
+  end
+
   class UnexpectedResponseError < Error
     attr_reader :response
 
