@@ -87,7 +87,7 @@ Once Spreedly has recorded the information, it will redirect the browser to the 
 Once you have the payment method token (OEj2G2QJZM4C10AfTLYTrsKIsZH in this case), you can remember it and use it whenever you'd like.  These [test cards](https://core.spreedly.com/manual/test-data) will help.
 
 #### Retrieve a payment method
-Let's say you'd like some additional information about the payment method.  You can do so like this:
+Let's say you'd like some additional information about the payment method.  You can find a payment method like so:
 
 ``` ruby
 credit_card = env.find_payment_method(token)
@@ -129,7 +129,7 @@ transaction = env.void_transaction(transaction_token)
 transaction = env.refund_transaction(transaction_token)
 
 # Specify an amount to be refunded
-transaction = env.refund_transaction(transaction_token, 104)
+transaction = env.refund_transaction(transaction_token, amount: 104)
 ```
 
 #### Retain and redact
@@ -162,7 +162,6 @@ env.purchase_on_gateway(gateway_token, payment_method_token, amount,
                         order_id: "123",
                         description: "The Description",
                         ip: "192.31.123.112",
-                        currency_code: "GBP",
                         merchant_name_descriptor: "SuperDuper Corp",
                         merchant_location_descriptor: "http://super.com"
                        )
@@ -178,10 +177,10 @@ env.purchase_on_gateway(gateway_token, payment_method_token, amount, retain_on_s
 #### Retrieving gateways
 
 ``` ruby
-gateways = env.find_gateways
+gateways = env.list_gateways
 
 # Iterate over the next chunk
-next_set = env.find_gateways(gateways.last.token)
+next_set = env.list_gateways(gateways.last.token)
 ```
 
 #### Retrieving payment methods
