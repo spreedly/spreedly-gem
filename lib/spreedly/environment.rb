@@ -66,8 +66,8 @@ module Spreedly
       Transaction.new_from(xml_doc)
     end
 
-    def list_transactions(since_token = nil)
-      xml_doc = ssl_get(list_transactions_url(since_token), headers)
+    def list_transactions(since_token = nil, payment_method_token = nil)
+      xml_doc = ssl_get(list_transactions_url(since_token, payment_method_token), headers)
       Transaction.new_list_from(xml_doc)
     end
 

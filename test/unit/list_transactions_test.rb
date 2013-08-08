@@ -25,15 +25,21 @@ class FindPaymentMethodTest < Test::Unit::TestCase
   end
 
   def test_request_url
-    url = get_request_url(successful_list_transactions_response) do
+    assert_request_url 'https://core.spreedly.com/v1/transactions.xml' do
       @environment.list_transactions
     end
-    assert_equal 'https://core.spreedly.com/v1/transactions.xml', url
 
-    url = get_request_url(successful_list_transactions_response) do
+    assert_request_url 'https://core.spreedly.com/v1/transactions.xml?since_token=SomeToken' do
       @environment.list_transactions("SomeToken")
     end
-    assert_equal 'https://core.spreedly.com/v1/transactions.xml?since_token=SomeToken', url
+
+    assert_request_url 'https://core.spreedly.com/v1/payment_methods/SomePaymentMethodToken/transactions.xml' do
+      @environment.list_transactions(nil, 'SomePaymentMethodToken')
+    end
+
+    assert_request_url 'https://core.spreedly.com/v1/payment_methods/SomePaymentMethodToken/transactions.xml?since_token=SinceToken' do
+      @environment.list_transactions('SinceToken', 'SomePaymentMethodToken')
+    end
   end
 
   private
@@ -42,5 +48,11 @@ class FindPaymentMethodTest < Test::Unit::TestCase
     @environment.list_transactions
   end
 
+  def assert_request_url(expected_url)
+    actual_url = get_request_url(successful_list_transactions_response) do
+      yield
+    end
+    assert_equal expected_url, actual_url
+  end
 
 end
