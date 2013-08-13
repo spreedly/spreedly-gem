@@ -53,6 +53,11 @@ module Spreedly
       "#{base_url}/v1/payment_methods/#{payment_method_token}/transactions.xml#{since_param}"
     end
 
+    def list_payment_methods_url(since_token)
+      since_param = "?since_token=#{since_token}" if since_token
+      "#{base_url}/v1/payment_methods.xml#{since_param}"
+    end
+
     def add_gateway_url
       "#{base_url}/v1/gateways.xml"
     end

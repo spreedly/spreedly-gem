@@ -25,6 +25,13 @@ module Spreedly
       end
     end
 
+    def self.new_list_from(xml_doc)
+      payment_methods = xml_doc.xpath('.//payment_methods/payment_method')
+      payment_methods.map do |each|
+        self.new_from(each)
+      end
+    end
+
     def valid?
       @errors.empty?
     end
