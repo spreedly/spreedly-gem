@@ -230,10 +230,10 @@ transaction.order_id      # => '30-9904-31114'
 env.find_transaction_transcript(transaction_token)
 ```
 
-#### Updating a payment method
+#### Updating a credit card
 
 ``` ruby
-env.update_payment_method(payment_method_token, first_name: 'JimBob', last_name: 'Jones')
+env.update_credit_card(credit_card_token, first_name: 'JimBob', last_name: 'Jones')
 ```
 
 #### Adding other types of gateways

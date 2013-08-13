@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'unit/response_stubs/list_payment_methods_stubs'
 
-class FindPaymentMethodTest < Test::Unit::TestCase
+class ListPaymentMethodsTest < Test::Unit::TestCase
 
   include ListPaymentMethodsStubs
 
