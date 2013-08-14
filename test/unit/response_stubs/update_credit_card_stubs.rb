@@ -7,7 +7,7 @@ module UpdateCreditCardStubs
         <created_at type="datetime">2013-08-13T21:33:09Z</created_at>
         <updated_at type="datetime">2013-08-13T21:33:10Z</updated_at>
         <email>cauthon@wot.com</email>
-        <data>Don't test everything here, since find_payment_method tests it all.</data>
+        <data nil="true"/>
         <storage_state>retained</storage_state>
         <last_four_digits>4444</last_four_digits>
         <card_type>master</card_type>

@@ -16,7 +16,6 @@ class UpdateCreditCreditCardTest < Test::Unit::TestCase
 
     assert_equal 'LagdXxK2VXC6DQ5XxP6UdjRJXBn', c.token
     assert_equal 'Mat Cauthon', c.full_name
-    assert_equal "Don't test everything here, since find_payment_method tests it all.", c.data
   end
 
   def test_request_body_params
@@ -26,7 +25,6 @@ class UpdateCreditCreditCardTest < Test::Unit::TestCase
 
     payment_method = body.xpath('./payment_method')
     assert_xpaths_in payment_method,
-      [ './data', 'talent: Late' ],
       [ './email', 'leavenworth@free.com' ],
       [ './first_name', 'Leavenworth' ],
       [ './last_name', 'Smedry' ],
@@ -50,7 +48,7 @@ class UpdateCreditCreditCardTest < Test::Unit::TestCase
   def full_card_details
     {
       email: 'leavenworth@free.com', month: 3, year: 2021,
-      last_name: 'Smedry', first_name: 'Leavenworth', data: "talent: Late",
+      last_name: 'Smedry', first_name: 'Leavenworth',
       address1: '10 Dragon Lane', address2: 'Suite 9', city: 'Tuki Tuki', state: 'Mokia',
       zip: '1122', country: 'Free Kingdoms', phone_number: '81Ab'
     }
