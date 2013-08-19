@@ -24,6 +24,8 @@ module Spreedly
         return RetainPaymentMethod.new(xml_doc)
       when 'RedactPaymentMethod'
         return RedactPaymentMethod.new(xml_doc)
+      when 'RedactGateway'
+        return RedactGateway.new(xml_doc)
       else
         Transaction.new(xml_doc)
       end

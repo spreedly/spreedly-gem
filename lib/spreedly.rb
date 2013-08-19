@@ -20,6 +20,7 @@ require 'spreedly/transactions/capture'
 require 'spreedly/transactions/refund'
 require 'spreedly/transactions/retain_payment_method'
 require 'spreedly/transactions/redact_payment_method'
+require 'spreedly/transactions/redact_gateway'
 require 'spreedly/gateway'
 require 'spreedly/error'
 

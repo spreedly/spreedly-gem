@@ -10,7 +10,7 @@ class RedactPaymentMethodTest < Test::Unit::TestCase
   end
 
   def test_successful_redact
-    t = redact_using(successful_redact_response)
+    t = redact_using(successful_redact_payment_method_response)
 
     assert_kind_of(Spreedly::RedactPaymentMethod, t)
     assert_equal '2BSe5T6FHpypph3ensF7m3Nb3qk', t.token
@@ -24,7 +24,7 @@ class RedactPaymentMethodTest < Test::Unit::TestCase
   end
 
   def test_empty_request_body_params
-    body = get_request_body(successful_redact_response) do
+    body = get_request_body(successful_redact_payment_method_response) do
       @environment.redact_payment_method("TransactionToken")
     end
 
@@ -32,7 +32,7 @@ class RedactPaymentMethodTest < Test::Unit::TestCase
   end
 
   def test_request_body_params
-    body = get_request_body(successful_redact_response) do
+    body = get_request_body(successful_redact_payment_method_response) do
       @environment.redact_payment_method("TransactionToken", remove_from_gateway: 'ThePassedGatewayToken')
     end
 

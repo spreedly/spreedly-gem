@@ -1,6 +1,6 @@
 module RedactPaymentMethodStubs
 
-  def successful_redact_response
+  def successful_redact_payment_method_response
     StubResponse.succeeded <<-XML
       <transaction>
         <on_test_gateway type="boolean">false</on_test_gateway>
@@ -43,11 +43,6 @@ module RedactPaymentMethodStubs
           <number>XXXX-XXXX-XXXX-4444</number>
         </payment_method>
       </transaction>
-    XML
-  end
-
-  def failed_redact_response
-    StubResponse.failed <<-XML
     XML
   end
 

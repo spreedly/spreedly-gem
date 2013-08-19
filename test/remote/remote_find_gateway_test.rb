@@ -24,7 +24,7 @@ class RemoteFindGatewayTest < Test::Unit::TestCase
     found = @environment.find_gateway(gateway.token)
 
     assert_equal gateway.token, found.token
-    assert_equal "Test", gateway.name
+    assert_equal "Spreedly Test", gateway.name
     assert_equal "retained", gateway.state
   end
 

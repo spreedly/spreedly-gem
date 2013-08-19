@@ -24,7 +24,7 @@ class RemoteAddGatewayTest < Test::Unit::TestCase
     gateway = @environment.add_gateway(:test)
     assert_equal "test", gateway.gateway_type
     assert_equal "retained", gateway.state
-    assert_equal "Test", gateway.name
+    assert_equal "Spreedly Test", gateway.name
   end
 
 end
