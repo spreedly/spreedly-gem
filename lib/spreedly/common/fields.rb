@@ -37,7 +37,6 @@ module Spreedly
         subclass.instance_variable_set("@fields", instance_variable_get("@fields"))
       end
 
-      private
       def add_accessor_for(f, field_type)
         case field_type
         when :boolean
