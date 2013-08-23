@@ -13,10 +13,11 @@ class FindGatewayTest < Test::Unit::TestCase
     g = find_using(successful_get_gateway_response)
 
     assert_kind_of(Spreedly::Gateway, g)
-    assert_equal("RsVlPgS4dMzeeUpKXxk01rMMRrQ", g.token)
-    assert_equal Time.parse("2013-08-07 18:53:30 UTC"), g.created_at
-    assert_equal Time.parse("2013-08-07 18:53:30 UTC"), g.updated_at
-    assert_equal 'redacted', g.state
+    assert_equal("5YqAdCL5AaxdbDdo1yZCkB4r74p", g.token)
+    assert_equal(Time.parse("2013-08-23 14:52:25 UTC"), g.created_at)
+    assert_equal(Time.parse("2013-08-23 14:52:25 UTC"), g.updated_at)
+    assert_equal('redacted', g.state)
+    assert_equal({ 'username' => "UsernameOfAwesome", 'business_case_signature' => "Super Sig" }, g.credentials)
   end
 
   private
