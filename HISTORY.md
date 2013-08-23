@@ -1,5 +1,16 @@
 # Changelog
 
+## 2.0.1
+* List the transactions for a payment method
+* Allow adding other gateways
+* Listing Payment Methods (retained on an account)
+* Updating a Payment Method
+* Listing Your Gateways
+* Finding a Gateway
+* Fix Ruby 1.9.2 private method issue
+* Add ability to find a bank account payment method
+* Add ability to redact a gateway
+
 ## 2.0.0
 * This gem is now intended for the Spreedly API.  For the Spreedly
   Subscriptions API, you can use the spreedly_subscriptions gem
