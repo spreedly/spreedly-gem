@@ -27,4 +27,10 @@ class RemoteAddGatewayTest < Test::Unit::TestCase
     assert_equal "Spreedly Test", gateway.name
   end
 
+  def test_need_active_account
+    assert_raise_with_message(Spreedly::PaymentRequiredError, "Your account has not been activated for real transactions. Please update your subscription settings.") do
+      gateway = @environment.add_gateway(:wirecard)
+    end
+  end
+
 end

@@ -81,8 +81,8 @@ module Spreedly
       PaymentMethod.new_list_from(xml_doc)
     end
 
-    def add_gateway(gateway_type, options = {})
-      body = add_gateway_body(gateway_type, options)
+    def add_gateway(gateway_type, credentials = {})
+      body = add_gateway_body(gateway_type, credentials)
       xml_doc = ssl_post(add_gateway_url, body, headers)
       Gateway.new(xml_doc)
     end
@@ -148,9 +148,10 @@ module Spreedly
       end
     end
 
-    def add_gateway_body(gateway_type, options)
+    def add_gateway_body(gateway_type, credentials)
       build_xml_request('gateway') do |doc|
         doc.gateway_type gateway_type
+        add_to_doc(doc, credentials, *credentials.keys)
       end
     end
 
