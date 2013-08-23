@@ -81,6 +81,11 @@ module Spreedly
       PaymentMethod.new_list_from(xml_doc)
     end
 
+    def list_gateways(since_token = nil)
+      xml_doc = ssl_get(list_gateways_url(since_token), headers)
+      Gateway.new_list_from(xml_doc)
+    end
+
     def add_gateway(gateway_type, credentials = {})
       body = add_gateway_body(gateway_type, credentials)
       xml_doc = ssl_post(add_gateway_url, body, headers)

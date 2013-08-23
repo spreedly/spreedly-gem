@@ -11,6 +11,12 @@ module Spreedly
       init_credentials(xml_doc)
     end
 
+    def self.new_list_from(xml_doc)
+      gateways = xml_doc.xpath('.//gateways/gateway')
+      gateways.map do |each|
+        self.new(each)
+      end
+    end
 
     private
     def init_credentials(xml_doc)
