@@ -22,6 +22,8 @@ module Spreedly
         return Paypal.new(xml_doc)
       when 'sprel'
         return Sprel.new(xml_doc)
+      when 'bank_account'
+        return BankAccount.new(xml_doc)
       end
     end
 

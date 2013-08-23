@@ -80,6 +80,29 @@ class FindPaymentMethodTest < Test::Unit::TestCase
     assert_equal("retained", paypal.storage_state)
   end
 
+  def test_successfully_find_bank_account
+    b = find_using(successful_get_bank_account_response)
+
+    assert_kind_of(Spreedly::BankAccount, b)
+    assert_equal "seeQDV0jwJwFa1FUUsph6kPMTj", b.token
+    assert_equal "daniel@waterhouse.com", b.email
+    assert_equal(1376673633, b.created_at.to_i)
+    assert_equal(1376673633, b.updated_at.to_i)
+    assert_equal("GeekyNote", b.data)
+    assert_equal("cached", b.storage_state)
+    assert_equal("Daniel", b.first_name)
+    assert_equal("Waterhouse", b.last_name)
+    assert_equal("Daniel Waterhouse", b.full_name)
+    assert_equal("First Bank of Crypto", b.bank_name)
+    assert_equal("checking", b.account_type)
+    assert_equal("personal", b.account_holder_type)
+    assert_equal("021", b.routing_number_display_digits)
+    assert_equal("4321", b.account_number_display_digits)
+    assert_equal("021*", b.routing_number)
+    assert_equal("*4321", b.account_number)
+    assert_equal([], b.errors)
+  end
+
   private
   def find_using(response)
     @environment.stubs(:raw_ssl_request).returns(response)

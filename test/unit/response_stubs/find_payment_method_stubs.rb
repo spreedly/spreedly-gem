@@ -105,4 +105,30 @@ module FindPaymentMethodStubs
     XML
   end
 
+  def successful_get_bank_account_response
+    StubResponse.succeeded <<-XML
+      <payment_method>
+        <token>seeQDV0jwJwFa1FUUsph6kPMTj</token>
+        <created_at type="datetime">2013-08-16T17:20:33Z</created_at>
+        <updated_at type="datetime">2013-08-16T17:20:33Z</updated_at>
+        <email>daniel@waterhouse.com</email>
+        <data>GeekyNote</data>
+        <storage_state>cached</storage_state>
+        <full_name>Daniel Waterhouse</full_name>
+        <bank_name>First Bank of Crypto</bank_name>
+        <account_type>checking</account_type>
+        <account_holder_type>personal</account_holder_type>
+        <routing_number_display_digits>021</routing_number_display_digits>
+        <account_number_display_digits>4321</account_number_display_digits>
+        <first_name>Daniel</first_name>
+        <last_name>Waterhouse</last_name>
+        <payment_method_type>bank_account</payment_method_type>
+        <errors>
+        </errors>
+        <routing_number>021*</routing_number>
+        <account_number>*4321</account_number>
+      </payment_method>
+    XML
+  end
+
 end
