@@ -15,4 +15,12 @@ class EnvironmentTest < Test::Unit::TestCase
     assert_equal "EUR", environment.currency_code
   end
 
+  def test_base_url_default
+    assert_equal "https://core.spreedly.com", @environment.base_url
+  end
+
+  def test_base_url_override
+    environment = Spreedly::Environment.new("TheKey", "TheAccessSecret", base_url: "http://it.com")
+    assert_equal "http://it.com", environment.base_url
+  end
 end

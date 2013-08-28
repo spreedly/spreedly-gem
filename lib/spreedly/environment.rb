@@ -7,10 +7,11 @@ module Spreedly
     include SslRequester
     include Urls
 
-    attr_reader :key, :currency_code
+    attr_reader :key, :currency_code, :base_url
 
     def initialize(environment_key, access_secret, options={})
       @key, @access_secret = environment_key, access_secret
+      @base_url = options[:base_url] || "https://core.spreedly.com"
       @currency_code = options[:currency_code] || 'USD'
     end
 

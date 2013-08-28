@@ -2,10 +2,6 @@ module Spreedly
 
   module Urls
 
-    def base_url
-      "https://core.spreedly.com"
-    end
-
     def find_payment_method_url(token)
       "#{base_url}/v1/payment_methods/#{token}.xml"
     end
