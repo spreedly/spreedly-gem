@@ -1,6 +1,6 @@
 # Changelog
 
-## Pending
+## 2.0.2
 * Add support for gateway options call.
 
 ## 2.0.1
