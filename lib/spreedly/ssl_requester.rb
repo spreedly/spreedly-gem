@@ -14,6 +14,10 @@ module Spreedly
       ssl_request(:put, endpoint, body, headers)
     end
 
+    def ssl_options(endpoint)
+      ssl_request(:options, endpoint, nil, {})
+    end
+
     private
     def ssl_request(method, endpoint, body, headers)
       raw_response = Timeout::timeout(70) do
@@ -57,6 +61,7 @@ module Spreedly
 
     def show_raw_response(raw_response)
       return unless ENV['SHOW_RAW_RESPONSE'] == 'true'
+      puts raw_response.inspect
       puts "\nraw_response.code: #{raw_response.code}\nraw_response.body:\n#{raw_response.body}"
     end
 

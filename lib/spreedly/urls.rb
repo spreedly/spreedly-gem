@@ -63,6 +63,10 @@ module Spreedly
       "#{base_url}/v1/gateways.xml#{since_param}"
     end
 
+    def gateway_options_url
+      "#{base_url}/v1/gateways.xml"
+    end
+
     def add_gateway_url
       "#{base_url}/v1/gateways.xml"
     end

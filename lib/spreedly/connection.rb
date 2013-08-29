@@ -20,6 +20,8 @@ module Spreedly
         http.put(endpoint.request_uri, body, headers)
       when :delete
         http.delete(endpoint.request_uri, headers)
+      when :options
+        http.request(OptionsWithResponseBody.new(endpoint.request_uri, headers))
       else
         raise ArgumentError, "Unsupported request method #{method.to_s.upcase}"
       end
@@ -36,5 +38,12 @@ module Spreedly
       http
     end
   end
+
+  class OptionsWithResponseBody < Net::HTTPRequest
+    METHOD = 'OPTIONS'
+    REQUEST_HAS_BODY = false
+    RESPONSE_HAS_BODY = true
+  end
+
 end
 

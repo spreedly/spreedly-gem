@@ -1,5 +1,8 @@
 # Changelog
 
+## Pending
+* Add support for gateway options call.
+
 ## 2.0.1
 * List the transactions for a payment method
 * Allow adding other gateways
