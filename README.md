@@ -288,6 +288,14 @@ transaction.card.last_name      # => "Smedry"
 
 ```
 
+#### Getting meta information about the supported gateways
+
+You can get the full list of supported gateways like so:
+
+``` ruby
+env.gateway_options
+```
+
 
 ## Error Handling
 
@@ -358,6 +366,8 @@ handle the case of Spreedly itself not responding.  Here's an example:
 ``` ruby
 env.purchase_on_gateway(gateway_token, payment_method_token, 802) # Raises Spreedly::TimeoutError
 ```
+
+For api calls that actually talk to a payment gateway, the timout is longer since some gateways can take longer to respond when under load.
 
 ## Sample applications using the gem
 

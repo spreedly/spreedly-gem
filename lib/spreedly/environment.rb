@@ -99,7 +99,7 @@ module Spreedly
     end
 
     def add_credit_card(options)
-      api_post(add_payment_method_url, add_credit_card_body(options))
+      api_post(add_payment_method_url, add_credit_card_body(options), false)
     end
 
     def update_credit_card(credit_card_token, options)
@@ -202,8 +202,8 @@ module Spreedly
       builder.to_xml
     end
 
-    def api_post(url, body)
-      xml_doc = ssl_post(url, body, headers)
+    def api_post(url, body, talking_to_gateway = true)
+      xml_doc = ssl_post(url, body, headers, talking_to_gateway)
       Transaction.new_from(xml_doc)
     end
 

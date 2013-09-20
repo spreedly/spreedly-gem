@@ -1,5 +1,10 @@
 # Changelog
 
+## Next version
+* Smarter about timeouts - now only have long timeout for calls
+  that actually talk to a payment gateway.  The other calls can
+  have shorter timeouts.
+
 ## 2.0.2
 * Add support for gateway options call.
 

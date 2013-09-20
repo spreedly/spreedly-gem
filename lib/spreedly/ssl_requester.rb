@@ -2,25 +2,26 @@ module Spreedly
 
   module SslRequester
 
-    def ssl_get(endpoint, headers = {})
-      ssl_request(:get, endpoint, nil, headers)
+    def ssl_get(endpoint, headers, talking_to_gateway = false)
+      ssl_request(:get, endpoint, nil, headers, talking_to_gateway)
     end
 
-    def ssl_post(endpoint, body, headers = {})
-      ssl_request(:post, endpoint, body, headers)
+    def ssl_post(endpoint, body, headers, talking_to_gateway = false)
+      ssl_request(:post, endpoint, body, headers, talking_to_gateway)
     end
 
-    def ssl_put(endpoint, body, headers = {})
-      ssl_request(:put, endpoint, body, headers)
+    def ssl_put(endpoint, body, headers, talking_to_gateway = false)
+      ssl_request(:put, endpoint, body, headers, talking_to_gateway)
     end
 
-    def ssl_options(endpoint)
-      ssl_request(:options, endpoint, nil, {})
+    def ssl_options(endpoint, talking_to_gateway = false)
+      ssl_request(:options, endpoint, nil, {}, talking_to_gateway)
     end
 
     private
-    def ssl_request(method, endpoint, body, headers)
-      raw_response = Timeout::timeout(70) do
+    def ssl_request(method, endpoint, body, headers, talking_to_gateway)
+      how_long = talking_to_gateway ? 66 : 10
+      raw_response = Timeout::timeout(how_long) do
         raw_ssl_request(method, endpoint, body, headers)
       end
 
