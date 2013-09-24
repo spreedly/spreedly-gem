@@ -29,7 +29,7 @@ module Spreedly
       end
 
       show_raw_response(raw_response)
-      handle_response(raw_response)
+      handle_response(raw_response, return_raw)
 
     rescue Timeout::Error => e
       raise Spreedly::TimeoutError.new
@@ -43,8 +43,11 @@ module Spreedly
     def handle_response(response, return_raw = false)
       case response.code.to_i
       when 200...300
-        # xml_doc
-        return return_raw ? response.body : xml_doc(response)
+        if return_raw
+          response.body
+        else
+          xml_doc(response)
+        end
       when 401
         raise AuthenticationError.new(xml_doc(response))
       when 404

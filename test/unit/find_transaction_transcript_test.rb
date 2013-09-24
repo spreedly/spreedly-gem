@@ -12,7 +12,7 @@ class FindTransactionTranscriptTest < Test::Unit::TestCase
   def test_successful_find_transaction_transcript
     t = find_using(successful_get_transaction_transcript_response)
 
-    assert_kind_of(Nokogiri::XML::Document, t)
+    assert_kind_of(String, t)
   end
 
   private

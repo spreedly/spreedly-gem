@@ -7,9 +7,7 @@ class RemoteFindTransactionTranscriptTest < Test::Unit::TestCase
   end
 
   def test_invalid_login
-
     assert_invalid_login do |environment|
-      p  environment.find_transaction_transcript("SomeToken")
       environment.find_transaction_transcript("SomeToken")
     end
   end
@@ -27,7 +25,7 @@ class RemoteFindTransactionTranscriptTest < Test::Unit::TestCase
 
     found = @environment.find_transaction_transcript(transaction.token)
 
-    assert_kind_of(Nokogiri::XML::Document, found)
+    assert_kind_of(String, found)
   end
 
 end
