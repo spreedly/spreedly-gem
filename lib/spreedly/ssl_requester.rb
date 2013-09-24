@@ -6,6 +6,10 @@ module Spreedly
       ssl_request(:get, endpoint, nil, headers)
     end
 
+    def ssl_raw_get(endpoint, headers = {})
+      ssl_request(:get, endpoint, nil, headers, true)
+    end    
+
     def ssl_post(endpoint, body, headers = {})
       ssl_request(:post, endpoint, body, headers)
     end
@@ -19,7 +23,7 @@ module Spreedly
     end
 
     private
-    def ssl_request(method, endpoint, body, headers)
+    def ssl_request(method, endpoint, body, headers, return_raw = false)
       raw_response = Timeout::timeout(70) do
         raw_ssl_request(method, endpoint, body, headers)
       end
@@ -36,27 +40,30 @@ module Spreedly
       connection.request(method, body, headers)
     end
 
-    def handle_response(response)
-      xml_doc = Nokogiri::XML(response.body)
-
+    def handle_response(response, return_raw = false)
       case response.code.to_i
       when 200...300
-        xml_doc
+        # xml_doc
+        return return_raw ? response.body : xml_doc(response)
       when 401
-        raise AuthenticationError.new(xml_doc)
+        raise AuthenticationError.new(xml_doc(response))
       when 404
-        raise NotFoundError.new(xml_doc)
+        raise NotFoundError.new(xml_doc(response))
       when 402
-        raise PaymentRequiredError.new(xml_doc)
+        raise PaymentRequiredError.new(xml_doc(response))
       when 422
-        if xml_doc.at_xpath('.//errors/error')
-          raise TransactionCreationError.new(xml_doc)
+        if xml_doc(response).at_xpath('.//errors/error')
+          raise TransactionCreationError.new(xml_doc(response))
         else
-          xml_doc
+          xml_doc(response)
         end
       else
         raise UnexpectedResponseError.new(response)
       end
+    end
+
+    def  xml_doc(response)
+      Nokogiri::XML(response.body)
     end
 
     def show_raw_response(raw_response)

@@ -29,6 +29,10 @@ module Spreedly
       Transaction.new_from(xml_doc)
     end
 
+    def find_transaction_transcript(token)
+      xml_doc = ssl_raw_get(find_transaction_transcript_url(token), headers)
+    end
+
     def find_gateway(token)
       xml_doc = ssl_get(find_gateway_url(token), headers)
       Gateway.new(xml_doc)
