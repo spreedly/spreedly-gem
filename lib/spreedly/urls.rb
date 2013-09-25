@@ -10,8 +10,8 @@ module Spreedly
       "#{base_url}/v1/transactions/#{token}.xml"
     end
 
-    def find_transaction_transcript_url(token)
-      "#{base_url}/v1/transactions/#{token}/transcript"
+    def find_transcript_url(transaction_token)
+      "#{base_url}/v1/transactions/#{transaction_token}/transcript"
     end
 
     def find_gateway_url(token)

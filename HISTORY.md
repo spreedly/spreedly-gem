@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.4
+* Add ability to retrieve a transcript [hoenth]
+
 ## 2.0.3
 * Readme improvements
 * Smarter about timeouts - now only have long timeout for calls

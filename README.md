@@ -227,7 +227,7 @@ transaction.order_id      # => '30-9904-31114'
 #### Retrieving the transcript for a transaction
 
 ``` ruby
-env.find_transaction_transcript(transaction_token)
+env.find_transcript(transaction_token)
 ```
 
 #### Updating a credit card
