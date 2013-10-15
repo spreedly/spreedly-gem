@@ -22,6 +22,16 @@ class FindTransactionTest < Test::Unit::TestCase
     assert_equal "7sqmBrh8zS4Mgei6wOyYskFpghF", t.payment_method.token
   end
 
+  def test_transaction_with_no_response
+    t = find_using(responseless_transaction_response)
+
+    assert_kind_of(Spreedly::Purchase, t)
+    assert_equal("1f41avmBKchYCNam8rMgrRRTppD", t.token)
+
+    assert !t.succeeded?
+    assert_nil t.response
+  end
+
   private
   def find_using(response)
     @environment.stubs(:raw_ssl_request).returns(response)

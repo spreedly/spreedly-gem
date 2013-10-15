@@ -10,7 +10,8 @@ module Spreedly
 
     def initialize(xml_doc)
       super
-      @response = Response.new(xml_doc.at_xpath('.//response'))
+      response_xml_doc = xml_doc.at_xpath('.//response')
+      @response = response_xml_doc ? Response.new(response_xml_doc) : nil
     end
 
   end
