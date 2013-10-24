@@ -91,9 +91,15 @@ module Spreedly
       Gateway.new_list_from(xml_doc)
     end
 
-    def gateway_options
+    def gateway_options(gateway_type = nil)
       xml_doc = ssl_options(gateway_options_url)
-      GatewayClass.new_list_from(xml_doc)
+      gateways = GatewayClass.new_list_from(xml_doc)
+
+      if gateway_type
+        gateways.select { |gw| gw.gateway_type == gateway_type }.first
+      else
+        gateways
+      end
     end
 
     def add_gateway(gateway_type, credentials = {})
