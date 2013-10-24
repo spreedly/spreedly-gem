@@ -2,7 +2,7 @@ module Spreedly
   class AuthMode
     include Fields
 
-    field :auth_mode_type
+    field :auth_mode_type, :name
     attr_reader :auth_mode_type, :credentials
 
     def initialize(xml_doc)
