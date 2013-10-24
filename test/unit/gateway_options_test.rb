@@ -47,6 +47,6 @@ class ListGatewaysTest < Test::Unit::TestCase
 
     assert_equal "login", list.first.name
     assert_equal "Login", list.first.label
-    assert_equal "true", list.first.safe
+    assert_equal true, list.first.safe
   end
 end
