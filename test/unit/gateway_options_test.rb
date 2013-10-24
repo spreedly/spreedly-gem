@@ -25,4 +25,14 @@ class ListGatewaysTest < Test::Unit::TestCase
     assert_kind_of Spreedly::GatewayClass, list.last
   end
 
+  def test_successful_gateway_options_with_argument
+    @environment.stubs(:raw_ssl_request).returns(successful_gateway_options_response)
+    result = @environment.gateway_options("paypal")
+
+    assert_kind_of Spreedly::GatewayClass, result
+    assert_equal "paypal", result.gateway_type
+
+    invalid_result = @environment.gateway_options("paypal2")
+    assert_equal nil, invalid_result
+  end
 end

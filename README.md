@@ -296,6 +296,11 @@ You can get the full list of supported gateways like so:
 env.gateway_options
 ```
 
+Or you can get supported gateway details by type:
+
+``` ruby
+env.gateway_options("paypal")
+```
 
 ## Error Handling
 
