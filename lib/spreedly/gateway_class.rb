@@ -40,7 +40,7 @@ module Spreedly
     end
 
     def init_auth_modes(xml_doc)
-      @auth_modes = xml_doc.xpath(".//auth_modes").map do |each|
+      @auth_modes = xml_doc.xpath(".//auth_modes/auth_mode").map do |each|
         Spreedly::AuthMode.new(each)
       end
     end

@@ -25,4 +25,28 @@ class ListGatewaysTest < Test::Unit::TestCase
     assert_kind_of Spreedly::GatewayClass, list.last
   end
 
+  def test_successful_gateway_auth_modes
+    @environment.stubs(:raw_ssl_request).returns(successful_gateway_options_response)
+    list = @environment.gateway_options.first.auth_modes
+
+    assert_kind_of Array, list
+    assert_equal 3, list.size
+
+    assert_equal "signature", list.first.auth_mode_type
+    assert_equal "Signature", list.first.name
+    assert_kind_of Array, list.first.credentials
+    assert_equal 3, list.first.credentials.size
+  end
+
+  def test_successful_gateway_auth_mode_credentials
+    @environment.stubs(:raw_ssl_request).returns(successful_gateway_options_response)
+    list = @environment.gateway_options.first.auth_modes.first.credentials
+
+    assert_kind_of Array, list
+    assert_equal 3, list.size
+
+    assert_equal "login", list.first.name
+    assert_equal "Login", list.first.label
+    assert_equal "true", list.first.safe
+  end
 end
