@@ -3,14 +3,8 @@ module Spreedly
   class GatewayClass
     include Fields
 
-    field       :gateway_type,
-                :name,
-                :supported_countries,
-                :homepage
-
-    attr_reader :supported_countries,
-                :payment_methods,
-                :auth_modes
+    field :gateway_type, :name, :supported_countries, :homepage
+    attr_reader :supported_countries, :payment_methods, :auth_modes
 
     def initialize(xml_doc)
       initialize_fields(xml_doc)

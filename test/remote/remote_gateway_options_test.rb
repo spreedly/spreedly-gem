@@ -10,7 +10,10 @@ class RemoteGatewayOptionsTest < Test::Unit::TestCase
     gateway_classes = @environment.gateway_options
     braintree = gateway_classes.select { |each| each.name == "Braintree" }.first
     assert_equal "http://www.braintreepaymentsolutions.com/", braintree.homepage
-    assert_equal ["credit_card", "third_party_token"], braintree.payment_methods
+    assert_equal %w(credit_card third_party_token), braintree.payment_methods
+    assert_equal %w(orange blue), braintree.auth_modes.map { |e| e.auth_mode_type }
+    assert_equal %w(login password), braintree.auth_modes.first.credentials.map { |e| e.name }
+    assert_equal [ true, false ], braintree.auth_modes.first.credentials.map { |e| e.safe }
   end
 
 end
