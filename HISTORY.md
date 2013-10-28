@@ -1,6 +1,10 @@
 # Changelog
 
-## 2.0.4
+## 2.0.6
+* Add auth_mode support to gateway options call [sosedoff]
+* Pass through verification_value when creating a card directly [duff]
+
+## 2.0.5
 * Add ability to retrieve a transcript [hoenth]
 
 ## 2.0.3
