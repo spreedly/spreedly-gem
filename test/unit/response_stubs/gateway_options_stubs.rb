@@ -72,10 +72,10 @@ module GatewayOptionsStubs
             <supports_purchase_via_preauthorization type="boolean">true</supports_purchase_via_preauthorization>
             <supports_offsite_purchase type="boolean">true</supports_offsite_purchase>
             <supports_offsite_authorize type="boolean">true</supports_offsite_authorize>
-            <supports_3dsecure_purchase type="boolean">false</supports_3dsecure_purchase>
-            <supports_3dsecure_authorize type="boolean">false</supports_3dsecure_authorize>
-            <supports_store type="boolean">false</supports_store>
-            <supports_remove type="boolean">true</supports_remove>
+            <supports_3dsecure_purchase type="boolean">true</supports_3dsecure_purchase>
+            <supports_3dsecure_authorize type="boolean">true</supports_3dsecure_authorize>
+            <supports_store type="boolean">true</supports_store>
+            <supports_remove type="boolean">false</supports_remove>
           </characteristics>
           <payment_methods>
             <payment_method>credit_card</payment_method>
