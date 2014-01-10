@@ -49,4 +49,27 @@ class ListGatewaysTest < Test::Unit::TestCase
     assert_equal "Login", list.first.label
     assert_equal true, list.first.safe
   end
+
+  def test_characteristics
+    @environment.stubs(:raw_ssl_request).returns(successful_gateway_options_response)
+    gateway_class = @environment.gateway_options.first
+
+    [ :supports_purchase,
+      :supports_authorize,
+      :supports_capture,
+      :supports_credit,
+      :supports_void,
+      :supports_reference_purchase,
+      :supports_purchase_via_preauthorization,
+      :supports_offsite_purchase,
+      :supports_offsite_authorize,
+      :supports_3dsecure_purchase,
+      :supports_3dsecure_authorize,
+      :supports_store
+    ].each do |c|
+      assert gateway_class.send("#{c}?")
+    end
+
+    assert !gateway_class.send(:supports_remove?)
+  end
 end
