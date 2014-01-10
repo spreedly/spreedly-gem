@@ -96,6 +96,10 @@ module Spreedly
       GatewayClass.new_list_from(xml_doc)
     end
 
+    def self.gateway_options
+      self.new("", "").gateway_options
+    end
+
     def add_gateway(gateway_type, credentials = {})
       body = add_gateway_body(gateway_type, credentials)
       xml_doc = ssl_post(add_gateway_url, body, headers)
