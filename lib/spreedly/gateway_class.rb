@@ -3,21 +3,11 @@ module Spreedly
   class GatewayClass
     include Fields
 
-    field :gateway_type, :name, :supported_countries, :homepage
-    field :supports_purchase, 
-          :supports_authorize, 
-          :supports_capture, 
-          :supports_credit, 
-          :supports_void, 
-          :supports_reference_purchase, 
-          :supports_purchase_via_preauthorization, 
-          :supports_offsite_purchase, 
-          :supports_offsite_authorize, 
-          :supports_3dsecure_purchase, 
-          :supports_3dsecure_authorize, 
-          :supports_store, 
-          :supports_remove,
-          type: :boolean
+    field :gateway_type, :name, :supported_countries, :homepage, :company_name
+    field :supports_purchase, :supports_authorize, :supports_capture, :supports_credit,
+          :supports_void, :supports_reference_purchase, :supports_purchase_via_preauthorization,
+          :supports_offsite_purchase, :supports_offsite_authorize, :supports_3dsecure_purchase,
+          :supports_3dsecure_authorize, :supports_store, :supports_remove, type: :boolean
 
     attr_reader :supported_countries, :payment_methods, :auth_modes
 

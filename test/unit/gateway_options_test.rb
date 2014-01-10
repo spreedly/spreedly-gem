@@ -1,7 +1,7 @@
 require 'test_helper'
 require 'unit/response_stubs/gateway_options_stubs'
 
-class ListGatewaysTest < Test::Unit::TestCase
+class GatewayOptionsTest < Test::Unit::TestCase
 
   include GatewayOptionsStubs
 

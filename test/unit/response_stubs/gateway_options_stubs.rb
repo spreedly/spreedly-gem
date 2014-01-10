@@ -86,6 +86,7 @@ module GatewayOptionsStubs
           </gateway_specific_fields>
           <supported_countries>US, GB, CA</supported_countries>
           <homepage>http://paypal.com/</homepage>
+          <company_name>Paypal Inc.</company_name>
         </gateway>
         <gateway>
           <gateway_type>worldpay</gateway_type>
@@ -129,6 +130,7 @@ module GatewayOptionsStubs
           <gateway_specific_fields/>
           <supported_countries>HK, US, GB, AU, AD, BE, CH, CY, CZ, DE, DK, ES, FI, FR, GI, GR, HU, IE, IL, IT, LI, LU, MC, MT, NL, NO, NZ, PL, PT, SE, SG, SI, SM, TR, UM, VA</supported_countries>
           <homepage>http://worldpay.com</homepage>
+          <company_name>Worldpay</company_name>
         </gateway>
       </gateways>
     XML
