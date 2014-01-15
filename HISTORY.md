@@ -1,5 +1,10 @@
 # Changelog
 
+## 2.0.7
+* Add support for company_name to gateway options [duff]
+* Implemented gateway characteristics [ilyutov]
+* Allow access to gateway options w/o credentials [duff]
+
 ## 2.0.6
 * Add auth_mode support to gateway options call [sosedoff]
 * Pass through verification_value when creating a card directly [duff]
