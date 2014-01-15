@@ -140,6 +140,13 @@ transaction = env.retain_payment_method(payment_method_token)
 transaction = env.redact_payment_method(payment_method_token)
 ```
 
+#### Redact a gateway
+
+``` ruby
+transaction = env.redact_gateway(gateway_token)
+```
+
+
 #### Currencies
 When you instantiate an environment, you can specify a default currency code like so:
 
