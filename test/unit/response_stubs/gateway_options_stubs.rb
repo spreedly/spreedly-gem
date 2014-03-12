@@ -85,6 +85,7 @@ module GatewayOptionsStubs
             <gateway_specific_field>recurring</gateway_specific_field>
           </gateway_specific_fields>
           <supported_countries>US, GB, CA</supported_countries>
+          <regions>europe, north_america</regions>
           <homepage>http://paypal.com/</homepage>
           <company_name>Paypal Inc.</company_name>
         </gateway>
@@ -129,6 +130,7 @@ module GatewayOptionsStubs
           </payment_methods>
           <gateway_specific_fields/>
           <supported_countries>HK, US, GB, AU, AD, BE, CH, CY, CZ, DE, DK, ES, FI, FR, GI, GR, HU, IE, IL, IT, LI, LU, MC, MT, NL, NO, NZ, PL, PT, SE, SG, SI, SM, TR, UM, VA</supported_countries>
+          <regions>latin_america</regions>
           <homepage>http://worldpay.com</homepage>
           <company_name>Worldpay</company_name>
         </gateway>
