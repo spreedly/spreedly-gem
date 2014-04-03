@@ -30,13 +30,20 @@ module Spreedly
     private
     def http
       http = Net::HTTP.new(endpoint.host, endpoint.port)
+      configure_ssl(http)
       http.open_timeout = 64
       http.read_timeout = 64
+      http
+    end
+
+    def configure_ssl(http)
+      return unless endpoint.scheme == "https"
+
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_PEER
       http.ca_file = File.dirname(__FILE__) + '/../certs/cacert.pem'
-      http
     end
+
   end
 
   class OptionsWithResponseBody < Net::HTTPRequest
