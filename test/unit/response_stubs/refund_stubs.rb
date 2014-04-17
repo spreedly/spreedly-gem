@@ -21,6 +21,7 @@ module RefundStubs
         <gateway_specific_response_fields nil="true"/>
         <message key="messages.transaction_succeeded">Succeeded!</message>
         <gateway_token>XYI0V2l4KC1cAm6Y3c2kG5loJaA</gateway_token>
+        <gateway_transaction_id>44</gateway_transaction_id>
         <response>
           <success type="boolean">true</success>
           <message>Successful credit</message>
@@ -63,6 +64,7 @@ module RefundStubs
         <gateway_specific_response_fields nil="true"/>
         <message>Unable to process the credit transaction.</message>
         <gateway_token>GWUbHifwMEI8Lqyjz5H1zMbIC7M</gateway_token>
+        <gateway_transaction_id></gateway_transaction_id>
         <response>
           <success type="boolean">false</success>
           <message>Unable to process the credit transaction.</message>

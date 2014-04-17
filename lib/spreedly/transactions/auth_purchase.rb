@@ -2,7 +2,7 @@ module Spreedly
 
   class AuthPurchase < GatewayTransaction
 
-    field :currency_code, :gateway_transaction_id
+    field :currency_code
     field :amount, type: :integer
 
     attr_reader :payment_method
