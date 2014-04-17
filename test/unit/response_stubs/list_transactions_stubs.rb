@@ -22,6 +22,7 @@ module ListTransactionsStubs
           <gateway_specific_response_fields nil="true"/>
           <message key="messages.transaction_succeeded">Succeeded!</message>
           <gateway_token>TpjI3MSmLOSfqpFKP2poZRKc6Ru</gateway_token>
+          <gateway_transaction_id>44</gateway_transaction_id>
           <response>
             <success type="boolean">true</success>
             <message>Successful authorize</message>

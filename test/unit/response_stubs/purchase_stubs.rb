@@ -21,6 +21,7 @@ module PurchaseStubs
         <gateway_specific_response_fields nil="true"/>
         <message key="messages.transaction_succeeded">Succeeded!</message>
         <gateway_token>YOaCn5a9xRaBTGgmGAWbkgWUuqv</gateway_token>
+        <gateway_transaction_id>44</gateway_transaction_id>
         <response>
           <success type="boolean">true</success>
           <message>Successful purchase</message>
@@ -89,6 +90,7 @@ module PurchaseStubs
         <gateway_specific_response_fields nil="true"/>
         <message>Unable to process the purchase transaction.</message>
         <gateway_token>Y6jMbUCm2oz6QTpavzp0xLaV9mk</gateway_token>
+        <gateway_transaction_id nil="true"/>
         <response>
           <success type="boolean">false</success>
           <message>Unable to process the purchase transaction.</message>
