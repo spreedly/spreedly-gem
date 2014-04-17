@@ -86,9 +86,11 @@ module Spreedly
       PaymentMethod.new_list_from(xml_doc)
     end
 
-    def list_gateways(since_token = nil)
+    def list_gateways(opts = {})
+      since_token = opts[:since_token]
+      
       xml_doc = ssl_get(list_gateways_url(since_token), headers)
-      Gateway.new_list_from(xml_doc)
+      Gateway.new_list_from(xml_doc, opts[:omit_test])
     end
 
     def gateway_options

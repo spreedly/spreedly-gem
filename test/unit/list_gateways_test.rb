@@ -20,6 +20,15 @@ class ListGatewaysTest < Test::Unit::TestCase
     assert_kind_of Spreedly::Gateway, list.first
     assert_kind_of Spreedly::Gateway, list.last
   end
+  
+  def test_omits_test_gateways_from_list
+    @environment.stubs(:raw_ssl_request).returns(successful_list_gateways_response)
+    
+    list = @environment.list_gateways omit_test: true
+        
+    assert_kind_of(Array, list)
+    assert_equal 0, list.size
+  end
 
   def test_request_url
     assert_request_url 'https://core.spreedly.com/v1/gateways.xml' do
@@ -27,7 +36,7 @@ class ListGatewaysTest < Test::Unit::TestCase
     end
 
     assert_request_url 'https://core.spreedly.com/v1/gateways.xml?since_token=SomeToken' do
-      @environment.list_gateways("SomeToken")
+      @environment.list_gateways(since_token: "SomeToken")
     end
   end
 

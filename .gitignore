@@ -5,4 +5,5 @@ pkg
 .bundle
 tmp
 vendor/ruby
+vendor/gems
 test/credentials/personal_credentials.yml
