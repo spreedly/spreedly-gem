@@ -64,7 +64,7 @@ class RemotePurchaseTest < Test::Unit::TestCase
     assert_equal "Real Stuff", transaction.merchant_name_descriptor
     assert_equal "Raleigh", transaction.merchant_location_descriptor
     assert_equal "retained", transaction.payment_method.storage_state
-    assert_equal 46, transaction.gateway_transaction_id
+    assert_equal "46", transaction.gateway_transaction_id
   end
 
 end
