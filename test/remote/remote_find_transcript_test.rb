@@ -18,12 +18,13 @@ class RemoteFindTranscriptTest < Test::Unit::TestCase
     end
   end
 
-  def test_successfully_find_transcript
+  def test_successfully_find_transaction
     gateway_token = @environment.add_gateway(:test).token
     card_token = create_failed_card_on(@environment).token
     transaction = @environment.purchase_on_gateway(gateway_token, card_token, 144)
 
     found = @environment.find_transcript(transaction.token)
+
     assert_kind_of(String, found)
   end
 
