@@ -15,7 +15,9 @@ class RemoteListGatewaysTest < Test::Unit::TestCase
 
   def test_successfully_list_gateways
     g1 = @environment.add_gateway(:test).token
+    sleep 1
     g2 = @environment.add_gateway(:test).token
+    sleep 1
     g3 = @environment.add_gateway(:test).token
 
     first_twenty = @environment.list_gateways
@@ -23,6 +25,9 @@ class RemoteListGatewaysTest < Test::Unit::TestCase
     assert_kind_of Spreedly::Model, first_twenty.first
 
     gateways = @environment.list_gateways(g1)
+    p gateways
+    p g2
+    p g3
     assert_equal 2, gateways.size
     assert_kind_of(Spreedly::Gateway, gateways.first)
     assert_kind_of(Spreedly::Gateway, gateways.last)
