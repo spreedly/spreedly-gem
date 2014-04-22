@@ -10,6 +10,7 @@ module FindTransactionStubs
         <transaction_type>AddPaymentMethod</transaction_type>
         <retained type="boolean">true</retained>
         <message key="messages.transaction_succeeded">Succeeded!</message>
+        <gateway_transaction_id>47</gateway_transaction_id>
         <payment_method>
           <token>7sqmBrh8zS4Mgei6wOyYskFpghF</token>
           <created_at type="datetime">2013-08-05T19:32:49Z</created_at>
@@ -62,6 +63,7 @@ module FindTransactionStubs
         <gateway_specific_response_fields nil="true"/>
         <message key="messages.cannot_use_redacted_gateway">Unable to use a gateway because it's been redacted.</message>
         <gateway_token>223rRq1muGCYQUMVGu2a1qcG9PK</gateway_token>
+        <gateway_transaction_id></gateway_transaction_id>
         <payment_method>
           <token>rYswku4CEaenVlBdmGluGM2cJ8q</token>
           <created_at type="datetime">2013-10-11T20:15:25Z</created_at>
