@@ -20,6 +20,7 @@ module VoidStubs
         <message key="messages.transaction_succeeded">Succeeded!</message>
         <gateway_token>EuXlDMZEMZfrHSvE9tkRzaW8j0z</gateway_token>
         <reference_token>CjedAratpuiT3CMmln4t3oZFvOS</reference_token>
+        <gateway_transaction_id>44</gateway_transaction_id>
         <response>
           <success type="boolean">true</success>
           <message>Successful void</message>
@@ -58,6 +59,7 @@ module VoidStubs
         <message>Transaction id is invalid.</message>
         <gateway_token>2AocQ8IUvnrr6J0xPGW7QbrMX6E</gateway_token>
         <reference_token>KNFrnpBYd9kFohOBZVL6GEmSGJB</reference_token>
+        <gateway_transaction_id></gateway_transaction_id>
         <response>
           <success type="boolean">false</success>
           <message>Transaction id is invalid.</message>

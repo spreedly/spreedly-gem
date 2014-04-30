@@ -27,6 +27,7 @@ class AuthorizeTest < Test::Unit::TestCase
     assert_equal 'My Writeoff Inc.', t.merchant_name_descriptor
     assert_equal 'Tax Free Zone', t.merchant_location_descriptor
     assert_equal 'YjWxOjbpeieXsZFdAsbhM2DFgLe', t.gateway_token
+    assert_equal "44", t.gateway_transaction_id
 
     assert_equal 'Nh2Vw0kAoSQvcJDpK52q4dZlrVJ', t.payment_method.token
     assert_equal 'Forthrast', t.payment_method.last_name

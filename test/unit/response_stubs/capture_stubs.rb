@@ -21,6 +21,7 @@ module CaptureStubs
         <gateway_specific_response_fields nil="true"/>
         <message key="messages.transaction_succeeded">Succeeded!</message>
         <gateway_token>SoPblCOGDwaRyym68XGWeRiCy1C</gateway_token>
+        <gateway_transaction_id>44</gateway_transaction_id>
         <response>
           <success type="boolean">true</success>
           <message>Successful capture</message>
@@ -63,6 +64,7 @@ module CaptureStubs
         <gateway_specific_response_fields nil="true"/>
         <message>Unable to process the capture transaction.</message>
         <gateway_token>K0L5hw4rhLx1xMTL2cfHWx9D1rX</gateway_token>
+        <gateway_transaction_id></gateway_transaction_id>
         <response>
           <success type="boolean">false</success>
           <message>Unable to process the capture transaction.</message>

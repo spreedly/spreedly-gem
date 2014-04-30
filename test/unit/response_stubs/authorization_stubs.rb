@@ -21,6 +21,7 @@ module AuthorizationStubs
         <gateway_specific_response_fields nil="true"/>
         <message key="messages.transaction_succeeded">Succeeded!</message>
         <gateway_token>YjWxOjbpeieXsZFdAsbhM2DFgLe</gateway_token>
+        <gateway_transaction_id>44</gateway_transaction_id>
         <response>
           <success type="boolean">true</success>
           <message>Successful authorize</message>
@@ -89,6 +90,7 @@ module AuthorizationStubs
         <gateway_specific_response_fields nil="true"/>
         <message>Unable to process the authorize transaction.</message>
         <gateway_token>OJoptVkyEg04N4AxfC6H42IH4HU</gateway_token>
+        <gateway_transaction_id nil="true"/>
         <response>
           <success type="boolean">false</success>
           <message>Unable to process the authorize transaction.</message>
