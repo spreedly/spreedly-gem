@@ -1,5 +1,17 @@
 # Changelog
 
+## 2.0.11
+* Add support for ThirdPartyTokens [duff]
+
+## 2.0.10
+* Add support for gateway_transaction_id [hoenth]
+
+## 2.0.9
+* Improve support for base_url around ssl [duff]
+
+## 2.0.8
+* Add support for gateway regions [duff]
+
 ## 2.0.7
 * Add support for company_name to gateway options [duff]
 * Implemented gateway characteristics [ilyutov]
