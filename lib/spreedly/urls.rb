@@ -75,6 +75,10 @@ module Spreedly
       "#{base_url}/v1/gateways.xml"
     end
 
+    def add_receiver_url
+      "#{base_url}/v1/receivers.xml"
+    end
+
     def add_payment_method_url
       "#{base_url}/v1/payment_methods.xml"
     end
