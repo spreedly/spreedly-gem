@@ -24,6 +24,8 @@ module Spreedly
         return Sprel.new(xml_doc)
       when 'bank_account'
         return BankAccount.new(xml_doc)
+      when 'third_party_token'
+        return ThirdPartyToken.new(xml_doc)
       end
     end
 

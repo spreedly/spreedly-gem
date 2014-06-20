@@ -13,12 +13,19 @@ class ListPaymentMethodsTest < Test::Unit::TestCase
     list = list_using(successful_list_payment_methods_response)
 
     assert_kind_of(Array, list)
-    assert_equal 2, list.size
+    assert_equal 5, list.size
+
+    assert_kind_of Spreedly::CreditCard, list.first
+    assert_kind_of Spreedly::CreditCard, list[1]
+    assert_kind_of Spreedly::ThirdPartyToken, list[2]
+    assert_kind_of Spreedly::Sprel, list[3]
+    assert_kind_of Spreedly::BankAccount, list[4]
 
     assert_equal 'Perrin Aybara', list.first.full_name
-    assert_equal 'Mat Cauthon', list.last.full_name
-    assert_kind_of Spreedly::CreditCard, list.first
-    assert_kind_of Spreedly::CreditCard, list.last
+    assert_equal 'Mat Cauthon', list[1].full_name
+    assert_equal 'test_vault:4111111111111111', list[2].third_party_token
+    assert_equal 'retained', list[3].storage_state
+    assert_equal '4321', list[4].account_number_display_digits
   end
 
   def test_request_url

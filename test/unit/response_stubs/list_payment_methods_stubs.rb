@@ -57,6 +57,53 @@ module ListPaymentMethodsStubs
           <verification_value></verification_value>
           <number>XXXX-XXXX-XXXX-4444</number>
         </payment_method>
+        <payment_method>
+          <token>RllfVekUSmqgEP8rpS2M1z9HG6C</token>
+          <created_at type="datetime">2014-05-30T19:51:48Z</created_at>
+          <updated_at type="datetime">2014-05-30T19:51:48Z</updated_at>
+          <gateway_type>test</gateway_type>
+          <storage_state>retained</storage_state>
+          <third_party_token>test_vault:4111111111111111</third_party_token>
+          <payment_method_type>third_party_token</payment_method_type>
+          <errors>
+          </errors>
+        </payment_method>
+        <payment_method>
+          <token>KX7Y1oePqya4JAQ5bMIY9Vi87xb</token>
+          <created_at type="datetime">2014-05-21T21:21:32Z</created_at>
+          <updated_at type="datetime">2014-05-22T03:42:27Z</updated_at>
+          <email nil="true"/>
+          <data>
+            <blah>whatever</blah>
+          </data>
+          <storage_state>retained</storage_state>
+          <test type="boolean">true</test>
+          <payment_method_type>sprel</payment_method_type>
+          <errors>
+          </errors>
+        </payment_method>
+        <payment_method>
+          <token>47KP5QXHYuv5N2LKu8hExMY7Okr</token>
+          <created_at type="datetime">2014-05-21T21:08:33Z</created_at>
+          <updated_at type="datetime">2014-05-21T21:08:33Z</updated_at>
+          <email nil="true"/>
+          <data nil="true"/>
+          <storage_state>cached</storage_state>
+          <test type="boolean">true</test>
+          <full_name>Bob Smith</full_name>
+          <bank_name>First Bank of Elbonia</bank_name>
+          <account_type>checking</account_type>
+          <account_holder_type>personal</account_holder_type>
+          <routing_number_display_digits>021</routing_number_display_digits>
+          <account_number_display_digits>4321</account_number_display_digits>
+          <first_name>Bob</first_name>
+          <last_name>Smith</last_name>
+          <payment_method_type>bank_account</payment_method_type>
+          <errors>
+          </errors>
+          <routing_number>021*</routing_number>
+          <account_number>*4321</account_number>
+        </payment_method>
       </payment_methods>
     XML
   end
