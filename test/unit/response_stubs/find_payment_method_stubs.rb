@@ -26,6 +26,7 @@ module FindPaymentMethodStubs
         <phone_number>201.344.7712</phone_number>
         <full_name>Alcatraz Smedry</full_name>
         <payment_method_type>credit_card</payment_method_type>
+        <eligible_for_card_updater type="boolean">true</eligible_for_card_updater>
         <errors>
         </errors>
         <verification_value></verification_value>
@@ -60,6 +61,7 @@ module FindPaymentMethodStubs
         <phone_number nil="true"/>
         <full_name></full_name>
         <payment_method_type>credit_card</payment_method_type>
+        <eligible_for_card_updater type="boolean">true</eligible_for_card_updater>
         <errors>
           <error attribute="first_name" key="errors.blank">First name can't be blank</error>
           <error attribute="last_name" key="errors.blank">Last name can't be blank</error>

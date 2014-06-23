@@ -31,7 +31,9 @@ module AddCreditCardStubs
           <country>UK</country>
           <phone_number>43</phone_number>
           <full_name>Eland Venture</full_name>
+          <eligible_for_card_updater type="boolean">true</eligible_for_card_updater>
           <payment_method_type>credit_card</payment_method_type>
+          <eligible_for_card_updater type="boolean">true</eligible_for_card_updater>
           <errors>
           </errors>
           <verification_value></verification_value>
