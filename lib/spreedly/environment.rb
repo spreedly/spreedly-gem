@@ -195,7 +195,7 @@ module Spreedly
 
     def add_to_doc(doc, options, *attributes)
       attributes.each do |attr|
-        doc.send(attr, options[attr.to_sym]) if options[attr.to_sym]
+        doc.send(attr, options[attr.to_sym]) if options[attr.to_sym] != nil
       end
     end
 
