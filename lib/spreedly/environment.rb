@@ -127,6 +127,12 @@ module Spreedly
       PaymentMethod.new_from(xml_doc)
     end
 
+    def deliver_receiver(options)
+      body = deliver_receiver_body(options)
+      xml_doc = ssl_post(deliver_receiver_url(options[:receiver_token]), body, headers)
+      Transaction.new_from(xml_doc)
+    end
+
     private
     def headers
       {
@@ -230,6 +236,16 @@ module Spreedly
       end
     end
 
+    def deliver_receiver_body(options)
+      # payment_method_token, url,  receiver_headers, receiver_body
+      build_xml_request('delivery') do |doc|
+        doc.payment_method_token options[:payment_method_token]
+        doc.url options[:url]
+        add_deliver_receiver_headers(doc, options[:receiver_headers])
+        add_deliver_receiver_body(doc, options[:receiver_body])
+      end
+    end
+
     def add_to_doc(doc, options, *attributes)
       attributes.each do |attr|
         doc.send(attr, options[attr.to_sym]) if options[attr.to_sym] != nil
@@ -239,6 +255,23 @@ module Spreedly
     def add_extra_options_for_basic_ops(doc, options)
       add_to_doc(doc, options, :order_id, :description, :ip, :merchant_name_descriptor,
                                :merchant_location_descriptor)
+    end
+
+    def add_deliver_receiver_headers(doc, headers)
+      doc.headers do
+        doc.cdata format_deliver_receiver_headers(headers)
+      end
+    end
+
+    def add_deliver_receiver_body(doc, body)
+      doc.body do
+        doc.cdata body
+      end
+    end
+
+    def format_deliver_receiver_headers(headers)
+      # Host and Content-Length are added by the PMD process, so remove those before formatting
+      headers.delete_if { |k,v| k == 'Host' || k == 'Content-Length' }.map { |k, v| "#{k}: #{v}" }.join("\r\n")
     end
 
     def build_xml_request(root)

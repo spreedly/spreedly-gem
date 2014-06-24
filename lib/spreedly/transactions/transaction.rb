@@ -30,6 +30,8 @@ module Spreedly
         return RedactGateway.new(xml_doc)
       when 'RecacheSensitiveData'
         return RecacheSensitiveData.new(xml_doc)
+      when 'DeliverPaymentMethod'
+        return DeliverPaymentMethod.new(xml_doc)
       else
         Transaction.new(xml_doc)
       end
