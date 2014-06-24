@@ -1,5 +1,8 @@
 # Changelog
 
+## 2.0.12
+* Add support for new credit card field: eligible_for_card_updater [markabe]
+
 ## 2.0.11
 * Add support for ThirdPartyTokens [duff]
 
