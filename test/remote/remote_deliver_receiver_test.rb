@@ -4,8 +4,7 @@ require 'json'
 class RemoteDeliverReceiverTest < Test::Unit::TestCase
 
   def setup
-    @environment = Spreedly::Environment.new('TgSDJO8cpF9eehGGhnkd6HCs0HS', 'OSSdlheP4gThug0Ly4i5tmaEPM48KseBYFMb90fQVKJ7u49yxlyfxuzOHlceaa1s')
-    # @environment = Spreedly::Environment.new(remote_test_environment_key, remote_test_access_secret)
+    @environment = Spreedly::Environment.new(remote_test_environment_key, remote_test_access_secret)
   end
 
   def test_successfully_deliver_receiver
