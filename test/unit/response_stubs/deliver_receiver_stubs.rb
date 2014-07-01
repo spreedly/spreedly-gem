@@ -11,6 +11,7 @@ module DeliverReceiverStubs
         <succeeded>true</succeeded>
         <message>Succeeded!</message>
         <response>
+          <status>200</status>
           <headers>
             <![CDATA[Date: Fri, 20 Jun 2014 20:24:57 GMT
       Server: Apache

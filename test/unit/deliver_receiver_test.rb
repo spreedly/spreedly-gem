@@ -17,6 +17,8 @@ class DeliverReceiverTest < Test::Unit::TestCase
                                             receiver_headers: headers,
                                             receiver_body: receiver_body,
                                             url: url)
+    response = receiver.response
+    assert response.status, '200'
   end
 
   def test_request_body_params
