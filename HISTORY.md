@@ -2,6 +2,9 @@
 
 ## 2.0.12
 * Add support for new credit card field: eligible_for_card_updater [markabe]
+* Check attributes for non-nil before sending [markabe]
+* Add supports_verify option to Gateway [duff]
+* Add support for verify_on_gateway API call [duff]
 
 ## 2.0.11
 * Add support for ThirdPartyTokens [duff]

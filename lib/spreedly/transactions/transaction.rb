@@ -20,6 +20,8 @@ module Spreedly
         return Refund.new(xml_doc)
       when 'Void'
         return Void.new(xml_doc)
+      when 'Verification'
+        return Verification.new(xml_doc)
       when 'RetainPaymentMethod'
         return RetainPaymentMethod.new(xml_doc)
       when 'RedactPaymentMethod'

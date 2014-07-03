@@ -48,6 +48,11 @@ module Spreedly
       api_post(authorize_url(gateway_token), body)
     end
 
+    def verify_on_gateway(gateway_token, payment_method_token, options = {})
+      body = verify_body(payment_method_token, options)
+      api_post(verify_url(gateway_token), body)
+    end
+
     def capture_transaction(authorization_token, options = {})
       api_post(capture_url(authorization_token), capture_body(options))
     end
@@ -128,6 +133,14 @@ module Spreedly
       build_xml_request('transaction') do |doc|
         doc.amount amount
         doc.currency_code(options[:currency_code] || currency_code)
+        doc.payment_method_token(payment_method_token)
+        add_to_doc(doc, options, :retain_on_success)
+        add_extra_options_for_basic_ops(doc, options)
+      end
+    end
+
+    def verify_body(payment_method_token, options)
+      build_xml_request('transaction') do |doc|
         doc.payment_method_token(payment_method_token)
         add_to_doc(doc, options, :retain_on_success)
         add_extra_options_for_basic_ops(doc, options)

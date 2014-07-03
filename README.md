@@ -119,6 +119,13 @@ You can also specify an optional amount to capture.
 capture_transaction = env.capture_transaction(auth_transaction.token, amount: 100)
 ```
 
+#### Verify
+
+Verify a card is legitimate so you can charge it at a later date.
+
+``` ruby
+env.verify_on_gateway(gateway_token, payment_method_token, retain_on_success: true)
+```
 
 #### Void and refund
 
@@ -162,7 +169,7 @@ env.purchase_on_gateway(gateway_token, payment_method_token, amount, currency_co
 
 
 #### Extra options for the basic operations
-For Purchase, Authorize, Capture, Refund, and Void calls, you can specify additional options:
+For Purchase, Authorize, Capture, Refund, Verify, and Void calls, you can specify additional options:
 
 ``` ruby
 env.purchase_on_gateway(gateway_token, payment_method_token, amount,
@@ -175,10 +182,14 @@ env.purchase_on_gateway(gateway_token, payment_method_token, amount,
 ```
 
 #### Retain on success
-Retain a payment method automatically if the purchase or authorize transaction succeeded.  Saves you a separate call to retain:
+Retain a payment method automatically if the purchase, verify, or authorize transaction succeeded.  Saves you a separate call to retain:
 
 ``` ruby
 env.purchase_on_gateway(gateway_token, payment_method_token, amount, retain_on_success: true)
+```
+
+``` ruby
+env.verify_on_gateway(gateway_token, payment_method_token, retain_on_success: true)
 ```
 
 #### Retrieving gateways

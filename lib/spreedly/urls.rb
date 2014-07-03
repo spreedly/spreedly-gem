@@ -26,6 +26,10 @@ module Spreedly
       "#{base_url}/v1/gateways/#{gateway_token}/authorize.xml"
     end
 
+    def verify_url(gateway_token)
+      "#{base_url}/v1/gateways/#{gateway_token}/verify.xml"
+    end
+
     def capture_url(authorization_token)
       "#{base_url}/v1/transactions/#{authorization_token}/capture.xml"
     end
