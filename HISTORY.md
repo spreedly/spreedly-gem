@@ -6,6 +6,8 @@
 * Add supports_verify option to Gateway [duff]
 * Add support for verify_on_gateway API call [duff]
 * Add support for RecacheSensitiveData transaction [duff]
+* Remove cacert.pem and rely on system certs [duff]
+
 
 ## 2.0.11
 * Add support for ThirdPartyTokens [duff]

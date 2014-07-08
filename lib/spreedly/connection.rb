@@ -41,7 +41,6 @@ module Spreedly
 
       http.use_ssl = true
       http.verify_mode = OpenSSL::SSL::VERIFY_PEER
-      http.ca_file = File.dirname(__FILE__) + '/../certs/cacert.pem'
     end
 
   end
