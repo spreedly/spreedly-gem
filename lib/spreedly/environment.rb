@@ -111,7 +111,7 @@ module Spreedly
       Gateway.new(xml_doc)
     end
 
-    def add_receiver(receiver_type, host_names, credentials = [])
+    def add_receiver(receiver_type, host_names = nil, credentials = [])
       body = add_receiver_body(receiver_type, host_names, credentials)
       xml_doc = ssl_post(add_receiver_url, body, headers)
       Receiver.new(xml_doc)
@@ -196,9 +196,8 @@ module Spreedly
     def add_receiver_body(receiver_type, host_names, credentials)
       build_xml_request('receiver') do |doc|
         doc.receiver_type receiver_type
-        doc.hostnames host_names if host_names
-        add_credentials_to_doc(doc, credentials) if credentials and !credentials.empty?
-        # add_to_doc(doc, credentials, *credentials.keys)
+        doc.hostnames host_names
+        add_credentials_to_doc(doc, credentials) if credentials && !credentials.empty?
       end
     end
 

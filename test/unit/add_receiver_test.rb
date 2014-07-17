@@ -21,28 +21,32 @@ class AddReceiverTest < Test::Unit::TestCase
 
   def test_request_body_params
     body = get_request_body(successful_add_receiver_response) do
-      @environment.add_receiver(:test, 'http://api.example.com/posts', receiver_test_credentials)
+      @environment.add_receiver(:test, 'http://api.example.com/post', receiver_test_credentials)
     end
 
     receiver = body.xpath('./receiver')
     assert_xpaths_in receiver,
-      [ './receiver_type', 'test' ]
-      [ './hostnames', 'http://api.example.com/posts' ]
+      [ './receiver_type', 'test' ],
+      [ './hostnames', 'http://api.example.com/post' ]
 
-    credential = receiver.xpath('./credentials/credential')[0]
-    assert_xpaths_in credential,
+    first_cred = receiver.xpath('./credentials/credential')[0]
+    assert_xpaths_in first_cred,
       [ './name', 'partner_id' ],
-      [ './value', 'test_string1' ]
+      [ './value', 'the_id' ],
+      [ './safe', 'true' ]
+
+    second_cred = receiver.xpath('./credentials/credential')[1]
+    assert_xpaths_in second_cred,
+      [ './name', 'partner_password' ],
+      [ './value', 'the_password' ]
   end
 
   private
 
   def receiver_test_credentials
     [
-    { name: 'partner_id', value: 'test_string1', safe: 'true' },
-    { name: 'partner_password', value: 'test_string2'},
-    { name: 'partner_source', value: 'test_string3'},
-    { name: 'partner_campaign', value: 'test_string4', safe: 'true' }
+      { name: 'partner_id', value: 'the_id', safe: 'true' },
+      { name: 'partner_password', value: 'the_password'},
     ]
   end
 
