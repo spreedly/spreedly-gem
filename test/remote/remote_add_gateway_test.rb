@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class RemoteAddGatewayTest < Test::Unit::TestCase
+class RemoteAddReceiverTest < Test::Unit::TestCase
 
   # TODO We'll add more to this soon.
 

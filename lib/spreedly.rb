@@ -28,6 +28,7 @@ require 'spreedly/transactions/redact_payment_method'
 require 'spreedly/transactions/redact_gateway'
 require 'spreedly/transactions/recache_sensitive_data'
 require 'spreedly/gateway'
+require 'spreedly/receiver'
 require 'spreedly/gateway_class'
 require 'spreedly/error'
 
