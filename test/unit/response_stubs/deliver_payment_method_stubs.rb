@@ -1,6 +1,6 @@
-module DeliverReceiverStubs
+module DeliverPaymentMethodStubs
 
-  def successful_deliver_receiver_response
+  def successful_deliver_payment_method_response
     StubResponse.succeeded <<-XML
       <transaction>
         <token>QguSkyc5F49S2P68RSbA2Eszkhr</token>

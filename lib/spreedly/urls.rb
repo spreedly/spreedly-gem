@@ -91,7 +91,7 @@ module Spreedly
       "#{base_url}/v1/payment_methods/#{token}.xml"
     end
 
-    def deliver_receiver_url(receiver_token)
+    def deliver_to_receiver_url(receiver_token)
       "#{base_url}/v1/receivers/#{receiver_token}/deliver.xml"
     end
 
