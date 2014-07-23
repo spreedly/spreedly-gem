@@ -52,7 +52,7 @@ gateway.token     # => "DnbEJaaY2egcVkCvg3s8qT38xgt"
 
 #### Add a payment method
 Need a payment method token to try things out?  With Spreedly it's pretty straightforward to use a
-[transparent redirect](https://core.spreedly.com/manual/quickstart#submit-payment-form) to give you a
+[transparent redirect](https://docs.spreedly.com/guides/adding-payment-methods/web-form/) to give you a
 payment method token.  A payment form in your application could look something like this:
 
 ``` html
@@ -84,7 +84,7 @@ Once Spreedly has recorded the information, it will redirect the browser to the 
 
     http://yourdomain.com/transparent_redirect_done?token=OEj2G2QJZM4C10AfTLYTrsKIsZH
 
-Once you have the payment method token (OEj2G2QJZM4C10AfTLYTrsKIsZH in this case), you can remember it and use it whenever you'd like.  These [test cards](https://core.spreedly.com/manual/test-data) will help.
+Once you have the payment method token (OEj2G2QJZM4C10AfTLYTrsKIsZH in this case), you can remember it and use it whenever you'd like.  These [test cards](https://docs.spreedly.com/reference/test-data/) will help.
 
 #### Retrieve a payment method
 Let's say you'd like some additional information about the payment method.  You can find a payment method like so:
@@ -369,7 +369,7 @@ env.purchase_on_gateway(gateway_token, "Some Unknown Token", 4432) # Raises Spre
 
 #### Trying to use a non-test gateway or a non-test payment method with an inactive account
 
-You're free to use [test card data](https://core.spreedly.com/manual/test-data) and a [Test gateway](https://core.spreedly.com/manual/payment-gateways/test) to integrate Spreedly without having a
+You're free to use [test card data](https://docs.spreedly.com/reference/test-data/) and a [Test gateway](https://docs.spreedly.com/payment-gateways/test/) to integrate Spreedly without having a
 paid Spreedly account.  If you try to use a real card or a real gateway when your account isn't yet paid for, we'll raise an exception:
 
 ``` ruby
@@ -389,7 +389,7 @@ For api calls that actually talk to a payment gateway, the timout is longer sinc
 
 ## Sample applications using the gem
 
-There are some sample applications with source code using this gem.  You can [find them here](https://core.spreedly.com/manual/sample_applications).
+There are some sample applications with source code using this gem.  You can [find them here](https://docs.spreedly.com/resources/apps-libs/).
 
 ## Contributing
 
