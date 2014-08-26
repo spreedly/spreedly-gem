@@ -67,6 +67,7 @@ module GatewayOptionsStubs
             <supports_authorize type="boolean">true</supports_authorize>
             <supports_capture type="boolean">true</supports_capture>
             <supports_credit type="boolean">true</supports_credit>
+            <supports_general_credit type="boolean">true</supports_general_credit>
             <supports_void type="boolean">true</supports_void>
             <supports_verify type="boolean">true</supports_verify>
             <supports_reference_purchase type="boolean">true</supports_reference_purchase>
@@ -116,6 +117,7 @@ module GatewayOptionsStubs
             <supports_authorize type="boolean">true</supports_authorize>
             <supports_capture type="boolean">true</supports_capture>
             <supports_credit type="boolean">true</supports_credit>
+            <supports_general_credit type="boolean">true</supports_general_credit>
             <supports_void type="boolean">true</supports_void>
             <supports_verify type="boolean">true</supports_verify>
             <supports_reference_purchase type="boolean">true</supports_reference_purchase>

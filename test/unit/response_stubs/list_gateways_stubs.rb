@@ -12,6 +12,7 @@ module ListGatewaysStubs
             <supports_authorize type="boolean">true</supports_authorize>
             <supports_capture type="boolean">true</supports_capture>
             <supports_credit type="boolean">true</supports_credit>
+            <supports_general_credit type="boolean">true</supports_general_credit>
             <supports_void type="boolean">true</supports_void>
             <supports_reference_purchase type="boolean">true</supports_reference_purchase>
             <supports_purchase_via_preauthorization type="boolean">true</supports_purchase_via_preauthorization>
@@ -45,6 +46,7 @@ module ListGatewaysStubs
             <supports_authorize type="boolean">true</supports_authorize>
             <supports_capture type="boolean">true</supports_capture>
             <supports_credit type="boolean">true</supports_credit>
+            <supports_general_credit type="boolean">true</supports_general_credit>
             <supports_void type="boolean">true</supports_void>
             <supports_reference_purchase type="boolean">true</supports_reference_purchase>
             <supports_purchase_via_preauthorization type="boolean">true</supports_purchase_via_preauthorization>

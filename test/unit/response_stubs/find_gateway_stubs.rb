@@ -13,6 +13,7 @@ module FindGatewayStubs
           <supports_authorize type="boolean">true</supports_authorize>
           <supports_capture type="boolean">true</supports_capture>
           <supports_credit type="boolean">false</supports_credit>
+          <supports_general_credit type="boolean">false</supports_general_credit>
           <supports_void type="boolean">false</supports_void>
           <supports_reference_purchase type="boolean">false</supports_reference_purchase>
           <supports_purchase_via_preauthorization type="boolean">false</supports_purchase_via_preauthorization>

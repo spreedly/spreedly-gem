@@ -58,6 +58,7 @@ class GatewayOptionsTest < Test::Unit::TestCase
       :supports_authorize,
       :supports_capture,
       :supports_credit,
+      :supports_general_credit,
       :supports_void,
       :supports_reference_purchase,
       :supports_purchase_via_preauthorization,
