@@ -53,11 +53,13 @@ class GatewayOptionsTest < Test::Unit::TestCase
   def test_characteristics
     @environment.stubs(:raw_ssl_request).returns(successful_gateway_options_response)
     gateway_class = @environment.gateway_options.first
-
+    puts "mb: gateway_class.supports_purchase: #{gateway_class.supports_purchase.inspect}"
+    puts "mb: gateway_class.supports_fraud_review: #{gateway_class.supports_fraud_review.inspect}"
     [ :supports_purchase,
       :supports_authorize,
       :supports_capture,
       :supports_credit,
+      :supports_general_credit,
       :supports_void,
       :supports_reference_purchase,
       :supports_purchase_via_preauthorization,
@@ -65,7 +67,8 @@ class GatewayOptionsTest < Test::Unit::TestCase
       :supports_offsite_authorize,
       :supports_3dsecure_purchase,
       :supports_3dsecure_authorize,
-      :supports_store
+      :supports_store,
+      :supports_fraud_review
     ].each do |c|
       assert gateway_class.send("#{c}?")
     end
