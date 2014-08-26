@@ -12,6 +12,7 @@ module FindPaymentMethodStubs
         </data>
         <storage_state>retained</storage_state>
         <last_four_digits>4445</last_four_digits>
+        <first_six_digits>411111</first_six_digits>
         <card_type>master</card_type>
         <first_name>Alcatraz</first_name>
         <last_name>Smedry</last_name>
@@ -46,7 +47,8 @@ module FindPaymentMethodStubs
           <how_many>2</how_many>
         </data>
         <storage_state>redacted</storage_state>
-        <last_four_digits>1881</last_four_digits>
+        <last_four_digits></last_four_digits>
+        <first_six_digits></first_six_digits>
         <card_type nil="true"/>
         <first_name></first_name>
         <last_name></last_name>

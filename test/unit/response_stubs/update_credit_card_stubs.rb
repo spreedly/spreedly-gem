@@ -10,6 +10,7 @@ module UpdateCreditCardStubs
         <data nil="true"/>
         <storage_state>retained</storage_state>
         <last_four_digits>4444</last_four_digits>
+        <first_six_digits>411111</first_six_digits>
         <card_type>master</card_type>
         <first_name>Mat</first_name>
         <last_name>Cauthon</last_name>

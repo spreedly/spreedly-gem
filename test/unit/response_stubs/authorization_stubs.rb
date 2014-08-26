@@ -44,6 +44,7 @@ module AuthorizationStubs
           <data nil="true"/>
           <storage_state>retained</storage_state>
           <last_four_digits>4444</last_four_digits>
+          <first_six_digits>411111</first_six_digits>
           <card_type>master</card_type>
           <first_name>John</first_name>
           <last_name>Forthrast</last_name>
@@ -114,6 +115,7 @@ module AuthorizationStubs
           <data nil="true"/>
           <storage_state>retained</storage_state>
           <last_four_digits>1881</last_four_digits>
+          <first_six_digits>411111</first_six_digits>
           <card_type>visa</card_type>
           <first_name>Perrin</first_name>
           <last_name>Aybara</last_name>

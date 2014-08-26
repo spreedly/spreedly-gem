@@ -18,6 +18,7 @@ module AddCreditCardStubs
           <data>Don't test everything here, since find_payment_method tests it all.</data>
           <storage_state>cached</storage_state>
           <last_four_digits>4942</last_four_digits>
+          <first_six_digits>411111</first_six_digits>
           <card_type>master</card_type>
           <first_name>Eland</first_name>
           <last_name>Venture</last_name>
