@@ -1,13 +1,21 @@
 # Changelog
 
-## 2.0.12
-* Add support for new credit card field: eligible_for_card_updater [markabe]
+## Next Version
+
+
+## 2.0.13
 * Check attributes for non-nil before sending [markabe]
 * Add supports_verify option to Gateway [duff]
 * Add support for verify_on_gateway API call [duff]
 * Add support for RecacheSensitiveData transaction [duff]
 * Remove cacert.pem and rely on system certs [duff]
+* Adds add_receiver method to environment [Thomas Hoen]
+* Adds deliver_receiver functionality [Thomas Hoen]
+* Add support for first_six_digits [duff]
+* Add support for supports_general_credit characteristic [markabe]
 
+## 2.0.12
+* Add support for new credit card field: eligible_for_card_updater [markabe]
 
 ## 2.0.11
 * Add support for ThirdPartyTokens [duff]
