@@ -75,6 +75,11 @@ module Spreedly
       "#{base_url}/v1/gateways.xml#{since_param}"
     end
 
+    def list_receivers_url(since_token)
+      since_param = "?since_token=#{since_token}" if since_token
+      "#{base_url}/v1/receivers.xml#{since_param}"
+    end
+
     def gateway_options_url
       "#{base_url}/v1/gateways.xml"
     end

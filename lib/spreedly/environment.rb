@@ -100,6 +100,11 @@ module Spreedly
       body = store_body(payment_method_token, options)
       api_post(store_url(gateway_token), body)
     end
+    
+    def list_receivers(since_token = nil)
+      xml_doc = ssl_get(list_receivers_url(since_token), headers)
+      Receiver.new_list_from(xml_doc)
+    end
 
     def gateway_options
       xml_doc = ssl_options(gateway_options_url)
