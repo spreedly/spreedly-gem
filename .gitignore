@@ -6,3 +6,5 @@ pkg
 tmp
 vendor/ruby
 test/credentials/personal_credentials.yml
+.ruby-gemset
+.ruby-version
