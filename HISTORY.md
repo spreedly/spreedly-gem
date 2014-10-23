@@ -2,6 +2,8 @@
 
 ## Next Version
 
+## 2.0.14
+* Add support for gateway_specific_fields [duff]
 
 ## 2.0.13
 * Check attributes for non-nil before sending [markabe]
