@@ -67,4 +67,25 @@ class RemotePurchaseTest < Test::Unit::TestCase
     assert_match /\d/, transaction.gateway_transaction_id
   end
 
+  def test_gateway_specific_fields
+    gateway_token = @environment.add_gateway(:test).token
+    card_token = create_card_on(@environment, retained: false).token
+
+    t = @environment.purchase_on_gateway(gateway_token, card_token, 344,
+          gateway_specific_fields:
+            {
+              litle: {
+                descriptor_name: "CompanyName",
+                descriptor_phone: "1331131131"
+              },
+              stripe: {
+                application_fee: 411
+              }
+            })
+
+    assert t.succeeded?
+    assert_equal "CompanyName", t.gateway_specific_fields[:litle][:descriptor_name]
+    assert_equal "411", t.gateway_specific_fields[:stripe][:application_fee]
+  end
+
 end

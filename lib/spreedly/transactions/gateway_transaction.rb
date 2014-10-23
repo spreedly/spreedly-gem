@@ -6,14 +6,32 @@ module Spreedly
     field :merchant_name_descriptor, :merchant_location_descriptor
     field :on_test_gateway, type: :boolean
 
-    attr_reader :response
+    attr_reader :response, :gateway_specific_fields
 
     def initialize(xml_doc)
       super
       response_xml_doc = xml_doc.at_xpath('.//response')
       @response = response_xml_doc ? Response.new(response_xml_doc) : nil
+      @gateway_specific_fields = parse_gateway_specific_fields(xml_doc)
     end
 
+    def parse_gateway_specific_fields(xml_doc)
+      result = {}
+
+      xml_doc.at_xpath('.//gateway_specific_fields').xpath('*').each do |node|
+        node_name = node.name.to_sym
+        if (node.elements.empty?)
+          result[node_name] = node.text
+        else
+          node.elements.each do |childnode|
+            result[node_name] ||= {}
+            result[node_name][childnode.name.to_sym] = childnode.text
+          end
+        end
+      end
+
+      result
+    end
   end
 
   class Response

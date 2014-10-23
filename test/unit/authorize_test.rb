@@ -28,6 +28,9 @@ class AuthorizeTest < Test::Unit::TestCase
     assert_equal 'Tax Free Zone', t.merchant_location_descriptor
     assert_equal 'YjWxOjbpeieXsZFdAsbhM2DFgLe', t.gateway_token
     assert_equal "44", t.gateway_transaction_id
+    assert_equal "TheName", t.gateway_specific_fields[:litle][:descriptor_name]
+    assert_equal "33411441", t.gateway_specific_fields[:litle][:descriptor_phone]
+    assert_equal "844", t.gateway_specific_fields[:stripe][:application_fee]
 
     assert_equal 'Nh2Vw0kAoSQvcJDpK52q4dZlrVJ', t.payment_method.token
     assert_equal 'Forthrast', t.payment_method.last_name
@@ -63,6 +66,7 @@ class AuthorizeTest < Test::Unit::TestCase
       [ './ip', '183.128.100.102' ],
       [ './merchant_name_descriptor', 'TRain' ],
       [ './merchant_location_descriptor', 'British Colombia' ],
+      [ './gateway_specific_fields/braintree/customer_id', '1143' ],
       [ './retain_on_success', 'true' ]
   end
 
@@ -81,6 +85,9 @@ class AuthorizeTest < Test::Unit::TestCase
       ip: "183.128.100.102",
       merchant_name_descriptor: "TRain",
       merchant_location_descriptor: "British Colombia",
+      gateway_specific_fields: {
+        braintree: { customer_id: "1143" }
+      },
       retain_on_success: true
     }
   end

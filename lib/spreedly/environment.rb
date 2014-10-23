@@ -256,8 +256,21 @@ module Spreedly
     end
 
     def add_extra_options_for_basic_ops(doc, options)
+      add_gateway_specific_fields(doc, options)
       add_to_doc(doc, options, :order_id, :description, :ip, :merchant_name_descriptor,
                                :merchant_location_descriptor)
+    end
+
+    def add_gateway_specific_fields(doc, options)
+      return unless options[:gateway_specific_fields].kind_of?(Hash)
+      doc << "<gateway_specific_fields>#{xml_for_hash(options[:gateway_specific_fields])}</gateway_specific_fields>"
+    end
+
+    def xml_for_hash(hash)
+      hash.map do |key, value|
+        text = value.kind_of?(Hash) ? xml_for_hash(value) : value
+        "<#{key}>#{text}</#{key}>"
+      end.join
     end
 
     def build_xml_request(root)

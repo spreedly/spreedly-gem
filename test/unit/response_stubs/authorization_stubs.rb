@@ -17,6 +17,15 @@ module AuthorizationStubs
         <description>LotsOCoffee</description>
         <merchant_name_descriptor>My Writeoff Inc.</merchant_name_descriptor>
         <merchant_location_descriptor>Tax Free Zone</merchant_location_descriptor>
+        <gateway_specific_fields>
+          <litle>
+            <descriptor_name>TheName</descriptor_name>
+            <descriptor_phone>33411441</descriptor_blah>
+          </litle>
+          <stripe>
+            <application_fee>844</application_fee>
+          </stripe>
+        </gateway_specific_fields>
         <gateway_specific_fields nil="true"/>
         <gateway_specific_response_fields nil="true"/>
         <message key="messages.transaction_succeeded">Succeeded!</message>
