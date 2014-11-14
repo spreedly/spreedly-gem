@@ -248,6 +248,12 @@ transaction.order_id      # => '30-9904-31114'
 env.find_transcript(transaction_token)
 ```
 
+#### Updating a gateway
+
+``` ruby
+env.update_gateway(gateway_token, login: 'newlogin', password: 'newpassword')
+```
+
 #### Updating a credit card
 
 ``` ruby

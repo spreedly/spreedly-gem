@@ -91,6 +91,10 @@ module Spreedly
       "#{base_url}/v1/payment_methods.xml"
     end
 
+    def update_gateway_url(token)
+      "#{base_url}/v1/gateways/#{token}.xml"
+    end
+
     def update_payment_method_url(token)
       "#{base_url}/v1/payment_methods/#{token}.xml"
     end
