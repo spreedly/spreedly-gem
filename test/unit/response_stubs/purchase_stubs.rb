@@ -30,6 +30,7 @@ module PurchaseStubs
           <cvv_code>31</cvv_code>
           <cvv_message nil="true">Rutabaga</cvv_message>
           <pending type="boolean">false</pending>
+          <fraud_review type="boolean">false</fraud_review>
           <error_code>899</error_code>
           <error_detail nil="true">The eagle lives!</error_detail>
           <cancelled type="boolean">false</cancelled>
@@ -101,6 +102,7 @@ module PurchaseStubs
           <cvv_code nil="true"/>
           <cvv_message nil="true"/>
           <pending type="boolean">false</pending>
+          <fraud_review type="boolean">false</fraud_review>
           <error_code></error_code>
           <error_detail nil="true">The eagle is dead Jim.</error_detail>
           <cancelled type="boolean">false</cancelled>

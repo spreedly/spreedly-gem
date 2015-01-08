@@ -37,6 +37,7 @@ class PurchaseTest < Test::Unit::TestCase
     assert_equal '31', t.response.cvv_code
     assert_equal 'Rutabaga', t.response.cvv_message
     assert !t.response.pending
+    assert !t.response.fraud_review
     assert_equal '899', t.response.error_code
     assert_equal 'The eagle lives!', t.response.error_detail
     assert !t.response.cancelled

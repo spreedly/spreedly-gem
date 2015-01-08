@@ -31,6 +31,7 @@ module VerificationStubs
           <cvv_code nil="true"/>
           <cvv_message nil="true"/>
           <pending type="boolean">false</pending>
+          <fraud_review type="boolean">false</fraud_review>
           <error_code/>
           <error_detail nil="true"/>
           <cancelled type="boolean">false</cancelled>
@@ -100,6 +101,7 @@ module VerificationStubs
           <cvv_code nil="true"/>
           <cvv_message nil="true"/>
           <pending type="boolean">false</pending>
+          <fraud_review type="boolean">false</fraud_review>
           <error_code/>
           <error_detail>What up with that?</error_detail>
           <cancelled type="boolean">false</cancelled>
