@@ -66,7 +66,8 @@ class GatewayOptionsTest < Test::Unit::TestCase
       :supports_offsite_authorize,
       :supports_3dsecure_purchase,
       :supports_3dsecure_authorize,
-      :supports_store
+      :supports_store,
+      :supports_fraud_review
     ].each do |c|
       assert gateway_class.send("#{c}?")
     end

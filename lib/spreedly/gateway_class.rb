@@ -8,7 +8,8 @@ module Spreedly
           :supports_void, :supports_verify, :supports_reference_purchase,
           :supports_purchase_via_preauthorization, :supports_offsite_purchase,
           :supports_offsite_authorize, :supports_3dsecure_purchase, :supports_3dsecure_authorize,
-          :supports_store, :supports_remove, :supports_general_credit, type: :boolean
+          :supports_store, :supports_remove, :supports_general_credit,
+          :supports_fraud_review, type: :boolean
 
     attr_reader :supported_countries, :payment_methods, :auth_modes, :regions
 
