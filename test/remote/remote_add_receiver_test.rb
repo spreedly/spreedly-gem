@@ -25,9 +25,9 @@ class RemoteAddReceiverTest < Test::Unit::TestCase
   end
 
   def test_add_test_receiver
-    receiver = @environment.add_receiver(:test, 'http://api.example.com/post')
+    receiver = @environment.add_receiver(:test, 'http://testserver.com')
     assert_equal "test", receiver.receiver_type
-    assert_equal 'http://api.example.com/post', receiver.hostnames
+    assert_equal 'http://testserver.com', receiver.hostnames
   end
 
   # Coming soon
