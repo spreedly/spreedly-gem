@@ -32,6 +32,8 @@ module Spreedly
         return RecacheSensitiveData.new(xml_doc)
       when 'DeliverPaymentMethod'
         return DeliverPaymentMethod.new(xml_doc)
+      when 'Store'
+        return Store.new(xml_doc)
       else
         Transaction.new(xml_doc)
       end

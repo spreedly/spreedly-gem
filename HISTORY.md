@@ -1,6 +1,8 @@
 # Changelog
 
 ## Next Version
+* Add support for supports_fraud_review gateway characteristic [markabe]
+* Add support for the store API call [duff]
 
 ## 2.0.14
 * Add support for gateway_specific_fields [duff]

@@ -54,6 +54,10 @@ module Spreedly
       "#{base_url}/v1/gateways/#{gateway_token}/redact.xml"
     end
 
+    def store_url(gateway_token)
+      "#{base_url}/v1/gateways/#{gateway_token}/store.xml"
+    end
+
     def list_transactions_url(since_token, payment_method_token)
       since_param = "?since_token=#{since_token}" if since_token
       return "#{base_url}/v1/transactions.xml#{since_param}" unless payment_method_token

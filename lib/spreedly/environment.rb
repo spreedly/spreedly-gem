@@ -96,6 +96,11 @@ module Spreedly
       Gateway.new_list_from(xml_doc)
     end
 
+    def store_on_gateway(gateway_token, payment_method_token)
+      body = store_body(payment_method_token)
+      api_post(store_url(gateway_token), body)
+    end
+
     def gateway_options
       xml_doc = ssl_options(gateway_options_url)
       GatewayClass.new_list_from(xml_doc)
@@ -204,6 +209,12 @@ module Spreedly
         doc.receiver_type receiver_type
         doc.hostnames host_names
         add_credentials_to_doc(doc, credentials) if credentials && !credentials.empty?
+      end
+    end
+
+    def store_body(payment_method_token)
+      build_xml_request('transaction') do |doc|
+        doc.payment_method_token(payment_method_token)
       end
     end
 
