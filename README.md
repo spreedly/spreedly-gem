@@ -147,6 +147,12 @@ transaction = env.retain_payment_method(payment_method_token)
 transaction = env.redact_payment_method(payment_method_token)
 ```
 
+#### General Credit
+
+``` ruby
+transaction = env.general_credit_on_gateway(gateway_token, payment_method_token, amount)
+```
+
 #### Redact a gateway
 
 ``` ruby
@@ -169,7 +175,7 @@ env.purchase_on_gateway(gateway_token, payment_method_token, amount, currency_co
 
 
 #### Extra options for the basic operations
-For Purchase, Authorize, Capture, Refund, Verify, and Void calls, you can specify additional options:
+For Purchase, Authorize, Capture, Refund, General credit, Verify, and Void calls, you can specify additional options:
 
 ``` ruby
 env.purchase_on_gateway(gateway_token, payment_method_token, amount,

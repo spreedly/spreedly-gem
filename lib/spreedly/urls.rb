@@ -42,6 +42,10 @@ module Spreedly
       "#{base_url}/v1/transactions/#{token}/credit.xml"
     end
 
+    def general_credit_url(gateway_token)
+      "#{base_url}/v1/gateways/#{gateway_token}/general_credit.xml"
+    end
+
     def retain_payment_method_url(payment_method_token)
       "#{base_url}/v1/payment_methods/#{payment_method_token}/retain.xml"
     end

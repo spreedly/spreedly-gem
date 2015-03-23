@@ -65,6 +65,11 @@ module Spreedly
       api_post(refund_transaction_url(token), refund_body(options))
     end
 
+    def general_credit_on_gateway(gateway_token, payment_method_token, amount, options = {})
+      body = general_credit_body(amount, payment_method_token, options)
+      api_post(general_credit_url(gateway_token), body)
+    end
+
     def retain_payment_method(payment_method_token)
       xml_doc = ssl_put(retain_payment_method_url(payment_method_token), '', headers)
       Transaction.new_from(xml_doc)
@@ -186,6 +191,15 @@ module Spreedly
 
       build_xml_request('transaction') do |doc|
         add_to_doc(doc, options, :amount, :currency_code)
+        add_extra_options_for_basic_ops(doc, options)
+      end
+    end
+
+    def general_credit_body(amount, payment_method_token, options)
+      build_xml_request('transaction') do |doc|
+        doc.amount amount
+        doc.currency_code(options[:currency_code] || currency_code)
+        doc.payment_method_token(payment_method_token)
         add_extra_options_for_basic_ops(doc, options)
       end
     end
