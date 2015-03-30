@@ -234,7 +234,7 @@ module Spreedly
         doc.credit_card do
           add_to_doc(doc, options, :number, :verification_value, :month, :first_name, :last_name,
                      :year, :address1, :address2, :city, :state, :zip, :country, :phone_number,
-                     :eligible_for_card_updater)
+                     :company, :eligible_for_card_updater)
         end
       end
     end
