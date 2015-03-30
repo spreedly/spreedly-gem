@@ -25,6 +25,7 @@ module FindPaymentMethodStubs
         <zip>02124</zip>
         <country>USA</country>
         <phone_number>201.344.7712</phone_number>
+        <company>Acme</company>
         <full_name>Alcatraz Smedry</full_name>
         <payment_method_type>credit_card</payment_method_type>
         <eligible_for_card_updater type="boolean">true</eligible_for_card_updater>
@@ -61,6 +62,7 @@ module FindPaymentMethodStubs
         <zip nil="true"/>
         <country nil="true"/>
         <phone_number nil="true"/>
+        <company>Acme</company>
         <full_name></full_name>
         <payment_method_type>credit_card</payment_method_type>
         <eligible_for_card_updater type="boolean">true</eligible_for_card_updater>

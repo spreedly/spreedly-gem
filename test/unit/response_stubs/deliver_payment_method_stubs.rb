@@ -69,6 +69,7 @@ module DeliverPaymentMethodStubs
           <zip nil="true"/>
           <country nil="true"/>
           <phone_number nil="true"/>
+          <company>Acme</company>
           <eligible_for_card_updater>true</eligible_for_card_updater>
           <verification_value></verification_value>
           <number>XXXX-XXXX-XXXX-1111</number>

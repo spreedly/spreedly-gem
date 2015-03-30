@@ -59,6 +59,7 @@ module ListTransactionsStubs
             <zip nil="true"/>
             <country nil="true"/>
             <phone_number nil="true"/>
+            <company>Acme</company>
             <full_name>Perrin Aybara</full_name>
             <payment_method_type>credit_card</payment_method_type>
             <eligible_for_card_updater type="boolean">true</eligible_for_card_updater>

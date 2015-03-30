@@ -31,6 +31,7 @@ module AddCreditCardStubs
           <zip>33221</zip>
           <country>UK</country>
           <phone_number>43</phone_number>
+          <company>Acme</company>
           <full_name>Eland Venture</full_name>
           <eligible_for_card_updater type="boolean">true</eligible_for_card_updater>
           <payment_method_type>credit_card</payment_method_type>
