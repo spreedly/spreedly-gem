@@ -4,6 +4,7 @@
 * Add support for supports_fraud_review gateway characteristic [markabe]
 * Add support for the store API call [duff]
 * Add support for company name property on credit card [duff]
+* Deliver payment method uses talking to gateway timeout [duff]
 
 ## 2.0.14
 * Add support for gateway_specific_fields [duff]

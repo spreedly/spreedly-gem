@@ -134,8 +134,7 @@ module Spreedly
 
     def deliver_to_receiver(receiver_token, payment_method_token, receiver_options)
       body = deliver_to_receiver_body(payment_method_token, receiver_options)
-      xml_doc = ssl_post(deliver_to_receiver_url(receiver_token), body, headers)
-      DeliverPaymentMethod.new_from(xml_doc)
+      api_post(deliver_to_receiver_url(receiver_token), body)
     end
 
     private
