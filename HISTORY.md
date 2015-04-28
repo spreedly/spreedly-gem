@@ -1,6 +1,8 @@
 # Changelog
 
 ## Next Version
+
+## 2.0.15
 * Add support for supports_fraud_review gateway characteristic [markabe]
 * Add support for the store API call [duff]
 * Add support for company name property on credit card [duff]
