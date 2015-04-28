@@ -206,7 +206,7 @@ module Spreedly
     def add_receiver_body(receiver_type, host_names, credentials)
       build_xml_request('receiver') do |doc|
         doc.receiver_type receiver_type
-        doc.hostnames host_names
+        doc.hostnames(host_names) if host_names
         add_credentials_to_doc(doc, credentials) if credentials && !credentials.empty?
       end
     end

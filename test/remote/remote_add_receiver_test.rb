@@ -30,11 +30,10 @@ class RemoteAddReceiverTest < Test::Unit::TestCase
     assert_equal 'http://testserver.com', receiver.hostnames
   end
 
-  # Coming soon
-  # def test_need_active_account
-  #   assert_raise_with_message(Spreedly::PaymentRequiredError, "Your account has not been activated for real transactions. Please update your subscription settings.") do
-  #     @environment.add_receiver(:braintree)
-  #   end
-  # end
+  def test_need_active_account
+    assert_raise_with_message(Spreedly::PaymentRequiredError, "Your account has not been activated for real transactions. Please update your subscription settings.") do
+      @environment.add_receiver(:braintree)
+    end
+  end
 
 end
