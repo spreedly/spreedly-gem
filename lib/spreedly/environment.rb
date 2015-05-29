@@ -231,7 +231,7 @@ module Spreedly
       build_xml_request('payment_method') do |doc|
         add_to_doc(doc, options, :data, :retained, :email)
         doc.credit_card do
-          add_to_doc(doc, options, :number, :verification_value, :month, :first_name, :last_name,
+          add_to_doc(doc, options, :number, :verification_value, :month, :full_name, :first_name, :last_name,
                      :year, :address1, :address2, :city, :state, :zip, :country, :phone_number,
                      :company, :eligible_for_card_updater)
         end
