@@ -23,6 +23,7 @@ module FindGatewayStubs
           <supports_3dsecure_authorize type="boolean">false</supports_3dsecure_authorize>
           <supports_store type="boolean">false</supports_store>
           <supports_remove type="boolean">false</supports_remove>
+          <supports_disburse type="boolean">false</supports_disburse>
           <supports_fraud_review type="boolean">false</supports_fraud_review>
         </characteristics>
         <credentials>
