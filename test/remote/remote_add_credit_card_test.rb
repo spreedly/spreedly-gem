@@ -27,7 +27,7 @@ class RemoteAddCreditCardTest < Test::Unit::TestCase
   end
 
   def test_payment_required
-    assert_raise_with_message(Spreedly::PaymentRequiredError, "Your account has not been activated for real transactions. Please update your subscription settings.") do
+    assert_raise_with_message(Spreedly::PaymentRequiredError, "Your environment (R7lHscqcYkZeDGGbthKp6GKMu15) has not been activated for real transactions with real payment methods. If you're using a Test Gateway you can *ONLY* use Test payment methods - ( https://docs.spreedly.com/test-data). All other credit card numbers are considered real credit cards; real credit cards are not allowed when using a Test Gateway.") do
       @environment.add_credit_card(card_deets(number: '343'))
     end
   end
