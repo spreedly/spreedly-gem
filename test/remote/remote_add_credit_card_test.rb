@@ -50,6 +50,14 @@ class RemoteAddCreditCardTest < Test::Unit::TestCase
     assert_equal 'retained', t.payment_method.storage_state
   end
 
+  def test_successfull_add_using_full_name
+    t = @environment.add_credit_card(number: '5555555555554444', month: 1, year: 2019, full_name: "Kvothe Jones")
+    assert t.succeeded?
+    assert_equal "Kvothe", t.payment_method.first_name
+    assert_equal "Jones", t.payment_method.last_name
+    assert_equal "Kvothe Jones", t.payment_method.full_name
+  end
+
 
   private
   def card_deets(options = {})
