@@ -267,6 +267,7 @@ module Spreedly
 
     def add_extra_options_for_basic_ops(doc, options)
       add_gateway_specific_fields(doc, options)
+      add_shipping_address_override(doc, options)
       add_to_doc(doc, options, :order_id, :description, :ip, :merchant_name_descriptor,
                                :merchant_location_descriptor)
     end
@@ -274,6 +275,15 @@ module Spreedly
     def add_gateway_specific_fields(doc, options)
       return unless options[:gateway_specific_fields].kind_of?(Hash)
       doc << "<gateway_specific_fields>#{xml_for_hash(options[:gateway_specific_fields])}</gateway_specific_fields>"
+    end
+
+    def add_shipping_address_override(doc, options)
+      return unless options[:shipping_address].kind_of?(Hash)
+      doc.send(:shipping_address) do
+        options[:shipping_address].each do |k, v|
+          doc.send(k, v)
+        end
+      end
     end
 
     def xml_for_hash(hash)
