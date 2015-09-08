@@ -43,6 +43,15 @@ class PurchaseTest < Test::Unit::TestCase
     assert !t.response.cancelled
     assert_equal Time.parse('2013-07-31T19:46:26Z'), t.response.created_at
     assert_equal Time.parse('2013-07-31T19:46:27Z'), t.response.updated_at
+
+    assert_equal '', t.shipping_address.name
+    assert_equal '', t.shipping_address.address1
+    assert_equal '', t.shipping_address.address2
+    assert_equal '', t.shipping_address.city
+    assert_equal '', t.shipping_address.state
+    assert_equal '', t.shipping_address.zip
+    assert_equal '', t.shipping_address.country
+    assert_equal '', t.shipping_address.phone_number
   end
 
   def test_failed_purchase
@@ -55,6 +64,19 @@ class PurchaseTest < Test::Unit::TestCase
     assert_equal 'gateway_processing_failed', t.state
 
     assert_equal 'The eagle is dead Jim.', t.response.error_detail
+  end
+
+  def test_successful_purchase_with_shipping_address_override
+    t = purchase_using(successful_purchase_with_shipping_address_override_response)
+
+    assert_equal 'John Doe', t.shipping_address.name
+    assert_equal '123 Main St.', t.shipping_address.address1
+    assert_equal 'Unit 1', t.shipping_address.address2
+    assert_equal 'Acme', t.shipping_address.city
+    assert_equal 'Corp', t.shipping_address.state
+    assert_equal '45678', t.shipping_address.zip
+    assert_equal 'USA', t.shipping_address.country
+    assert_equal '123-456-7890', t.shipping_address.phone_number
   end
 
   def test_request_body_params
