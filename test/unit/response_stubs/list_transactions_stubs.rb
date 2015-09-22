@@ -16,6 +16,7 @@ module ListTransactionsStubs
           <order_id nil="true"/>
           <ip nil="true"/>
           <description nil="true"/>
+          <email nil="true"/>
           <merchant_name_descriptor nil="true"/>
           <merchant_location_descriptor nil="true"/>
           <gateway_specific_fields nil="true"/>
@@ -84,6 +85,7 @@ module ListTransactionsStubs
           <transaction_type>Capture</transaction_type>
           <order_id nil="true"/>
           <ip nil="true"/>
+          <email nil="true"/>
           <description nil="true"/>
           <merchant_name_descriptor nil="true"/>
           <merchant_location_descriptor nil="true"/>

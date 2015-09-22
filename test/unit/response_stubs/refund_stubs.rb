@@ -14,6 +14,7 @@ module RefundStubs
         <transaction_type>Credit</transaction_type>
         <order_id>99a1</order_id>
         <ip>182.129.106.102</ip>
+        <email>joe@example.com</email>
         <description>LotsOCoffee</description>
         <merchant_name_descriptor>My Writeoff Inc.</merchant_name_descriptor>
         <merchant_location_descriptor>Tax Free Zone</merchant_location_descriptor>
@@ -58,6 +59,7 @@ module RefundStubs
         <transaction_type>Credit</transaction_type>
         <order_id nil="true"/>
         <ip nil="true"/>
+        <email nil="true"/>
         <description nil="true"/>
         <merchant_name_descriptor nil="true"/>
         <merchant_location_descriptor nil="true"/>

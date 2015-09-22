@@ -14,6 +14,7 @@ module VoidStubs
         <transaction_type>Void</transaction_type>
         <order_id>49J</order_id>
         <ip>102.122.012.111</ip>
+        <email>joe@example.com</email>
         <description>Wonderful Description</description>
         <merchant_name_descriptor>DopeCorp</merchant_name_descriptor>
         <merchant_location_descriptor>Somewhere</merchant_location_descriptor>
@@ -54,6 +55,7 @@ module VoidStubs
         <transaction_type>Void</transaction_type>
         <order_id nil="true"/>
         <ip nil="true"/>
+        <email nil="true"/>
         <description nil="true"/>
         <merchant_name_descriptor nil="true"/>
         <merchant_location_descriptor nil="true"/>

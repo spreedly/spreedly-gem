@@ -268,7 +268,7 @@ module Spreedly
     def add_extra_options_for_basic_ops(doc, options)
       add_gateway_specific_fields(doc, options)
       add_shipping_address_override(doc, options)
-      add_to_doc(doc, options, :order_id, :description, :ip, :merchant_name_descriptor,
+      add_to_doc(doc, options, :order_id, :description, :ip, :email, :merchant_name_descriptor,
                                :merchant_location_descriptor)
     end
 
