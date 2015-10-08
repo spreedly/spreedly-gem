@@ -13,6 +13,7 @@ module CaptureStubs
         <token>T41uDjYsxGybSsp7RHuRTohMjg2</token>
         <transaction_type>Capture</transaction_type>
         <order_id>99a1</order_id>
+        <email>joe@example.com</email>
         <ip>182.129.106.102</ip>
         <description>LotsOCoffee</description>
         <merchant_name_descriptor>My Writeoff Inc.</merchant_name_descriptor>
@@ -58,6 +59,7 @@ module CaptureStubs
         <transaction_type>Capture</transaction_type>
         <order_id nil="true"/>
         <ip nil="true"/>
+        <email nil="true"/>
         <description nil="true"/>
         <merchant_name_descriptor nil="true"/>
         <merchant_location_descriptor nil="true"/>

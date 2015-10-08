@@ -53,6 +53,7 @@ class RemotePurchaseTest < Test::Unit::TestCase
                                                    order_id: "8675",
                                                    description: "SuperDuper",
                                                    ip: "183.128.100.103",
+                                                   email: "fred@example.com",
                                                    merchant_name_descriptor: "Real Stuff",
                                                    merchant_location_descriptor: "Raleigh",
                                                    retain_on_success: true)
@@ -63,7 +64,9 @@ class RemotePurchaseTest < Test::Unit::TestCase
     assert_equal "183.128.100.103", transaction.ip
     assert_equal "Real Stuff", transaction.merchant_name_descriptor
     assert_equal "Raleigh", transaction.merchant_location_descriptor
-    assert_equal "retained", transaction.payment_method.storage_state
+    assert_equal "cached", transaction.payment_method.storage_state
+    assert_equal "fred@example.com", transaction.email
+    assert_equal "perrin@wot.com", transaction.payment_method.email
     assert_match /\d/, transaction.gateway_transaction_id
   end
 

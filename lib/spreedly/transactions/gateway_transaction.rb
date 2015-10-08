@@ -2,16 +2,18 @@ module Spreedly
 
   class GatewayTransaction < Transaction
 
-    field :order_id, :ip, :description, :gateway_token, :gateway_transaction_id
+    field :order_id, :ip, :description, :gateway_token, :gateway_transaction_id, :email
     field :merchant_name_descriptor, :merchant_location_descriptor
     field :on_test_gateway, type: :boolean
 
-    attr_reader :response, :gateway_specific_fields
+    attr_reader :response, :gateway_specific_fields, :shipping_address
 
     def initialize(xml_doc)
       super
       response_xml_doc = xml_doc.at_xpath('.//response')
+      shipping_address_xml_doc = xml_doc.at_xpath('.//shipping_address')
       @response = response_xml_doc ? Response.new(response_xml_doc) : nil
+      @shipping_address = shipping_address_xml_doc ? ShippingAddress.new(shipping_address_xml_doc) : nil
       @gateway_specific_fields = parse_gateway_specific_fields(xml_doc)
     end
 
@@ -47,4 +49,14 @@ module Spreedly
 
   end
 
+  class ShippingAddress
+    include Fields
+
+    field :name, :address1, :address2, :city, :state, :zip, :country, :phone_number
+
+    def initialize(xml_doc)
+      initialize_fields(xml_doc)
+    end
+
+  end
 end

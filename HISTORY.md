@@ -1,6 +1,7 @@
 # Changelog
 
 ## Next Version
+* Add support for purchase shipping address override [davidsantoso]
 
 ## 2.0.15
 * Add support for supports_fraud_review gateway characteristic [markabe]
