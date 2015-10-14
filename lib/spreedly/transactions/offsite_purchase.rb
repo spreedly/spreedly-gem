@@ -1,7 +1,7 @@
 module Spreedly
 
   class OffsitePurchase < AuthPurchase
-    
+
     field :checkout_url
 
     def initialize(xml_doc)
