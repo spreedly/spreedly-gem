@@ -49,6 +49,12 @@ gateway = env.add_gateway(:test)
 gateway.token     # => "DnbEJaaY2egcVkCvg3s8qT38xgt"
 ```
 
+#### Updating a gateway
+
+``` ruby
+env.update_gateway(gateway_token, login: 'newlogin', password: 'newpassword')
+```
+
 
 #### Add a payment method
 Need a payment method token to try things out?  With Spreedly it's pretty straightforward to use a

@@ -126,6 +126,16 @@ module Spreedly
       api_post(add_payment_method_url, add_credit_card_body(options), false)
     end
 
+    def update_gateway(gateway_token, credentials = {})
+      body = update_gateway_body(gateway_token, credentials)
+      xml_doc = ssl_put(update_gateway_url(gateway_token), body, headers)
+      Gateway.new(xml_doc)
+    end
+
+    def add_offsite_method(options)
+      api_post(add_payment_method_url, add_offsite_body(options), false)
+    end
+
     def update_credit_card(credit_card_token, options)
       body = update_credit_card_body(options)
       xml_doc = ssl_put(update_payment_method_url(credit_card_token), body, headers)
@@ -150,7 +160,7 @@ module Spreedly
         doc.amount amount
         doc.currency_code(options[:currency_code] || currency_code)
         doc.payment_method_token(payment_method_token)
-        add_to_doc(doc, options, :retain_on_success)
+        add_to_doc(doc, options, :retain_on_success, :redirect_url, :callback_url)
         add_extra_options_for_basic_ops(doc, options)
       end
     end
@@ -203,6 +213,17 @@ module Spreedly
       end
     end
 
+    def update_gateway_body(gateway_token, credentials)
+      build_xml_request('gateway') do |doc|
+        doc.token gateway_token
+        doc.credentials do |doc|
+          credentials.each do |key, val|
+            doc.send(key, val)
+          end
+        end
+      end
+    end
+
     def add_receiver_body(receiver_type, host_names, credentials)
       build_xml_request('receiver') do |doc|
         doc.receiver_type receiver_type
@@ -235,6 +256,12 @@ module Spreedly
                      :year, :address1, :address2, :city, :state, :zip, :country, :phone_number,
                      :company, :eligible_for_card_updater)
         end
+      end
+    end
+
+    def add_offsite_body(options)
+      build_xml_request('payment_method') do |doc|
+        add_to_doc(doc, options, :data, :retained, :email, :payment_method_type)
       end
     end
 
