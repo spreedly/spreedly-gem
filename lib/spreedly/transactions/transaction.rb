@@ -36,6 +36,10 @@ module Spreedly
         return Store.new(xml_doc)
       when 'OffsitePurchase'
         return OffsitePurchase.new(xml_doc)
+      when 'OffsiteAuthorization'
+        return OffsiteAuthorization.new(xml_doc)
+      when 'PurchaseViaPreauthorization'
+        return PurchaseViaPreauthorization.new(xml_doc)
       else
         Transaction.new(xml_doc)
       end
