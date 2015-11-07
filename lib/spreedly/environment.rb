@@ -70,6 +70,12 @@ module Spreedly
       Transaction.new_from(xml_doc)
     end
 
+    def recache_sensitive_data(payment_method_token, options = {})
+      body = recache_sensitive_data_body(options)
+      xml_doc = ssl_put(recache_sensitive_data_url(payment_method_token), body, headers)
+      Transaction.new_from(xml_doc)
+    end
+
     def redact_payment_method(payment_method_token, options = {})
       body = redact_payment_method_body(options)
       xml_doc = ssl_put(redact_payment_method_url(payment_method_token), body, headers)
@@ -244,6 +250,12 @@ module Spreedly
         add_to_doc(doc, options, :email, :month, :full_name, :first_name, :last_name, :year,
                    :address1, :address2, :city, :state, :zip, :country, :phone_number,
                    :eligible_for_card_updater)
+      end
+    end
+
+    def recache_sensitive_data_body(options)
+      build_xml_request('payment_method') do |doc|
+        add_to_doc(doc, options, *options.keys)
       end
     end
 

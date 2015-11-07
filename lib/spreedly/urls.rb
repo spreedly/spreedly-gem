@@ -46,6 +46,10 @@ module Spreedly
       "#{base_url}/v1/payment_methods/#{payment_method_token}/retain.xml"
     end
 
+    def recache_sensitive_data_url(receiver_token)
+      "#{base_url}/v1/payment_methods/#{receiver_token}/recache.xml"
+    end
+
     def redact_payment_method_url(payment_method_token)
       "#{base_url}/v1/payment_methods/#{payment_method_token}/redact.xml"
     end
