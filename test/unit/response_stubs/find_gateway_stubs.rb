@@ -6,6 +6,7 @@ module FindGatewayStubs
         <token>5YqAdCL5AaxdbDdo1yZCkB4r74p</token>
         <gateway_type>wirecard</gateway_type>
         <name>Wirecard</name>
+        <description>Wirecard Gateway</description>
         <username>username</username>
         <business_case_signature>signature</business_case_signature>
         <characteristics>

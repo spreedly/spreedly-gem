@@ -110,8 +110,9 @@ module Spreedly
       self.new("", "").gateway_options
     end
 
-    def add_gateway(gateway_type, credentials = {})
-      body = add_gateway_body(gateway_type, credentials)
+    def add_gateway(gateway_type, options = {})
+      credentials = options[:credentials] || {}
+      body = add_gateway_body(gateway_type, options[:description], credentials)
       xml_doc = ssl_post(add_gateway_url, body, headers)
       Gateway.new(xml_doc)
     end
@@ -196,9 +197,10 @@ module Spreedly
       end
     end
 
-    def add_gateway_body(gateway_type, credentials)
+    def add_gateway_body(gateway_type, description, credentials)
       build_xml_request('gateway') do |doc|
         doc.gateway_type gateway_type
+        doc.description description
         add_to_doc(doc, credentials, *credentials.keys)
       end
     end

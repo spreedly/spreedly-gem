@@ -49,6 +49,12 @@ gateway = env.add_gateway(:test)
 gateway.token     # => "DnbEJaaY2egcVkCvg3s8qT38xgt"
 ```
 
+You can even add a description for the gateway:
+
+``` ruby
+gateway = env.add_gateway(:test, description: "My Incredibly Awesome Test Gateway")
+gateway.token     # => "DnbEJaaY2egcVkCvg3s8qT38xgt"
+```
 
 #### Add a payment method
 Need a payment method token to try things out?  With Spreedly it's pretty straightforward to use a
@@ -257,7 +263,7 @@ env.update_credit_card(credit_card_token, first_name: 'JimBob', last_name: 'Jone
 #### Adding other types of gateways
 
 ``` ruby
-gateway = env.add_gateway(:paypal, mode: 'delegate', email: 'fred@example.com')
+gateway = env.add_gateway(:paypal, credentials: { mode: 'delegate', email: 'fred@example.com'})
 gateway.token     # => "2nQEJaaY3egcVkCvg2s9qT37xrb"
 ```
 

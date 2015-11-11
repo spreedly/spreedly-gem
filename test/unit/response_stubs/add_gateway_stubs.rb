@@ -6,6 +6,7 @@ module AddGatewayStubs
         <token>4dFb93AiRDEJ18MS9xDGMyu22uO</token>
         <gateway_type>test</gateway_type>
         <name>Test</name>
+        <description>Test Gateway</description>
         <characteristics>
           <supports_purchase type="boolean">true</supports_purchase>
           <supports_authorize type="boolean">true</supports_authorize>

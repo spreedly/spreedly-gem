@@ -13,6 +13,7 @@ module RedactGatewayStubs
           <token>8zy49qcEUigjYbpPKCjlhDzUqJ</token>
           <gateway_type>test</gateway_type>
           <name>Spreedly Test</name>
+          <description>Spreedly Test Gateway</description>
           <characteristics>
             <supports_purchase type="boolean">true</supports_purchase>
             <supports_authorize type="boolean">true</supports_authorize>

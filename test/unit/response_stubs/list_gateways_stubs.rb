@@ -7,6 +7,7 @@ module ListGatewaysStubs
           <token>OJUFe5ZR6pFfL4i4ZGVmvGWkZUY</token>
           <gateway_type>test</gateway_type>
           <name>Spreedly Test</name>
+          <description>Spreedly Test Gateway</description>
           <characteristics>
             <supports_purchase type="boolean">true</supports_purchase>
             <supports_authorize type="boolean">true</supports_authorize>
@@ -43,6 +44,7 @@ module ListGatewaysStubs
           <token>52wqOssuKZSXEYde30AGTG6xl8v</token>
           <gateway_type>test</gateway_type>
           <name>Spreedly Test</name>
+          <description>Spreedly Test Gateway</description>
           <characteristics>
             <supports_purchase type="boolean">true</supports_purchase>
             <supports_authorize type="boolean">true</supports_authorize>

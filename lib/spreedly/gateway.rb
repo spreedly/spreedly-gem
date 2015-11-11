@@ -3,7 +3,7 @@ module Spreedly
 
   class Gateway < Model
 
-    field :gateway_type, :state, :name
+    field :gateway_type, :description, :state, :name
     attr_reader :credentials
 
     def initialize(xml_doc)
