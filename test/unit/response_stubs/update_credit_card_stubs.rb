@@ -30,6 +30,7 @@ module UpdateCreditCardStubs
         <errors>
         </errors>
         <verification_value></verification_value>
+        <fingerprint>ac5579920013cc571e506805f1c8f3220eff</fingerprint>
         <number>XXXX-XXXX-XXXX-4444</number>
       </payment_method>
       XML

@@ -61,6 +61,7 @@ module StoreStubs
           <errors>
           </errors>
           <verification_value/>
+          <fingerprint>ac5579920013cc571e506805f1c8f3220eff</fingerprint>
           <number>XXXX-XXXX-XXXX-4444</number>
         </basis_payment_method>
         <response>
@@ -133,6 +134,7 @@ module StoreStubs
           <errors>
           </errors>
           <verification_value/>
+          <fingerprint>ac5579920013cc571e506805f1c8f3220eff</fingerprint>
           <number>XXXX-XXXX-XXXX-1119</number>
         </basis_payment_method>
         <response>
