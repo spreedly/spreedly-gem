@@ -1,7 +1,15 @@
 # Changelog
 
 ## Next Version
+
+
+## 2.0.16
+* Support disburse [rwdaigle]
+* Support full_name property [maccca]
 * Add support for purchase shipping address override [davidsantoso]
+* Allow email override in transactions [duff]
+* Add options for store_on_gateway [fedesoria]
+* Support fingerprint [duff]
 
 ## 2.0.15
 * Add support for supports_fraud_review gateway characteristic [markabe]
