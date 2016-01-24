@@ -22,6 +22,7 @@ class FindPaymentMethodTest < Test::Unit::TestCase
     assert_equal(1369504152, card.created_at.to_i)
     assert_equal(1369508044, card.updated_at.to_i)
     assert_equal('master', card.card_type)
+    assert_equal('credit_card', card.payment_method_type)
     assert_equal('Alcatraz', card.first_name)
     assert_equal('Smedry', card.last_name)
     assert_equal('8', card.month)

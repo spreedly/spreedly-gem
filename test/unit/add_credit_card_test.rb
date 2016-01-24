@@ -24,6 +24,7 @@ class AddCreditCreditCardTest < Test::Unit::TestCase
 
     assert_equal "AXaBXfVUqhaGMg8ytf8isiMAAL9", t.payment_method.token
     assert_equal "Eland Venture", t.payment_method.full_name
+    assert_equal 'credit_card', t.payment_method.payment_method_type
     assert_equal "Don't test everything here, since find_payment_method tests it all.", t.payment_method.data
 
     assert t.payment_method.eligible_for_card_updater
@@ -121,5 +122,3 @@ class AddCreditCreditCardTest < Test::Unit::TestCase
   end
 
 end
-
-
