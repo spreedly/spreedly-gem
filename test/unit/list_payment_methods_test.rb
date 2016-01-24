@@ -23,6 +23,7 @@ class ListPaymentMethodsTest < Test::Unit::TestCase
 
     assert_equal 'Perrin Aybara', list.first.full_name
     assert_equal 'Mat Cauthon', list[1].full_name
+    assert_equal 'credit_card', list.first.payment_method_type
     assert_equal 'test_vault:4111111111111111', list[2].third_party_token
     assert_equal 'retained', list[3].storage_state
     assert_equal '4321', list[4].account_number_display_digits

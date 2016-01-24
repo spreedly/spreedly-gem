@@ -33,6 +33,7 @@ class AuthorizeTest < Test::Unit::TestCase
     assert_equal "844", t.gateway_specific_fields[:stripe][:application_fee]
 
     assert_equal 'Nh2Vw0kAoSQvcJDpK52q4dZlrVJ', t.payment_method.token
+    assert_equal 'credit_card', t.payment_method.payment_method_type
     assert_equal 'Forthrast', t.payment_method.last_name
 
     assert t.response.success
