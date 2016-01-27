@@ -29,6 +29,7 @@ class PurchaseTest < Test::Unit::TestCase
     assert_equal 'YOaCn5a9xRaBTGgmGAWbkgWUuqv', t.gateway_token
     assert_equal '8xXXIPGXTaPXysDA5OUpgnjTEjK', t.payment_method.token
     assert_equal "44", t.gateway_transaction_id
+    assert_equal "Purchase", t.transaction_type
 
     assert t.response.success
     assert_equal 'Successful purchase', t.response.message

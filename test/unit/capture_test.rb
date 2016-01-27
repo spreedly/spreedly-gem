@@ -28,6 +28,7 @@ class CaptureTest < Test::Unit::TestCase
     assert_equal 'Tax Free Zone', t.merchant_location_descriptor
     assert_equal 'SoPblCOGDwaRyym68XGWeRiCy1C', t.gateway_token
     assert_equal 'PH6U2tyFWtDSVp88bNW2nnGy5rk', t.reference_token
+    assert_equal 'Capture', t.transaction_type
 
     assert t.response.success
     assert_equal 'Successful capture', t.response.message

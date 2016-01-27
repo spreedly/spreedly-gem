@@ -26,6 +26,7 @@ class VerifyTest < Test::Unit::TestCase
     assert_equal 'Tax Free Zone', t.merchant_location_descriptor
     assert_equal 'LoxFMxQJD5E1ksAwFWykUamaCKE', t.gateway_token
     assert_equal "49", t.gateway_transaction_id
+    assert_equal 'Verification', t.transaction_type
 
     assert_equal '98626DYInHb4K86dp6GrocnZOW6', t.payment_method.token
     assert_equal 'Aybara', t.payment_method.last_name
