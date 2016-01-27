@@ -68,6 +68,7 @@ class RemotePurchaseTest < Test::Unit::TestCase
     assert_equal "fred@example.com", transaction.email
     assert_equal "perrin@wot.com", transaction.payment_method.email
     assert_match /\d/, transaction.gateway_transaction_id
+    assert_match "Purchase", transaction.transaction_type
   end
 
   def test_gateway_specific_fields

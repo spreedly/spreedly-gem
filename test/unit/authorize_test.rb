@@ -28,6 +28,7 @@ class AuthorizeTest < Test::Unit::TestCase
     assert_equal 'Tax Free Zone', t.merchant_location_descriptor
     assert_equal 'YjWxOjbpeieXsZFdAsbhM2DFgLe', t.gateway_token
     assert_equal "44", t.gateway_transaction_id
+    assert_equal "Authorization", t.transaction_type
     assert_equal "TheName", t.gateway_specific_fields[:litle][:descriptor_name]
     assert_equal "33411441", t.gateway_specific_fields[:litle][:descriptor_phone]
     assert_equal "844", t.gateway_specific_fields[:stripe][:application_fee]

@@ -28,6 +28,7 @@ class RefundTest < Test::Unit::TestCase
     assert_equal 'Tax Free Zone', t.merchant_location_descriptor
     assert_equal 'XYI0V2l4KC1cAm6Y3c2kG5loJaA', t.gateway_token
     assert_equal 'RkIAltzr49eXuWc7ajBjLLeKZt8', t.reference_token
+    assert_equal 'Credit', t.transaction_type
 
     assert t.response.success
     assert_equal 'Successful credit', t.response.message

@@ -27,6 +27,7 @@ class VoidTest < Test::Unit::TestCase
     assert_equal 'Somewhere', t.merchant_location_descriptor
     assert_equal 'EuXlDMZEMZfrHSvE9tkRzaW8j0z', t.gateway_token
     assert_equal 'CjedAratpuiT3CMmln4t3oZFvOS', t.reference_token
+    assert_equal 'Void', t.transaction_type
 
     assert t.response.success?
     assert_equal 'Successful void', t.response.message
