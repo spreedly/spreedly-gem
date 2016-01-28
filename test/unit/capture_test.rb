@@ -29,6 +29,7 @@ class CaptureTest < Test::Unit::TestCase
     assert_equal 'SoPblCOGDwaRyym68XGWeRiCy1C', t.gateway_token
     assert_equal 'PH6U2tyFWtDSVp88bNW2nnGy5rk', t.reference_token
     assert_equal 'Capture', t.transaction_type
+    assert_equal "credit", t.gateway_specific_response_fields[:stripe][:card_funding]
 
     assert t.response.success
     assert_equal 'Successful capture', t.response.message

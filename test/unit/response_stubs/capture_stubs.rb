@@ -19,7 +19,11 @@ module CaptureStubs
         <merchant_name_descriptor>My Writeoff Inc.</merchant_name_descriptor>
         <merchant_location_descriptor>Tax Free Zone</merchant_location_descriptor>
         <gateway_specific_fields nil="true"/>
-        <gateway_specific_response_fields nil="true"/>
+        <gateway_specific_response_fields>
+          <stripe>
+            <card_funding>credit</card_funding>
+          </stripe>
+        </gateway_specific_response_fields>
         <message key="messages.transaction_succeeded">Succeeded!</message>
         <gateway_token>SoPblCOGDwaRyym68XGWeRiCy1C</gateway_token>
         <gateway_transaction_id>44</gateway_transaction_id>
