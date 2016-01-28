@@ -26,8 +26,11 @@ module AuthorizationStubs
             <application_fee>844</application_fee>
           </stripe>
         </gateway_specific_fields>
-        <gateway_specific_fields nil="true"/>
-        <gateway_specific_response_fields nil="true"/>
+        <gateway_specific_response_fields>
+          <stripe>
+            <card_funding>credit</card_funding>
+          </stripe>
+        </gateway_specific_response_fields>
         <message key="messages.transaction_succeeded">Succeeded!</message>
         <gateway_token>YjWxOjbpeieXsZFdAsbhM2DFgLe</gateway_token>
         <gateway_transaction_id>44</gateway_transaction_id>

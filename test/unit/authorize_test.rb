@@ -31,6 +31,7 @@ class AuthorizeTest < Test::Unit::TestCase
     assert_equal "TheName", t.gateway_specific_fields[:litle][:descriptor_name]
     assert_equal "33411441", t.gateway_specific_fields[:litle][:descriptor_phone]
     assert_equal "844", t.gateway_specific_fields[:stripe][:application_fee]
+    assert_equal "credit", t.gateway_specific_response_fields[:stripe][:card_funding]
 
     assert_equal 'Nh2Vw0kAoSQvcJDpK52q4dZlrVJ', t.payment_method.token
     assert_equal 'Forthrast', t.payment_method.last_name
