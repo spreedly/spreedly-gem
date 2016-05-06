@@ -105,4 +105,19 @@ module FindTransactionStubs
     XML
   end
 
+  def add_credit_card_transaction_sans_payment_method_method
+    StubResponse.succeeded <<-XML
+      <transaction>
+        <token>rMyrUp27o11gA1pZu2SikMVRNIn</token>
+        <created_at type="dateTime">2015-03-11T06:22:57Z</created_at>
+        <updated_at type="dateTime">2015-03-11T06:22:57Z</updated_at>
+        <succeeded type="boolean">false</succeeded>
+        <transaction_type>AddPaymentMethod</transaction_type>
+        <retained type="boolean">false</retained>
+        <state>created</state>
+        <message nil="true"/>
+      </transaction>
+    XML
+  end
+
 end

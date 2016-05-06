@@ -45,4 +45,5 @@ module AddCreditCardStubs
       </transaction>
       XML
   end
+
 end
