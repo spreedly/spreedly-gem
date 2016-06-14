@@ -32,6 +32,7 @@ require 'spreedly/transactions/store'
 require 'spreedly/gateway'
 require 'spreedly/receiver'
 require 'spreedly/gateway_class'
+require 'spreedly/receiver_class'
 require 'spreedly/error'
 
 module Spreedly

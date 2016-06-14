@@ -314,6 +314,14 @@ You can get the full list of supported gateways like so:
 env.gateway_options
 ```
 
+#### Getting meta information about the supported payment method distribution receivers
+
+You can get the full list of supported receivers like so:
+
+``` ruby
+env.receiver_options
+```
+
 
 ## Error Handling
 
