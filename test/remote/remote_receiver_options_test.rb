@@ -11,7 +11,7 @@ class RemoteReceiverOptionsTest < Test::Unit::TestCase
     ace = receiver_classes.select { |each| each.name == "Acerentacar Receiver" }.first
     assert_equal "https://ota.acerentacar.com", ace.hostnames
     assert_equal "Ace Rent a Car", ace.company_name
-    assert_equal "ace_rent_a_car_receiver", ace.receiver_type
+    assert_equal "ace_rent_a_car", ace.receiver_type
   end
 
 end
