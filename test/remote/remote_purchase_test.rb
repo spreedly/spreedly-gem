@@ -45,6 +45,27 @@ class RemotePurchaseTest < Test::Unit::TestCase
     assert_equal gateway_token, transaction.gateway_token
   end
 
+  def test_offsite_transaction_arguments
+    gateway_token = @environment.add_gateway(:test).token
+    sprel_token = create_sprel_on(@environment)
+
+    transaction = @environment.purchase_on_gateway(gateway_token, sprel_token, 344,
+                                                   order_id: "8675",
+                                                   description: "SuperDuper",
+                                                   ip: "183.128.100.103",
+                                                   email: "fred@example.com",
+                                                   merchant_name_descriptor: "Real Stuff",
+                                                   merchant_location_descriptor: "Raleigh",
+                                                   retain_on_success: true,
+                                                   redirect_url: "https://example.com/redirect",
+                                                   callback_url: "https://example.com/callback")
+
+    assert_equal "pending", transaction.state
+    assert "https://example.com/callback", transaction.callback_url
+    assert "https://example.com/redirect", transaction.redirect_url
+    assert transaction.checkout_url
+  end
+
   def test_optional_arguments
     gateway_token = @environment.add_gateway(:test).token
     card_token = create_card_on(@environment, retained: false).token
