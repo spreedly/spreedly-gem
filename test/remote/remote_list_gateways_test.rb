@@ -15,7 +15,9 @@ class RemoteListGatewaysTest < Test::Unit::TestCase
 
   def test_successfully_list_gateways
     g1 = @environment.add_gateway(:test).token
+    sleep 1
     g2 = @environment.add_gateway(:test).token
+    sleep 1
     g3 = @environment.add_gateway(:test).token
 
     first_twenty = @environment.list_gateways

@@ -14,7 +14,9 @@ class RemoteListPaymentMethodsTest < Test::Unit::TestCase
 
   def test_successfully_list_payment_methods
     c1 = create_card_on(@environment).token
+    sleep 1
     c2 = create_card_on(@environment).token
+    sleep 1
     c3 = create_card_on(@environment).token
 
     first_twenty = @environment.list_payment_methods

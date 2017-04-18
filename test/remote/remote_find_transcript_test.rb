@@ -24,6 +24,7 @@ class RemoteFindTranscriptTest < Test::Unit::TestCase
     transaction = @environment.purchase_on_gateway(gateway_token, card_token, 144)
 
     found = @environment.find_transcript(transaction.token)
+
     assert_kind_of(String, found)
   end
 
