@@ -11,11 +11,13 @@ module Spreedly
       init_credentials(xml_doc)
     end
 
-    def self.new_list_from(xml_doc)
+    def self.new_list_from(xml_doc, omit_test = false)
       gateways = xml_doc.xpath('.//gateways/gateway')
-      gateways.map do |each|
+      list = gateways.map do |each|
         self.new(each)
       end
+            
+      omit_test ? list.select { |gw| gw.name != 'Spreedly Test' } : list
     end
 
     private
