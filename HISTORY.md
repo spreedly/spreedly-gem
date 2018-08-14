@@ -1,7 +1,7 @@
 # Changelog
 
 ## Next Version
-
+* Removes support for disbursements [bpollack]
 
 ## 2.0.16
 * Support disburse [rwdaigle]

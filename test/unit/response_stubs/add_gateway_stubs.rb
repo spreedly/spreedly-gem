@@ -21,7 +21,6 @@ module AddGatewayStubs
           <supports_3dsecure_authorize type="boolean">true</supports_3dsecure_authorize>
           <supports_store type="boolean">true</supports_store>
           <supports_remove type="boolean">true</supports_remove>
-          <supports_disburse type="boolean">true</supports_disburse>
           <supports_fraud_review type="boolean">true</supports_fraud_review>
         </characteristics>
         <state>retained</state>
