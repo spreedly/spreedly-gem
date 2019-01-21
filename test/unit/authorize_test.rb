@@ -67,7 +67,8 @@ class AuthorizeTest < Test::Unit::TestCase
       [ './merchant_name_descriptor', 'TRain' ],
       [ './merchant_location_descriptor', 'British Colombia' ],
       [ './gateway_specific_fields/braintree/customer_id', '1143' ],
-      [ './retain_on_success', 'true' ]
+      [ './retain_on_success', 'true' ],
+      [ './continue_caching', 'true']
   end
 
 
@@ -88,7 +89,8 @@ class AuthorizeTest < Test::Unit::TestCase
       gateway_specific_fields: {
         braintree: { customer_id: "1143" }
       },
-      retain_on_success: true
+      retain_on_success: true,
+      continue_caching: true
     }
   end
 
