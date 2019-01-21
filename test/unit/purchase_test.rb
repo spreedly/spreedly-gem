@@ -94,7 +94,8 @@ class PurchaseTest < Test::Unit::TestCase
       [ './ip', '183.128.100.103' ],
       [ './merchant_name_descriptor', 'Real Stuff' ],
       [ './merchant_location_descriptor', 'Raleigh' ],
-      [ './retain_on_success', 'true' ]
+      [ './retain_on_success', 'true' ],
+      [ './continue_caching', 'true']
   end
 
 
@@ -112,7 +113,8 @@ class PurchaseTest < Test::Unit::TestCase
       ip: "183.128.100.103",
       merchant_name_descriptor: "Real Stuff",
       merchant_location_descriptor: "Raleigh",
-      retain_on_success: true
+      retain_on_success: true,
+      continue_caching: true
     }
   end
 
