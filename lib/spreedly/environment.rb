@@ -76,6 +76,12 @@ module Spreedly
       Transaction.new_from(xml_doc)
     end
 
+    def recache_payment_method(payment_method_token, options = {})
+      body = recache_payment_method_body(options)
+      xml_doc = ssl_put(recache_payment_method_url(payment_method_token), body, headers)
+      RecacheSensitiveData.new_from(xml_doc)
+    end
+
     def redact_gateway(gateway_token, options = {})
       xml_doc = ssl_put(redact_gateway_url(gateway_token), '', headers)
       Transaction.new_from(xml_doc)
@@ -207,6 +213,14 @@ module Spreedly
       return '' if options.empty?
       build_xml_request('transaction') do |doc|
         add_to_doc(doc, options, :remove_from_gateway)
+      end
+    end
+
+    def recache_payment_method_body(options)
+      build_xml_request('payment_method') do |doc|
+        doc.credit_card do
+          add_to_doc(doc, options, :verification_value)
+        end
       end
     end
 

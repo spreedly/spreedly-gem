@@ -50,6 +50,10 @@ module Spreedly
       "#{base_url}/v1/payment_methods/#{payment_method_token}/redact.xml"
     end
 
+    def recache_payment_method_url(payment_method_token)
+      "#{base_url}/v1/payment_methods/#{payment_method_token}/recache.xml"
+    end
+
     def redact_gateway_url(gateway_token)
       "#{base_url}/v1/gateways/#{gateway_token}/redact.xml"
     end
