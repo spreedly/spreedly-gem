@@ -91,6 +91,10 @@ module Spreedly
       "#{base_url}/v1/receivers.xml"
     end
 
+    def redact_receiver_url(token)
+      "#{base_url}/v1/receivers/#{token}/redact.xml"
+    end
+
     def add_payment_method_url
       "#{base_url}/v1/payment_methods.xml"
     end
