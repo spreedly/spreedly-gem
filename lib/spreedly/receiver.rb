@@ -3,7 +3,7 @@ module Spreedly
 
   class Receiver < Model
 
-    field :receiver_type, :hostnames
+    field :receiver_type, :hostnames, :state, :company_name
     attr_reader :credentials
 
     def initialize(xml_doc)
