@@ -3,7 +3,7 @@ module Spreedly
   class GatewayClass
     include Fields
 
-    field :gateway_type, :name, :homepage, :company_name
+    field :gateway_type, :name, :homepage, :company_name, :display_api_url
     field :supports_purchase, :supports_authorize, :supports_capture, :supports_credit,
           :supports_void, :supports_verify, :supports_reference_purchase,
           :supports_purchase_via_preauthorization, :supports_offsite_purchase,

@@ -273,7 +273,7 @@ Here's how you can do it:
 
 ``` ruby
 options = {
-email: 'perrin@wot.com', number: '5555555555554444', month: 1, year: 2019, last_name: 'Aybara', first_name: 'Perrin', data: "occupation: Blacksmith"
+email: 'perrin@wot.com', number: '5555555555554444', month: 1, year: 2023, last_name: 'Aybara', first_name: 'Perrin', data: "occupation: Blacksmith"
 }
 transaction = env.add_credit_card(options)
 
@@ -286,7 +286,7 @@ You can also retain the card immediately like so:
 
 ``` ruby
 options = {
-email: 'perrin@wot.com', number: '5555555555554444', month: 1, year: 2019, last_name: 'Aybara', first_name: 'Perrin', data: "occupation: Blacksmith", retained: true
+email: 'perrin@wot.com', number: '5555555555554444', month: 1, year: 2023, last_name: 'Aybara', first_name: 'Perrin', data: "occupation: Blacksmith", retained: true
 }
 transaction = env.add_credit_card(options)
 
