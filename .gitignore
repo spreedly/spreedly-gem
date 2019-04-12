@@ -7,3 +7,4 @@ tmp
 vendor/ruby
 test/credentials/*.yml
 .ruby-version
+.idea

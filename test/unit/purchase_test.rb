@@ -55,6 +55,59 @@ class PurchaseTest < Test::Unit::TestCase
     assert_equal '', t.shipping_address.phone_number
   end
 
+  def test_successful_3dsecure_purchase_attempt
+    t = purchase_using(successful_purchase_3dsecure_attempt_response)
+
+    assert_kind_of(Spreedly::Purchase, t)
+    assert_equal 'Btcyks35m4JLSNOs9ymJoNQLjeX', t.token
+    assert_equal 144, t.amount
+    assert t.on_test_gateway?
+    assert_equal Time.parse("2013-07-31 19:46:26 UTC"), t.created_at
+    assert_equal Time.parse("2013-07-31 19:46:32 UTC"), t.updated_at
+    assert_equal 'USD', t.currency_code
+    assert !t.succeeded?
+    assert_equal 'pending', t.state
+    assert_equal 'none', t.required_action
+    assert_equal 'http://challenge_url.test', t.challenge_url
+    assert_equal 'challenge form data', t.challenge_form
+    assert_equal 'device fingerprint form data', t.device_fingerprint_form
+    assert_equal '', t.order_id
+    assert_equal '', t.ip
+    assert_equal '4 Shardblades', t.description
+    assert_equal '', t.merchant_name_descriptor
+    assert_equal '', t.merchant_location_descriptor
+    assert_equal 'YOaCn5a9xRaBTGgmGAWbkgWUuqv', t.gateway_token
+    assert_equal '8xXXIPGXTaPXysDA5OUpgnjTEjK', t.payment_method.token
+    assert_equal "44", t.gateway_transaction_id
+
+    assert t.response.success
+    assert_equal 'Checked enrollment status', t.response.message
+    assert !t.response.pending
+    assert !t.response.fraud_review
+    assert_equal '', t.response.error_code
+    assert_equal Time.parse('2013-07-31T19:46:26Z'), t.response.created_at
+    assert_equal Time.parse('2013-07-31T19:46:27Z'), t.response.updated_at
+
+    assert_equal 'https://example.com/callback_url', t.callback_url
+    assert_equal 'https://example.com/redirect_url', t.redirect_url
+    assert_equal '', t.checkout_url
+
+    assert t.checkout_form.include?('<form action="https://core.spreedly.com/test/1234/auth/1234" method="POST">')
+    assert t.checkout_form.include?('<input name="PaReq" value="" type="hidden"/>')
+    assert t.checkout_form.include?('<input name="MD" value="" type="hidden"/>')
+    assert t.checkout_form.include?('<input name="TermUrl" value="https://core.spreedly.com/transaction/Btcyks35m4JLSNOs9ymJoNQLjeX/redirect" type="hidden"/>')
+    assert t.checkout_form.include?('<input name="Complete" value="Authorize Transaction" type="submit"/>')
+
+    assert_equal '', t.shipping_address.name
+    assert_equal '', t.shipping_address.address1
+    assert_equal '', t.shipping_address.address2
+    assert_equal '', t.shipping_address.city
+    assert_equal '', t.shipping_address.state
+    assert_equal '', t.shipping_address.zip
+    assert_equal '', t.shipping_address.country
+    assert_equal '', t.shipping_address.phone_number
+  end
+
   def test_failed_purchase
     t = purchase_using(failed_purchase_response)
 
