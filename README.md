@@ -409,3 +409,5 @@ There are two rake tasks to help run the tests:
 rake test:remote  # Run remote tests that actually hit the Spreedly site
 rake test:units   # Run unit tests
 ```
+
+To run remote tests you'll need to copy `test/credentials/credentials.yml.example` to `test/credentials/credentials.yml` and update the values of `environment_key` and `access_secret`.
