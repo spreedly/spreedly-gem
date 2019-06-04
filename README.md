@@ -411,3 +411,5 @@ rake test:units   # Run unit tests
 ```
 
 To run remote tests you'll need to copy `test/credentials/credentials.yml.example` to `test/credentials/credentials.yml` and update the values of `environment_key` and `access_secret`.
+
+When you're happy with your change, don't forget to add your contributions to CHANGELOG.md. We follow the changelog format found [here](https://keepachangelog.com/en/1.0.0/).
