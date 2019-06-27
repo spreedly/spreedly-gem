@@ -3,6 +3,8 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+
+## [2.0.20] - 2019-06-27
 ### Changed
 - @patrickarnett - Modify `list_transactions` and `list_transactions_url` to take `count`, `order`, and `state` arguments in an optional hash.
 
