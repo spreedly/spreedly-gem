@@ -1,6 +1,7 @@
 require 'test/unit'
 require 'mocha/setup'
 require 'awesome_print'
+require 'pry'
 require 'logger'
 require 'log_buddy'
 require 'spreedly'

@@ -53,25 +53,29 @@ class GatewayOptionsTest < Test::Unit::TestCase
   def test_characteristics
     @environment.stubs(:raw_ssl_request).returns(successful_gateway_options_response)
     gateway_class = @environment.gateway_options.first
-
-    [ :supports_purchase,
+    characteristics = gateway_class.class.fields.select{|f| f =~ /supports/ }.sort
+    expected_characteristics = [
+      :supports_3dsecure_authorize,
+      :supports_3dsecure_purchase,
+      :supports_3dsecure_2_authorize,
+      :supports_3dsecure_2_purchase,
       :supports_authorize,
       :supports_capture,
       :supports_credit,
-      :supports_general_credit,
-      :supports_void,
-      :supports_reference_purchase,
-      :supports_purchase_via_preauthorization,
-      :supports_offsite_purchase,
-      :supports_offsite_authorize,
-      :supports_3dsecure_purchase,
-      :supports_3dsecure_authorize,
-      :supports_store,
       :supports_fraud_review,
-    ].each do |c|
-      assert gateway_class.send("#{c}?")
-    end
+      :supports_general_credit,
+      :supports_offsite_authorize,
+      :supports_offsite_purchase,
+      :supports_purchase,
+      :supports_purchase_via_preauthorization,
+      :supports_reference_purchase,
+      :supports_remove,
+      :supports_store,
+      :supports_verify,
+      :supports_void,
+    ].sort
 
+    assert_equal expected_characteristics, characteristics
     assert !gateway_class.send(:supports_remove?)
   end
 end
