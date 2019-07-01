@@ -36,7 +36,10 @@ class UpdateCreditCreditCardTest < Test::Unit::TestCase
       [ './state', 'Mokia' ],
       [ './zip', '1122' ],
       [ './country', 'Free Kingdoms' ],
-      [ './phone_number', '81Ab' ]
+      [ './phone_number', '81Ab' ],
+      [ './allow_expired_date', 'true' ],
+      [ './allow_blank_date', 'true' ],
+      [ './allow_blank_name', 'true' ]
   end
 
   private
@@ -50,7 +53,8 @@ class UpdateCreditCreditCardTest < Test::Unit::TestCase
       email: 'leavenworth@free.com', month: 3, year: 2021,
       last_name: 'Smedry', first_name: 'Leavenworth',
       address1: '10 Dragon Lane', address2: 'Suite 9', city: 'Tuki Tuki', state: 'Mokia',
-      zip: '1122', country: 'Free Kingdoms', phone_number: '81Ab'
+      zip: '1122', country: 'Free Kingdoms', phone_number: '81Ab',
+      allow_expired_date: true, allow_blank_date: true, allow_blank_name: true
     }
   end
 
