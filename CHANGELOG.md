@@ -3,6 +3,9 @@
 All notable changes to this project will be documented in this file.
 
 ## [Unreleased]
+### Removed
+- @jeremywrowe - Remove bundler from dev dependencies
+### Added
 - @jeremywrowe - Add 3D Secure 2 abilities to gateway class
 
 ## [2.0.20] - 2019-06-27
