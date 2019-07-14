@@ -1,8 +1,6 @@
 
 module Spreedly
-
   class Transaction < Model
-
     field :state, :message
     field :succeeded, type: :boolean
 
@@ -47,7 +45,5 @@ module Spreedly
         self.new_from(each)
       end
     end
-
   end
-
 end

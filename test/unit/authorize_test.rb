@@ -76,6 +76,7 @@ class AuthorizeTest < Test::Unit::TestCase
 
 
   private
+
   def authorize_using(response)
     @environment.stubs(:raw_ssl_request).returns(response)
     @environment.authorize_on_gateway("IgnoredGatewayTokenSinceResponseIsStubbed", "IgnoredPaymentMethodTokenSinceResponseIsStubbed", 5921)

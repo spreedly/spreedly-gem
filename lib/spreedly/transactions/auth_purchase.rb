@@ -2,6 +2,7 @@ module Spreedly
   class AuthPurchase < GatewayTransaction
     field :currency_code, :checkout_url, :checkout_form, :redirect_url, :callback_url
     field :required_action, :challenge_form, :challenge_url, :device_fingerprint_form
+    field :stored_credential_initiator, :stored_credential_reason_type
     field :amount, type: :integer
 
     attr_reader :payment_method

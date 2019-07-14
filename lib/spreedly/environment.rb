@@ -30,7 +30,8 @@ module Spreedly
     end
 
     def find_transcript(transaction_token)
-      ssl_raw_get(find_transcript_url(transaction_token), headers)
+      transcript_url = find_transcript_url(transaction_token)
+      ssl_raw_get(transcript_url, headers)
     end
 
     def find_gateway(token)
@@ -171,6 +172,8 @@ module Spreedly
         doc.currency_code(options[:currency_code] || currency_code)
         doc.payment_method_token(payment_method_token)
         add_to_doc(doc, options, :retain_on_success)
+        add_to_doc(doc, options, :stored_credential_initiator)
+        add_to_doc(doc, options, :stored_credential_reason_type)
         add_extra_options_for_basic_ops(doc, options)
       end
     end
@@ -335,6 +338,5 @@ module Spreedly
       xml_doc = ssl_post(url, body, headers, talking_to_gateway)
       Transaction.new_from(xml_doc)
     end
-
   end
 end

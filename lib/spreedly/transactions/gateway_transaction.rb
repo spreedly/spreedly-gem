@@ -1,7 +1,5 @@
 module Spreedly
-
   class GatewayTransaction < Transaction
-
     field :order_id, :ip, :description, :gateway_token, :gateway_transaction_id, :email, :transaction_type
     field :merchant_name_descriptor, :merchant_location_descriptor
     field :on_test_gateway, type: :boolean
@@ -35,29 +33,5 @@ module Spreedly
 
       result
     end
-  end
-
-  class Response
-    include Fields
-
-    field :success, :pending, :cancelled, :fraud_review, type: :boolean
-    field :created_at, :updated_at, type: :date_time
-    field :message, :avs_code, :avs_message, :cvv_code, :cvv_message, :error_code, :error_detail
-
-    def initialize(xml_doc)
-      initialize_fields(xml_doc)
-    end
-
-  end
-
-  class ShippingAddress
-    include Fields
-
-    field :name, :address1, :address2, :city, :state, :zip, :country, :phone_number
-
-    def initialize(xml_doc)
-      initialize_fields(xml_doc)
-    end
-
   end
 end

@@ -1,7 +1,5 @@
 module Spreedly
-
   module Urls
-
     def find_payment_method_url(token)
       "#{base_url}/v1/payment_methods/#{token}.xml"
     end
@@ -119,7 +117,5 @@ module Spreedly
     def deliver_to_receiver_url(receiver_token)
       "#{base_url}/v1/receivers/#{receiver_token}/deliver.xml"
     end
-
   end
-
 end

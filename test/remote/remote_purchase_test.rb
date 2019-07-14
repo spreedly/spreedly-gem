@@ -35,6 +35,24 @@ class RemotePurchaseTest < Test::Unit::TestCase
     assert_equal 144, transaction.amount
   end
 
+  def test_successful_purchase_with_stored_credentials
+    gateway_token = @environment.add_gateway(:test).token
+    card_token = create_card_on(@environment).token
+
+    transaction = @environment.purchase_on_gateway(
+      gateway_token,
+      card_token,
+      899,
+      stored_credential_initiator: :merchant,
+      stored_credential_reason_type: :installment
+    )
+
+    assert transaction.succeeded?
+    assert_equal 'merchant', transaction.stored_credential_initiator
+    assert_equal 'installment', transaction.stored_credential_reason_type
+  end
+
+
   def test_failed_purchase
     gateway_token = @environment.add_gateway(:test).token
     card_token = create_failed_card_on(@environment).token
