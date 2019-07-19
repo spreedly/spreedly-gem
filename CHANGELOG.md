@@ -2,9 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
-- @jeremywrowe - Add Support for Stored Credentials
-- @jeremywrowe - Add 3D Secure 2 abilities to gateway class
+## [2.0.21] - 2019-07-19
+### Added
+- @jeremywrowe - Support for Stored Credentials on authorization / purchase
+- @jeremywrowe - 3D Secure 2 abilities to gateway class
 
 ## [2.0.20] - 2019-06-27
 ### Changed
