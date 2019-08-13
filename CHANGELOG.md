@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+### Added
+- @jeremywrowe - Support for three_ds_version, three_ds_context, and channel on
+  authorization / purchase
+
 ## [2.0.21] - 2019-07-19
 ### Added
 - @jeremywrowe - Support for Stored Credentials on authorization / purchase

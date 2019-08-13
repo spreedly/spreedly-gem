@@ -22,6 +22,7 @@ module PurchaseStubs
         <message key="messages.transaction_succeeded">Succeeded!</message>
         <gateway_token>YOaCn5a9xRaBTGgmGAWbkgWUuqv</gateway_token>
         <gateway_transaction_id>44</gateway_transaction_id>
+        <three_ds_context>three-ds-context</three_ds_context>
         <shipping_address>
           <name nil="true"/>
           <address1 nil="true"/>

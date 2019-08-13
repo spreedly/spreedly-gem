@@ -87,8 +87,8 @@ class RemotePurchaseTest < Test::Unit::TestCase
   def test_3d_secure_attempt_transaction_arguments
     gateway_token = @environment.add_gateway(:test).token
     card_token = create_card_on(@environment, number: '4556761029983886', retained: false).token
-
-    transaction = @environment.purchase_on_gateway(gateway_token, card_token, 344,
+    browser_info = "eyJ3aWR0aCI6MzAwOCwiaGVpZ2h0IjoxNjkyLCJkZXB0aCI6MjQsInRpbWV6b25lIjoyNDAsInVzZXJfYWdlbnQiOiJNb3ppbGxhLzUuMCAoTWFjaW50b3NoOyBJbnRlbCBNYWMgT1MgWCAxMC4xNDsgcnY6NjguMCkgR2Vja28vMjAxMDAxMDEgRmlyZWZveC82OC4wIiwiamF2YSI6ZmFsc2UsImxhbmd1YWdlIjoiZW4tVVMiLCJhY2NlcHRfaGVhZGVyIjoidGV4dC9odG1sLGFwcGxpY2F0aW9uL3hodG1sK3htbCxhcHBsaWNhdGlvbi94bWwifQ=="
+    transaction = @environment.purchase_on_gateway(gateway_token, card_token, 3004,
                                                    order_id: "8675",
                                                    description: "SuperDuper",
                                                    ip: "183.128.100.103",
@@ -98,13 +98,13 @@ class RemotePurchaseTest < Test::Unit::TestCase
                                                    retain_on_success: true,
                                                    redirect_url: "https://example.com/redirect",
                                                    callback_url: "https://example.com/callback",
-                                                   attempt_3dsecure: true)
+                                                   browser_info: browser_info,
+                                                   attempt_3dsecure: true,
+                                                   three_ds_version: "2.0")
 
     assert_equal "pending", transaction.state
-    assert "https://example.com/callback", transaction.callback_url
-    assert "https://example.com/redirect", transaction.redirect_url
-    assert_equal '', transaction.checkout_url
-    assert transaction.checkout_form.include?("<form action=\"https://core.spreedly.com/test/#{gateway_token}")
+    assert_equal "https://example.com/redirect", transaction.redirect_url
+    assert_equal "device_fingerprint", transaction.required_action
   end
 
   def test_optional_arguments

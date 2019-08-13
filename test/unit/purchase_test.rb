@@ -30,6 +30,7 @@ class PurchaseTest < Test::Unit::TestCase
     assert_equal '8xXXIPGXTaPXysDA5OUpgnjTEjK', t.payment_method.token
     assert_equal "44", t.gateway_transaction_id
     assert_equal "Purchase", t.transaction_type
+    assert_equal "three-ds-context", t.three_ds_context
 
     assert t.response.success
     assert_equal 'Successful purchase', t.response.message

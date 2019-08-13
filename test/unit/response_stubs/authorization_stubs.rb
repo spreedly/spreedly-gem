@@ -17,6 +17,7 @@ module AuthorizationStubs
         <description>LotsOCoffee</description>
         <merchant_name_descriptor>My Writeoff Inc.</merchant_name_descriptor>
         <merchant_location_descriptor>Tax Free Zone</merchant_location_descriptor>
+        <three_ds_context>three-ds-context</three_ds_context>
         <gateway_specific_fields>
           <litle>
             <descriptor_name>TheName</descriptor_name>
