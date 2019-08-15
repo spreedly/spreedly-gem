@@ -2,6 +2,10 @@
 
 All notable changes to this project will be documented in this file.
 
+## [Unreleased]
+### Added
+- @bayprogrammer - Add 3D Secure 2 third-party auth abilities to gateway class
+
 ## [2.0.22] - 2019-08-14
 ### Added
 - @jeremywrowe - Support for three_ds_version, three_ds_context, and channel on

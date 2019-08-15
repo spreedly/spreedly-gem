@@ -59,6 +59,8 @@ class GatewayOptionsTest < Test::Unit::TestCase
       :supports_3dsecure_purchase,
       :supports_3dsecure_2_authorize,
       :supports_3dsecure_2_purchase,
+      :supports_3dsecure_2_mpi_authorize,
+      :supports_3dsecure_2_mpi_purchase,
       :supports_authorize,
       :supports_capture,
       :supports_credit,

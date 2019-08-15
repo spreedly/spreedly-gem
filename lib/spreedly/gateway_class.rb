@@ -9,6 +9,7 @@ module Spreedly
           :supports_purchase_via_preauthorization, :supports_offsite_purchase,
           :supports_offsite_authorize, :supports_3dsecure_purchase, :supports_3dsecure_authorize,
           :supports_3dsecure_2_purchase, :supports_3dsecure_2_authorize,
+          :supports_3dsecure_2_mpi_purchase, :supports_3dsecure_2_mpi_authorize,
           :supports_store, :supports_remove, :supports_general_credit,
           :supports_fraud_review, type: :boolean
 
