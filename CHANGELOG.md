@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [Unreleased]
+## [2.0.23] - 2019-08-16
 ### Added
 - @bayprogrammer - Add 3D Secure 2 third-party auth abilities to gateway class
 
