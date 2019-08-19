@@ -1,16 +1,19 @@
 
 module Spreedly
-
   module CreationHelper
-
     def create_card_on(environment, options = {})
-      deets = default_card_deets.merge(options)
-      environment.add_credit_card(deets).payment_method
+      options = default_card_options.merge(options)
+      environment.add_credit_card(options).payment_method
     end
 
     def create_failed_card_on(environment, options = {})
-      deets = default_card_deets.merge(number: '4012888888881881').merge(options)
-      environment.add_credit_card(deets).payment_method
+      options = default_card_options.merge(number: '4012888888881881').merge(options)
+      environment.add_credit_card(options).payment_method
+    end
+
+    def create_threeds_2_card_on(environment, options = {})
+      options = default_card_options.merge(number: '4556761029983886').merge(options)
+      environment.add_credit_card(options).payment_method
     end
 
     def create_sprel_on(environment)
@@ -21,7 +24,7 @@ module Spreedly
 
     private
 
-    def default_card_deets
+    def default_card_options
       {
         email: 'perrin@wot.com', number: '5555555555554444', month: 1, year: 2023,
         last_name: 'Aybara', first_name: 'Perrin', retained: true

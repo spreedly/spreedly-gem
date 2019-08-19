@@ -181,6 +181,12 @@ env.purchase_on_gateway(gateway_token, payment_method_token, amount,
                        )
 ```
 
+#### Complete a transaction (3DS 2)
+
+```ruby
+env.complete_transaction(transaction_token)
+```
+
 #### Retain on success
 Retain a payment method automatically if the purchase, verify, or authorize transaction succeeded.  Saves you a separate call to retain:
 
@@ -321,7 +327,6 @@ You can get the full list of supported receivers like so:
 ``` ruby
 env.receiver_options
 ```
-
 
 ## Error Handling
 

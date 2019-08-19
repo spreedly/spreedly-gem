@@ -49,6 +49,10 @@ module Spreedly
       api_post(authorize_url(gateway_token), body)
     end
 
+    def complete_transaction(transaction_token)
+      api_post(complete_transaction_url(transaction_token), '')
+    end
+
     def verify_on_gateway(gateway_token, payment_method_token, options = {})
       body = verify_body(payment_method_token, options)
       api_post(verify_url(gateway_token), body)
