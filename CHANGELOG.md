@@ -1,7 +1,8 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
-## [Unreleased]
+
+## [2.0.24]
 ### Added
 - @jeremywrowe - Add 3D Secure 2 complete transaction
 
