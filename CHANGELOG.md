@@ -2,7 +2,7 @@
 
 All notable changes to this project will be documented in this file.
 
-## [2.0.24]
+## [2.0.24] - 2019-08-21
 ### Added
 - @jeremywrowe - Add 3D Secure 2 complete transaction
 
