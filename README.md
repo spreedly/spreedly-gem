@@ -2,6 +2,8 @@
 
 A convenient Ruby wrapper for the Spreedly API.
 
+This is an example Ruby integration with Spreedly. This version is no longer actively updated and will be superseded by a new version in the near future. Feature parity may lag behind, so please use this gem at your own risk.
+
 ## Philosophy
 
 * No global configuration of authentication credentials.
