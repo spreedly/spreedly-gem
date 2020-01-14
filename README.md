@@ -330,6 +330,20 @@ You can get the full list of supported receivers like so:
 env.receiver_options
 ```
 
+#### Delivering a payment method
+
+You can deliver a payment method to a third party using [Payment Method Distribution](https://docs.spreedly.com/guides/payment-method-distribution/). Once a receiver is set up and you have a payment method that you would like to share, you can use the following call:
+
+```ruby
+env.deliver_to_receiver(
+  "receiver token goes here",
+  "payment method token goes here",
+  headers: { "Content-Type": "application/json" },
+  url: "https://spreedly-echo.herokuapp.com",
+  body: { card_number: "{{credit_card_number}}" }.to_json
+)
+```
+
 ## Error Handling
 
 When you make a call to the API, there are times when things don't go as expected.  For the most part, when a call is made, a Transaction is created behind the scenes at Spreedly.  In general,
