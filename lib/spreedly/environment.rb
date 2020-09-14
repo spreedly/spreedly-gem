@@ -185,7 +185,7 @@ module Spreedly
     def verify_body(payment_method_token, options)
       build_xml_request('transaction') do |doc|
         doc.payment_method_token(payment_method_token)
-        add_to_doc(doc, options, :retain_on_success)
+        add_to_doc(doc, options, :retain_on_success, :currency_code)
         add_extra_options_for_basic_ops(doc, options)
       end
     end
