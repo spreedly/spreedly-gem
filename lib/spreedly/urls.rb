@@ -130,10 +130,5 @@ module Spreedly
     def deliver_to_receiver_url(receiver_token)
       "#{base_url}/v1/receivers/#{receiver_token}/deliver.xml"
     end
-    
-    def deliver_receiver_url(receiver_token)
-      "#{base_url}/v1/receivers/#{receiver_token}/deliver.xml"
-    end
-
   end
 end
