@@ -72,6 +72,10 @@ module Spreedly
       "#{base_url}/v1/receivers.xml#{since_param}"
     end
 
+    def list_supported_receivers_url
+      "#{base_url}/v1/receivers_options.xml"
+    end
+
     def gateway_options_url
       "#{base_url}/v1/gateways.xml"
     end
