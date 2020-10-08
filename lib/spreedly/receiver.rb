@@ -3,12 +3,19 @@ module Spreedly
 
   class Receiver < Model
 
-    field :receiver_type, :hostnames
+    field :receiver_type, :hostnames, :company_name
     attr_reader :credentials
 
     def initialize(xml_doc)
       super
       init_credentials(xml_doc)
+    end
+
+    def self.new_list_from(xml_doc)
+      receivers = xml_doc.xpath('.//receivers/receiver')
+      receivers.map do |each|
+        self.new(each)
+      end
     end
 
     private

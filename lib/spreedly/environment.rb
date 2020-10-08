@@ -112,6 +112,10 @@ module Spreedly
       Receiver.new(xml_doc)
     end
 
+    def list_receivers(since_token = nil)
+      xml_doc = ssl_get(list_receivers_url(since_token), headers)
+      Receiver.new_list_from(xml_doc)
+    end
     def add_credit_card(options)
       api_post(add_payment_method_url, add_credit_card_body(options), false)
     end
