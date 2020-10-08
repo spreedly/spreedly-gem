@@ -4,15 +4,15 @@ class FieldsTest < Test::Unit::TestCase
 
   class ModelWithFields
     include Spreedly::Fields
-    field :message, :amount, :on_test_gateway, :updated_at, :succeeded
+    field :message, :amount, :on_test_gateway, :updated_at, :succeeded, :field_not_in_response
   end
 
   class ModelWithTypedFields
     include Spreedly::Fields
-    field :message
-    field :succeeded, :on_test_gateway, type: :boolean
-    field :amount, type: :integer
-    field :updated_at, type: :date_time
+    field :message, :string_field_not_in_response
+    field :succeeded, :on_test_gateway, :boolean_field_not_in_response, type: :boolean
+    field :amount, :integer_field_not_in_response, type: :integer
+    field :updated_at, :date_time_field_not_in_response, type: :date_time
   end
 
   def setup
@@ -26,6 +26,7 @@ class FieldsTest < Test::Unit::TestCase
     assert_nil @model.on_test_gateway
     assert_nil @model.updated_at
     assert_nil @model.succeeded
+    assert_nil @model.field_not_in_response
   end
 
   def test_defaults_to_nil_for_typed_fields
@@ -36,6 +37,10 @@ class FieldsTest < Test::Unit::TestCase
     assert_nil @typed_model.updated_at
     assert_nil @typed_model.succeeded
     assert_nil @typed_model.succeeded?
+    assert_nil @typed_model.string_field_not_in_response
+    assert_nil @typed_model.boolean_field_not_in_response
+    assert_nil @typed_model.integer_field_not_in_response
+    assert_nil @typed_model.date_time_field_not_in_response
   end
 
   def test_initialize_fields_for_strings
@@ -45,6 +50,7 @@ class FieldsTest < Test::Unit::TestCase
     assert_equal "true", @model.on_test_gateway
     assert_equal "2013-07-31T19:51:57Z", @model.updated_at
     assert_equal "false", @model.succeeded
+    assert_nil @model.field_not_in_response
   end
 
   def test_initialize_fields_for_typed_fields
@@ -56,8 +62,12 @@ class FieldsTest < Test::Unit::TestCase
     assert_equal Time.parse("2013-07-31T19:51:57Z"), @typed_model.updated_at
     assert_equal false, @typed_model.succeeded
     assert_equal false, @typed_model.succeeded?
+    
+    assert_nil @typed_model.string_field_not_in_response
+    assert_nil @typed_model.boolean_field_not_in_response
+    assert_nil @typed_model.integer_field_not_in_response
+    assert_nil @typed_model.date_time_field_not_in_response
   end
-
 
   private
   def xml

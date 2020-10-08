@@ -5,4 +5,6 @@ pkg
 .bundle
 tmp
 vendor/ruby
-test/credentials/personal_credentials.yml
+test/credentials/*.yml
+.ruby-version
+.idea

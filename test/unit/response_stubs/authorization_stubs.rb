@@ -17,8 +17,21 @@ module AuthorizationStubs
         <description>LotsOCoffee</description>
         <merchant_name_descriptor>My Writeoff Inc.</merchant_name_descriptor>
         <merchant_location_descriptor>Tax Free Zone</merchant_location_descriptor>
-        <gateway_specific_fields nil="true"/>
-        <gateway_specific_response_fields nil="true"/>
+        <three_ds_context>three-ds-context</three_ds_context>
+        <gateway_specific_fields>
+          <litle>
+            <descriptor_name>TheName</descriptor_name>
+            <descriptor_phone>33411441</descriptor_blah>
+          </litle>
+          <stripe>
+            <application_fee>844</application_fee>
+          </stripe>
+        </gateway_specific_fields>
+        <gateway_specific_response_fields>
+          <stripe>
+            <card_funding>credit</card_funding>
+          </stripe>
+        </gateway_specific_response_fields>
         <message key="messages.transaction_succeeded">Succeeded!</message>
         <gateway_token>YjWxOjbpeieXsZFdAsbhM2DFgLe</gateway_token>
         <gateway_transaction_id>44</gateway_transaction_id>
@@ -30,6 +43,7 @@ module AuthorizationStubs
           <cvv_code nil="true"/>
           <cvv_message nil="true"/>
           <pending type="boolean">false</pending>
+          <fraud_review type="boolean">false</fraud_review>
           <error_code></error_code>
           <error_detail nil="true"/>
           <cancelled type="boolean">false</cancelled>
@@ -44,6 +58,7 @@ module AuthorizationStubs
           <data nil="true"/>
           <storage_state>retained</storage_state>
           <last_four_digits>4444</last_four_digits>
+          <first_six_digits>411111</first_six_digits>
           <card_type>master</card_type>
           <first_name>John</first_name>
           <last_name>Forthrast</last_name>
@@ -56,11 +71,14 @@ module AuthorizationStubs
           <zip nil="true"/>
           <country nil="true"/>
           <phone_number nil="true"/>
+          <company>Acme</company>
           <full_name>John Forthrast</full_name>
           <payment_method_type>credit_card</payment_method_type>
+          <eligible_for_card_updater type="boolean">true</eligible_for_card_updater>
           <errors>
           </errors>
           <verification_value></verification_value>
+          <fingerprint>ac5579920013cc571e506805f1c8f3220eff</fingerprint>
           <number>XXXX-XXXX-XXXX-4444</number>
         </payment_method>
         <api_urls>
@@ -99,6 +117,7 @@ module AuthorizationStubs
           <cvv_code nil="true"/>
           <cvv_message nil="true"/>
           <pending type="boolean">false</pending>
+          <fraud_review type="boolean">false</fraud_review>
           <error_code></error_code>
           <error_detail>The eagle may have perished.</error_detail>
           <cancelled type="boolean">false</cancelled>
@@ -113,6 +132,7 @@ module AuthorizationStubs
           <data nil="true"/>
           <storage_state>retained</storage_state>
           <last_four_digits>1881</last_four_digits>
+          <first_six_digits>411111</first_six_digits>
           <card_type>visa</card_type>
           <first_name>Perrin</first_name>
           <last_name>Aybara</last_name>
@@ -125,11 +145,14 @@ module AuthorizationStubs
           <zip nil="true"/>
           <country nil="true"/>
           <phone_number nil="true"/>
+          <company>Acme</company>
           <full_name>Perrin Aybara</full_name>
           <payment_method_type>credit_card</payment_method_type>
+          <eligible_for_card_updater type="boolean">true</eligible_for_card_updater>
           <errors>
           </errors>
           <verification_value></verification_value>
+          <fingerprint>ac5579920013cc571e506805f1c8f3220eff</fingerprint>
           <number>XXXX-XXXX-XXXX-1881</number>
         </payment_method>
         <api_urls>

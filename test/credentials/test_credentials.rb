@@ -23,7 +23,7 @@ module Spreedly
     end
 
     def load_personal_creds
-      return {} unless File.exists?(personal_creds_file)
+      return {} unless File.exist?(personal_creds_file)
 
       personal_creds = YAML.load(File.read(personal_creds_file))
       return {} unless personal_creds

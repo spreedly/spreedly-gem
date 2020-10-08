@@ -12,6 +12,7 @@ module FindPaymentMethodStubs
         </data>
         <storage_state>retained</storage_state>
         <last_four_digits>4445</last_four_digits>
+        <first_six_digits>411111</first_six_digits>
         <card_type>master</card_type>
         <first_name>Alcatraz</first_name>
         <last_name>Smedry</last_name>
@@ -24,11 +25,14 @@ module FindPaymentMethodStubs
         <zip>02124</zip>
         <country>USA</country>
         <phone_number>201.344.7712</phone_number>
+        <company>Acme</company>
         <full_name>Alcatraz Smedry</full_name>
         <payment_method_type>credit_card</payment_method_type>
+        <eligible_for_card_updater type="boolean">true</eligible_for_card_updater>
         <errors>
         </errors>
         <verification_value></verification_value>
+        <fingerprint>ac5579920013cc571e506805f1c8f3220eff</fingerprint>
         <number>XXXX-XXXX-XXXX-4445</number>
       </payment_method>
     XML
@@ -45,7 +49,8 @@ module FindPaymentMethodStubs
           <how_many>2</how_many>
         </data>
         <storage_state>redacted</storage_state>
-        <last_four_digits>1881</last_four_digits>
+        <last_four_digits></last_four_digits>
+        <first_six_digits></first_six_digits>
         <card_type nil="true"/>
         <first_name></first_name>
         <last_name></last_name>
@@ -58,8 +63,10 @@ module FindPaymentMethodStubs
         <zip nil="true"/>
         <country nil="true"/>
         <phone_number nil="true"/>
+        <company>Acme</company>
         <full_name></full_name>
         <payment_method_type>credit_card</payment_method_type>
+        <eligible_for_card_updater type="boolean">true</eligible_for_card_updater>
         <errors>
           <error attribute="first_name" key="errors.blank">First name can't be blank</error>
           <error attribute="last_name" key="errors.blank">Last name can't be blank</error>
@@ -68,6 +75,7 @@ module FindPaymentMethodStubs
           <error attribute="number" key="errors.blank">Number can't be blank</error>
         </errors>
         <verification_value></verification_value>
+        <fingerprint>ac5579920013cc571e506805f1c8f3220eff</fingerprint>
         <number>XXXX-XXXX-XXXX-1881</number>
       </payment_method>
     XML

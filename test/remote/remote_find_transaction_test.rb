@@ -13,7 +13,7 @@ class RemoteFindTransactionTest < Test::Unit::TestCase
   end
 
   def test_transaction_not_found
-    assert_raise_with_message(Spreedly::NotFoundError, "Unable to find the transaction SomeUnknownToken.") do
+    assert_raise(Spreedly::NotFoundError) do
        @environment.find_transaction("SomeUnknownToken")
     end
   end

@@ -14,6 +14,7 @@ module RefundStubs
         <transaction_type>Credit</transaction_type>
         <order_id>99a1</order_id>
         <ip>182.129.106.102</ip>
+        <email>joe@example.com</email>
         <description>LotsOCoffee</description>
         <merchant_name_descriptor>My Writeoff Inc.</merchant_name_descriptor>
         <merchant_location_descriptor>Tax Free Zone</merchant_location_descriptor>
@@ -30,6 +31,7 @@ module RefundStubs
           <cvv_code nil="true"/>
           <cvv_message nil="true"/>
           <pending type="boolean">false</pending>
+          <fraud_review type="boolean">false</fraud_review>
           <error_code></error_code>
           <error_detail nil="true"/>
           <cancelled type="boolean">false</cancelled>
@@ -57,6 +59,7 @@ module RefundStubs
         <transaction_type>Credit</transaction_type>
         <order_id nil="true"/>
         <ip nil="true"/>
+        <email nil="true"/>
         <description nil="true"/>
         <merchant_name_descriptor nil="true"/>
         <merchant_location_descriptor nil="true"/>
@@ -73,6 +76,7 @@ module RefundStubs
           <cvv_code nil="true"/>
           <cvv_message nil="true"/>
           <pending type="boolean">false</pending>
+          <fraud_review type="boolean">false</fraud_review>
           <error_code></error_code>
           <error_detail>The eagle is actually a dead duck.</error_detail>
           <cancelled type="boolean">false</cancelled>

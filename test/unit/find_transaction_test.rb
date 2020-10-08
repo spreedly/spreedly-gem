@@ -32,6 +32,16 @@ class FindTransactionTest < Test::Unit::TestCase
     assert_nil t.response
   end
 
+  def test_add_payment_method_transaction_with_no_payment_method
+    t = find_using(add_credit_card_transaction_sans_payment_method_method)
+
+    assert_kind_of(Spreedly::AddPaymentMethod, t)
+    assert_equal("rMyrUp27o11gA1pZu2SikMVRNIn", t.token)
+
+    assert !t.succeeded?
+    assert_nil t.payment_method
+  end
+
   private
   def find_using(response)
     @environment.stubs(:raw_ssl_request).returns(response)

@@ -19,6 +19,7 @@ module FindTransactionStubs
           <data nil="true"/>
           <storage_state>retained</storage_state>
           <last_four_digits>4444</last_four_digits>
+          <first_six_digits>411111</first_six_digits>
           <card_type>master</card_type>
           <first_name>Perrin</first_name>
           <last_name>Aybara</last_name>
@@ -31,11 +32,14 @@ module FindTransactionStubs
           <zip nil="true"/>
           <country nil="true"/>
           <phone_number nil="true"/>
+          <company>Acme</company>
           <full_name>Perrin Aybara</full_name>
           <payment_method_type>credit_card</payment_method_type>
+          <eligible_for_card_updater type="boolean">true</eligible_for_card_updater>
           <errors>
           </errors>
           <verification_value></verification_value>
+          <fingerprint>ac5579920013cc571e506805f1c8f3220eff</fingerprint>
           <number>XXXX-XXXX-XXXX-4444</number>
         </payment_method>
       </transaction>
@@ -72,6 +76,7 @@ module FindTransactionStubs
           <data nil="true"/>
           <storage_state>retained</storage_state>
           <last_four_digits>2111</last_four_digits>
+          <first_six_digits>411111</first_six_digits>
           <card_type>visa</card_type>
           <first_name>Jonathan</first_name>
           <last_name>Phaedrus</last_name>
@@ -84,15 +89,33 @@ module FindTransactionStubs
           <zip>10657</zip>
           <country>United States</country>
           <phone_number nil="true"/>
+          <company>Acme</company>
           <full_name>Jonathan Phaedrus</full_name>
           <payment_method_type>credit_card</payment_method_type>
+          <eligible_for_card_updater type="boolean">true</eligible_for_card_updater>
           <errors>
           </errors>
           <verification_value></verification_value>
+          <fingerprint>ac5579920013cc571e506805f1c8f3220eff</fingerprint>
           <number>XXXX-XXXX-XXXX-2111</number>
         </payment_method>
         <api_urls>
         </api_urls>
+      </transaction>
+    XML
+  end
+
+  def add_credit_card_transaction_sans_payment_method_method
+    StubResponse.succeeded <<-XML
+      <transaction>
+        <token>rMyrUp27o11gA1pZu2SikMVRNIn</token>
+        <created_at type="dateTime">2015-03-11T06:22:57Z</created_at>
+        <updated_at type="dateTime">2015-03-11T06:22:57Z</updated_at>
+        <succeeded type="boolean">false</succeeded>
+        <transaction_type>AddPaymentMethod</transaction_type>
+        <retained type="boolean">false</retained>
+        <state>created</state>
+        <message nil="true"/>
       </transaction>
     XML
   end

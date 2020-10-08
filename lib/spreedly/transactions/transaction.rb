@@ -1,8 +1,6 @@
 
 module Spreedly
-
   class Transaction < Model
-
     field :state, :message
     field :succeeded, type: :boolean
 
@@ -12,6 +10,8 @@ module Spreedly
         return AddPaymentMethod.new(xml_doc)
       when 'Purchase'
         return Purchase.new(xml_doc)
+      when 'OffsitePurchase'
+        return OffsitePurchase.new(xml_doc)
       when 'Authorization'
         return Authorization.new(xml_doc)
       when 'Capture'
@@ -20,14 +20,20 @@ module Spreedly
         return Refund.new(xml_doc)
       when 'Void'
         return Void.new(xml_doc)
+      when 'Verification'
+        return Verification.new(xml_doc)
       when 'RetainPaymentMethod'
         return RetainPaymentMethod.new(xml_doc)
       when 'RedactPaymentMethod'
         return RedactPaymentMethod.new(xml_doc)
       when 'RedactGateway'
         return RedactGateway.new(xml_doc)
+      when 'RecacheSensitiveData'
+        return RecacheSensitiveData.new(xml_doc)
       when 'DeliverPaymentMethod'
         return DeliverPaymentMethod.new(xml_doc)
+      when 'Store'
+        return Store.new(xml_doc)
       else
         Transaction.new(xml_doc)
       end
@@ -39,7 +45,5 @@ module Spreedly
         self.new_from(each)
       end
     end
-
   end
-
 end

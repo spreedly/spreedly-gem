@@ -30,7 +30,8 @@ module Spreedly
     end
 
     def find_transcript(transaction_token)
-      ssl_raw_get(find_transcript_url(transaction_token), headers)
+      transcript_url = find_transcript_url(transaction_token)
+      ssl_raw_get(transcript_url, headers)
     end
 
     def find_gateway(token)
@@ -46,6 +47,15 @@ module Spreedly
     def authorize_on_gateway(gateway_token, payment_method_token, amount, options = {})
       body = auth_purchase_body(amount, payment_method_token, options)
       api_post(authorize_url(gateway_token), body)
+    end
+
+    def complete_transaction(transaction_token)
+      api_post(complete_transaction_url(transaction_token), '')
+    end
+
+    def verify_on_gateway(gateway_token, payment_method_token, options = {})
+      body = verify_body(payment_method_token, options)
+      api_post(verify_url(gateway_token), body)
     end
 
     def capture_transaction(authorization_token, options = {})
@@ -71,13 +81,24 @@ module Spreedly
       Transaction.new_from(xml_doc)
     end
 
+    def recache_payment_method(payment_method_token, options = {})
+      body = recache_payment_method_body(options)
+      xml_doc = ssl_put(recache_payment_method_url(payment_method_token), body, headers)
+      RecacheSensitiveData.new_from(xml_doc)
+    end
+
     def redact_gateway(gateway_token, options = {})
       xml_doc = ssl_put(redact_gateway_url(gateway_token), '', headers)
       Transaction.new_from(xml_doc)
     end
 
-    def list_transactions(since_token = nil, payment_method_token = nil)
-      xml_doc = ssl_get(list_transactions_url(since_token, payment_method_token), headers)
+    def redact_receiver(receiver_token, options = {})
+      xml_doc = ssl_put(redact_receiver_url(receiver_token), '', headers)
+      Transaction.new_from(xml_doc)
+    end
+
+    def list_transactions(since_token = nil, payment_method_token = nil, options = {})
+      xml_doc = ssl_get(list_transactions_url(since_token, payment_method_token, options), headers)
       Transaction.new_list_from(xml_doc)
     end
 
@@ -91,6 +112,11 @@ module Spreedly
       Gateway.new_list_from(xml_doc)
     end
 
+    def store_on_gateway(gateway_token, payment_method_token, options = {})
+      body = store_body(payment_method_token, options)
+      api_post(store_url(gateway_token), body)
+    end
+
     def gateway_options
       xml_doc = ssl_options(gateway_options_url)
       GatewayClass.new_list_from(xml_doc)
@@ -100,13 +126,22 @@ module Spreedly
       self.new("", "").gateway_options
     end
 
+    def receiver_options
+      xml_doc = ssl_get(receiver_options_url, headers)
+      ReceiverClass.new_list_from(xml_doc)
+    end
+
+    def self.receiver_options
+      self.new("", "").receiver_options
+    end
+
     def add_gateway(gateway_type, credentials = {})
       body = add_gateway_body(gateway_type, credentials)
       xml_doc = ssl_post(add_gateway_url, body, headers)
       Gateway.new(xml_doc)
     end
 
-    def add_receiver(receiver_type, host_names, credentials = [])
+    def add_receiver(receiver_type, host_names = nil, credentials = [])
       body = add_receiver_body(receiver_type, host_names, credentials)
       xml_doc = ssl_post(add_receiver_url, body, headers)
       Receiver.new(xml_doc)
@@ -132,6 +167,11 @@ module Spreedly
       PaymentMethod.new_from(xml_doc)
     end
 
+    def deliver_to_receiver(receiver_token, payment_method_token, receiver_options)
+      body = deliver_to_receiver_body(payment_method_token, receiver_options)
+      api_post(deliver_to_receiver_url(receiver_token), body)
+    end
+
     def deliver_receiver(options)
       body = deliver_receiver_body(options)
       xml_doc = ssl_post(deliver_receiver_url(options[:receiver_token]), body, headers)
@@ -150,6 +190,16 @@ module Spreedly
       build_xml_request('transaction') do |doc|
         doc.amount amount
         doc.currency_code(options[:currency_code] || currency_code)
+        doc.payment_method_token(payment_method_token)
+        add_to_doc(doc, options, :retain_on_success)
+        add_to_doc(doc, options, :stored_credential_initiator)
+        add_to_doc(doc, options, :stored_credential_reason_type)
+        add_extra_options_for_basic_ops(doc, options)
+      end
+    end
+
+    def verify_body(payment_method_token, options)
+      build_xml_request('transaction') do |doc|
         doc.payment_method_token(payment_method_token)
         add_to_doc(doc, options, :retain_on_success)
         add_extra_options_for_basic_ops(doc, options)
@@ -189,6 +239,14 @@ module Spreedly
       end
     end
 
+    def recache_payment_method_body(options)
+      build_xml_request('payment_method') do |doc|
+        doc.credit_card do
+          add_to_doc(doc, options, :verification_value)
+        end
+      end
+    end
+
     def add_gateway_body(gateway_type, credentials)
       build_xml_request('gateway') do |doc|
         doc.gateway_type gateway_type
@@ -199,9 +257,15 @@ module Spreedly
     def add_receiver_body(receiver_type, host_names, credentials)
       build_xml_request('receiver') do |doc|
         doc.receiver_type receiver_type
-        doc.hostnames host_names if host_names
-        add_credentials_to_doc(doc, credentials) if credentials and !credentials.empty?
-        # add_to_doc(doc, credentials, *credentials.keys)
+        doc.hostnames(host_names) if host_names
+        add_credentials_to_doc(doc, credentials) if credentials && !credentials.empty?
+      end
+    end
+
+    def store_body(payment_method_token, options)
+      build_xml_request('transaction') do |doc|
+        doc.payment_method_token(payment_method_token)
+        add_gateway_specific_fields(doc, options)
       end
     end
 
@@ -219,16 +283,31 @@ module Spreedly
       build_xml_request('payment_method') do |doc|
         add_to_doc(doc, options, :data, :retained, :email)
         doc.credit_card do
-          add_to_doc(doc, options, :number, :verification_value, :month, :first_name, :last_name,
-                     :year, :address1, :address2, :city, :state, :zip, :country, :phone_number)
+          add_to_doc(doc, options, :number, :verification_value, :month, :full_name, :first_name, :last_name,
+                     :year, :address1, :address2, :city, :state, :zip, :country, :phone_number,
+                     :company, :eligible_for_card_updater)
         end
       end
     end
 
     def update_credit_card_body(options)
       build_xml_request('payment_method') do |doc|
-        add_to_doc(doc, options, :email, :month, :first_name, :last_name, :year,
-                   :address1, :address2, :city, :state, :zip, :country, :phone_number)
+        add_to_doc(doc, options, :email, :month, :full_name, :first_name, :last_name, :year,
+                   :address1, :address2, :city, :state, :zip, :country, :phone_number,
+                   :eligible_for_card_updater)
+      end
+    end
+
+    def deliver_to_receiver_body(payment_method_token, receiver_options)
+      build_xml_request('delivery') do |doc|
+        doc.payment_method_token payment_method_token
+        doc.url receiver_options[:url]
+        doc.headers do
+          doc.cdata receiver_options[:headers].map { |k, v| "#{k}: #{v}" }.join("\r\n")
+        end
+        doc.body do
+          doc.cdata receiver_options[:body]
+        end
       end
     end
 
@@ -244,13 +323,37 @@ module Spreedly
 
     def add_to_doc(doc, options, *attributes)
       attributes.each do |attr|
-        doc.send(attr, options[attr.to_sym]) if options[attr.to_sym]
+        doc.send(attr, options[attr.to_sym]) if options[attr.to_sym] != nil
       end
     end
 
     def add_extra_options_for_basic_ops(doc, options)
-      add_to_doc(doc, options, :order_id, :description, :ip, :merchant_name_descriptor,
-                               :merchant_location_descriptor)
+      add_gateway_specific_fields(doc, options)
+      add_shipping_address_override(doc, options)
+      add_to_doc(doc, options, :order_id, :description, :ip, :email, :merchant_name_descriptor,
+                               :merchant_location_descriptor, :redirect_url, :callback_url,
+                               :continue_caching, :attempt_3dsecure, :browser_info, :three_ds_version, :channel)
+    end
+
+    def add_gateway_specific_fields(doc, options)
+      return unless options[:gateway_specific_fields].kind_of?(Hash)
+      doc << "<gateway_specific_fields>#{xml_for_hash(options[:gateway_specific_fields])}</gateway_specific_fields>"
+    end
+
+    def add_shipping_address_override(doc, options)
+      return unless options[:shipping_address].kind_of?(Hash)
+      doc.send(:shipping_address) do
+        options[:shipping_address].each do |k, v|
+          doc.send(k, v)
+        end
+      end
+    end
+
+    def xml_for_hash(hash)
+      hash.map do |key, value|
+        text = value.kind_of?(Hash) ? xml_for_hash(value) : value
+        "<#{key}>#{text}</#{key}>"
+      end.join
     end
 
     def add_deliver_receiver_headers(doc, headers)
@@ -282,6 +385,5 @@ module Spreedly
       xml_doc = ssl_post(url, body, headers, talking_to_gateway)
       Transaction.new_from(xml_doc)
     end
-
   end
 end

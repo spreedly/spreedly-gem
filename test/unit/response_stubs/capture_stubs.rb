@@ -13,12 +13,17 @@ module CaptureStubs
         <token>T41uDjYsxGybSsp7RHuRTohMjg2</token>
         <transaction_type>Capture</transaction_type>
         <order_id>99a1</order_id>
+        <email>joe@example.com</email>
         <ip>182.129.106.102</ip>
         <description>LotsOCoffee</description>
         <merchant_name_descriptor>My Writeoff Inc.</merchant_name_descriptor>
         <merchant_location_descriptor>Tax Free Zone</merchant_location_descriptor>
         <gateway_specific_fields nil="true"/>
-        <gateway_specific_response_fields nil="true"/>
+        <gateway_specific_response_fields>
+          <stripe>
+            <card_funding>credit</card_funding>
+          </stripe>
+        </gateway_specific_response_fields>
         <message key="messages.transaction_succeeded">Succeeded!</message>
         <gateway_token>SoPblCOGDwaRyym68XGWeRiCy1C</gateway_token>
         <gateway_transaction_id>44</gateway_transaction_id>
@@ -30,6 +35,7 @@ module CaptureStubs
           <cvv_code nil="true"/>
           <cvv_message nil="true"/>
           <pending type="boolean">false</pending>
+          <fraud_review type="boolean">false</fraud_review>
           <error_code></error_code>
           <error_detail nil="true"/>
           <cancelled type="boolean">false</cancelled>
@@ -57,6 +63,7 @@ module CaptureStubs
         <transaction_type>Capture</transaction_type>
         <order_id nil="true"/>
         <ip nil="true"/>
+        <email nil="true"/>
         <description nil="true"/>
         <merchant_name_descriptor nil="true"/>
         <merchant_location_descriptor nil="true"/>
@@ -73,6 +80,7 @@ module CaptureStubs
           <cvv_code nil="true"/>
           <cvv_message nil="true"/>
           <pending type="boolean">false</pending>
+          <fraud_review type="boolean">false</fraud_review>
           <error_code></error_code>
           <error_detail>The eagle has hit the window.</error_detail>
           <cancelled type="boolean">false</cancelled>

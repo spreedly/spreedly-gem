@@ -41,13 +41,24 @@ class RemoteUpdateCreditCardTest < Test::Unit::TestCase
     assert_equal 'Cauthon', result.last_name
     assert_equal 'Mat', result.first_name
     assert_equal 'cauthon@wot.com', result.email
+    assert_equal false, result.eligible_for_card_updater
+  end
+
+  def test_successfull_update_using_full_name
+    card = create_card_on(@environment)
+    result = @environment.update_credit_card(card.token, full_name: "Murray Rothbard")
+
+    assert_equal "Murray", result.first_name
+    assert_equal "Rothbard", result.last_name
+    assert_equal "Murray Rothbard", result.full_name
   end
 
   private
   def card_deets(options = {})
     {
-      email: 'cauthon@wot.com', month: 1, year: 2019,
-      last_name: 'Cauthon', first_name: 'Mat'
+      email: 'cauthon@wot.com', month: 1, year: 2023,
+      last_name: 'Cauthon', first_name: 'Mat',
+      eligible_for_card_updater: 'false'
     }.merge(options)
   end
 

@@ -1,7 +1,5 @@
 module Spreedly
-
   module Urls
-
     def find_payment_method_url(token)
       "#{base_url}/v1/payment_methods/#{token}.xml"
     end
@@ -14,6 +12,10 @@ module Spreedly
       "#{base_url}/v1/transactions/#{transaction_token}/transcript"
     end
 
+    def complete_transaction_url(token)
+      "#{base_url}/v1/transactions/#{token}/complete.xml"
+    end
+
     def find_gateway_url(token)
       "#{base_url}/v1/gateways/#{token}.xml"
     end
@@ -24,6 +26,10 @@ module Spreedly
 
     def authorize_url(gateway_token)
       "#{base_url}/v1/gateways/#{gateway_token}/authorize.xml"
+    end
+
+    def verify_url(gateway_token)
+      "#{base_url}/v1/gateways/#{gateway_token}/verify.xml"
     end
 
     def capture_url(authorization_token)
@@ -46,15 +52,32 @@ module Spreedly
       "#{base_url}/v1/payment_methods/#{payment_method_token}/redact.xml"
     end
 
+    def recache_payment_method_url(payment_method_token)
+      "#{base_url}/v1/payment_methods/#{payment_method_token}/recache.xml"
+    end
+
     def redact_gateway_url(gateway_token)
       "#{base_url}/v1/gateways/#{gateway_token}/redact.xml"
     end
 
-    def list_transactions_url(since_token, payment_method_token)
-      since_param = "?since_token=#{since_token}" if since_token
-      return "#{base_url}/v1/transactions.xml#{since_param}" unless payment_method_token
+    def store_url(gateway_token)
+      "#{base_url}/v1/gateways/#{gateway_token}/store.xml"
+    end
 
-      "#{base_url}/v1/payment_methods/#{payment_method_token}/transactions.xml#{since_param}"
+    def list_transactions_url(since_token, payment_method_token, options = {})
+      options.each do |key, val|
+        options[key.to_sym] = val
+      end
+
+      params = []
+      params << "since_token=#{since_token}" if since_token
+      params << "count=#{options[:count]}" if options[:count]
+      params << "order=#{options[:order]}" if options[:order]
+      params << "state=#{options[:state]}" if options[:state]
+      param_string = "?#{params.join('&')}" if params.any?
+      return "#{base_url}/v1/transactions.xml#{param_string}" unless payment_method_token
+
+      "#{base_url}/v1/payment_methods/#{payment_method_token}/transactions.xml#{param_string}"
     end
 
     def list_payment_methods_url(since_token)
@@ -84,8 +107,16 @@ module Spreedly
       "#{base_url}/v1/gateways.xml"
     end
 
+    def receiver_options_url
+      "#{base_url}/v1/receivers_options.xml"
+    end
+
     def add_receiver_url
       "#{base_url}/v1/receivers.xml"
+    end
+
+    def redact_receiver_url(token)
+      "#{base_url}/v1/receivers/#{token}/redact.xml"
     end
 
     def add_payment_method_url
@@ -96,10 +127,13 @@ module Spreedly
       "#{base_url}/v1/payment_methods/#{token}.xml"
     end
 
+    def deliver_to_receiver_url(receiver_token)
+      "#{base_url}/v1/receivers/#{receiver_token}/deliver.xml"
+    end
+    
     def deliver_receiver_url(receiver_token)
       "#{base_url}/v1/receivers/#{receiver_token}/deliver.xml"
     end
 
   end
-
 end

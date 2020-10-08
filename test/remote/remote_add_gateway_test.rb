@@ -2,8 +2,6 @@ require 'test_helper'
 
 class RemoteAddReceiverTest < Test::Unit::TestCase
 
-  # TODO We'll add more to this soon.
-
   def setup
     @environment = Spreedly::Environment.new(remote_test_environment_key, remote_test_access_secret)
   end
@@ -28,8 +26,8 @@ class RemoteAddReceiverTest < Test::Unit::TestCase
   end
 
   def test_need_active_account
-    assert_raise_with_message(Spreedly::PaymentRequiredError, "Your account has not been activated for real transactions. Please update your subscription settings.") do
-      gateway = @environment.add_gateway(:wirecard)
+    assert_raise_with_message(Spreedly::PaymentRequiredError, "Your environment (R7lHscqcYkZeDGGbthKp6GKMu15) has not been activated for real transactions with real payment methods. If you're using a Test Gateway you can *ONLY* use Test payment methods - ( https://docs.spreedly.com/test-data). All other credit card numbers are considered real credit cards; real credit cards are not allowed when using a Test Gateway.") do
+      @environment.add_gateway(:wirecard)
     end
   end
 

@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class RemoteAuthorizeTest < Test::Unit::TestCase
-
   def setup
     @environment = Spreedly::Environment.new(remote_test_environment_key, remote_test_access_secret)
   end
@@ -35,6 +34,23 @@ class RemoteAuthorizeTest < Test::Unit::TestCase
     assert_equal 899, transaction.amount
   end
 
+  def test_successful_authorize_with_stored_credentials
+    gateway_token = @environment.add_gateway(:test).token
+    card_token = create_card_on(@environment).token
+
+    transaction = @environment.authorize_on_gateway(
+      gateway_token,
+      card_token,
+      899,
+      stored_credential_initiator: :merchant,
+      stored_credential_reason_type: :installment
+    )
+
+    assert transaction.succeeded?
+    assert_equal 'merchant', transaction.stored_credential_initiator
+    assert_equal 'installment', transaction.stored_credential_reason_type
+  end
+
   def test_failed_authorize
     gateway_token = @environment.add_gateway(:test).token
     card_token = create_failed_card_on(@environment).token
@@ -44,5 +60,4 @@ class RemoteAuthorizeTest < Test::Unit::TestCase
     assert_equal "Unable to process the authorize transaction.", transaction.message
     assert_equal gateway_token, transaction.gateway_token
   end
-
 end

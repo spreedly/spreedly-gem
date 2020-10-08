@@ -40,6 +40,18 @@ class ListTransactionsTest < Test::Unit::TestCase
     assert_request_url 'https://core.spreedly.com/v1/payment_methods/SomePaymentMethodToken/transactions.xml?since_token=SinceToken' do
       @environment.list_transactions('SinceToken', 'SomePaymentMethodToken')
     end
+
+    assert_request_url 'https://core.spreedly.com/v1/transactions.xml?order=asc' do
+      @environment.list_transactions(nil, nil, order: :asc)
+    end
+
+    assert_request_url 'https://core.spreedly.com/v1/transactions.xml?since_token=SinceToken&count=10&state=succeeded' do
+      @environment.list_transactions('SinceToken', nil, state: :succeeded, count: 10)
+    end
+
+    assert_request_url 'https://core.spreedly.com/v1/payment_methods/SomePaymentMethodToken/transactions.xml?since_token=SinceToken&count=10&order=asc&state=succeeded' do
+      @environment.list_transactions('SinceToken', 'SomePaymentMethodToken', order: :asc, state: :succeeded, count: 10)
+    end
   end
 
   private

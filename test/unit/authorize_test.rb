@@ -28,8 +28,15 @@ class AuthorizeTest < Test::Unit::TestCase
     assert_equal 'Tax Free Zone', t.merchant_location_descriptor
     assert_equal 'YjWxOjbpeieXsZFdAsbhM2DFgLe', t.gateway_token
     assert_equal "44", t.gateway_transaction_id
+    assert_equal "three-ds-context", t.three_ds_context
+    assert_equal "Authorization", t.transaction_type
+    assert_equal "TheName", t.gateway_specific_fields[:litle][:descriptor_name]
+    assert_equal "33411441", t.gateway_specific_fields[:litle][:descriptor_phone]
+    assert_equal "844", t.gateway_specific_fields[:stripe][:application_fee]
+    assert_equal "credit", t.gateway_specific_response_fields[:stripe][:card_funding]
 
     assert_equal 'Nh2Vw0kAoSQvcJDpK52q4dZlrVJ', t.payment_method.token
+    assert_equal 'credit_card', t.payment_method.payment_method_type
     assert_equal 'Forthrast', t.payment_method.last_name
 
     assert t.response.success
@@ -63,11 +70,14 @@ class AuthorizeTest < Test::Unit::TestCase
       [ './ip', '183.128.100.102' ],
       [ './merchant_name_descriptor', 'TRain' ],
       [ './merchant_location_descriptor', 'British Colombia' ],
-      [ './retain_on_success', 'true' ]
+      [ './gateway_specific_fields/braintree/customer_id', '1143' ],
+      [ './retain_on_success', 'true' ],
+      [ './continue_caching', 'true']
   end
 
 
   private
+
   def authorize_using(response)
     @environment.stubs(:raw_ssl_request).returns(response)
     @environment.authorize_on_gateway("IgnoredGatewayTokenSinceResponseIsStubbed", "IgnoredPaymentMethodTokenSinceResponseIsStubbed", 5921)
@@ -81,7 +91,11 @@ class AuthorizeTest < Test::Unit::TestCase
       ip: "183.128.100.102",
       merchant_name_descriptor: "TRain",
       merchant_location_descriptor: "British Colombia",
-      retain_on_success: true
+      gateway_specific_fields: {
+        braintree: { customer_id: "1143" }
+      },
+      retain_on_success: true,
+      continue_caching: true
     }
   end
 

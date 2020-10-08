@@ -8,7 +8,8 @@ module Spreedly
 
     def initialize(xml_doc)
       super
-      @payment_method = PaymentMethod.new_from(xml_doc.at_xpath('.//payment_method'))
+      payment_method_xml_doc = xml_doc.at_xpath('.//payment_method')
+      @payment_method = payment_method_xml_doc ? PaymentMethod.new_from(payment_method_xml_doc) : nil
     end
 
   end

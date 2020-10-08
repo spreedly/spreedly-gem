@@ -35,6 +35,24 @@ class RemotePurchaseTest < Test::Unit::TestCase
     assert_equal 144, transaction.amount
   end
 
+  def test_successful_purchase_with_stored_credentials
+    gateway_token = @environment.add_gateway(:test).token
+    card_token = create_card_on(@environment).token
+
+    transaction = @environment.purchase_on_gateway(
+      gateway_token,
+      card_token,
+      899,
+      stored_credential_initiator: :merchant,
+      stored_credential_reason_type: :installment
+    )
+
+    assert transaction.succeeded?
+    assert_equal 'merchant', transaction.stored_credential_initiator
+    assert_equal 'installment', transaction.stored_credential_reason_type
+  end
+
+
   def test_failed_purchase
     gateway_token = @environment.add_gateway(:test).token
     card_token = create_failed_card_on(@environment).token
@@ -45,6 +63,50 @@ class RemotePurchaseTest < Test::Unit::TestCase
     assert_equal gateway_token, transaction.gateway_token
   end
 
+  def test_offsite_transaction_arguments
+    gateway_token = @environment.add_gateway(:test).token
+    sprel_token = create_sprel_on(@environment)
+
+    transaction = @environment.purchase_on_gateway(gateway_token, sprel_token, 344,
+                                                   order_id: "8675",
+                                                   description: "SuperDuper",
+                                                   ip: "183.128.100.103",
+                                                   email: "fred@example.com",
+                                                   merchant_name_descriptor: "Real Stuff",
+                                                   merchant_location_descriptor: "Raleigh",
+                                                   retain_on_success: true,
+                                                   redirect_url: "https://example.com/redirect",
+                                                   callback_url: "https://example.com/callback")
+
+    assert_equal "pending", transaction.state
+    assert "https://example.com/callback", transaction.callback_url
+    assert "https://example.com/redirect", transaction.redirect_url
+    assert transaction.checkout_url
+  end
+
+  def test_3d_secure_attempt_transaction_arguments
+    gateway_token = @environment.add_gateway(:test).token
+    card_token = create_card_on(@environment, number: '4556761029983886', retained: false).token
+    browser_info = "eyJ3aWR0aCI6MzAwOCwiaGVpZ2h0IjoxNjkyLCJkZXB0aCI6MjQsInRpbWV6b25lIjoyNDAsInVzZXJfYWdlbnQiOiJNb3ppbGxhLzUuMCAoTWFjaW50b3NoOyBJbnRlbCBNYWMgT1MgWCAxMC4xNDsgcnY6NjguMCkgR2Vja28vMjAxMDAxMDEgRmlyZWZveC82OC4wIiwiamF2YSI6ZmFsc2UsImxhbmd1YWdlIjoiZW4tVVMiLCJhY2NlcHRfaGVhZGVyIjoidGV4dC9odG1sLGFwcGxpY2F0aW9uL3hodG1sK3htbCxhcHBsaWNhdGlvbi94bWwifQ=="
+    transaction = @environment.purchase_on_gateway(gateway_token, card_token, 3004,
+                                                   order_id: "8675",
+                                                   description: "SuperDuper",
+                                                   ip: "183.128.100.103",
+                                                   email: "fred@example.com",
+                                                   merchant_name_descriptor: "Real Stuff",
+                                                   merchant_location_descriptor: "Raleigh",
+                                                   retain_on_success: true,
+                                                   redirect_url: "https://example.com/redirect",
+                                                   callback_url: "https://example.com/callback",
+                                                   browser_info: browser_info,
+                                                   attempt_3dsecure: true,
+                                                   three_ds_version: "2.0")
+
+    assert_equal "pending", transaction.state
+    assert_equal "https://example.com/redirect", transaction.redirect_url
+    assert_equal "device_fingerprint", transaction.required_action
+  end
+
   def test_optional_arguments
     gateway_token = @environment.add_gateway(:test).token
     card_token = create_card_on(@environment, retained: false).token
@@ -53,6 +115,7 @@ class RemotePurchaseTest < Test::Unit::TestCase
                                                    order_id: "8675",
                                                    description: "SuperDuper",
                                                    ip: "183.128.100.103",
+                                                   email: "fred@example.com",
                                                    merchant_name_descriptor: "Real Stuff",
                                                    merchant_location_descriptor: "Raleigh",
                                                    retain_on_success: true)
@@ -63,8 +126,32 @@ class RemotePurchaseTest < Test::Unit::TestCase
     assert_equal "183.128.100.103", transaction.ip
     assert_equal "Real Stuff", transaction.merchant_name_descriptor
     assert_equal "Raleigh", transaction.merchant_location_descriptor
-    assert_equal "retained", transaction.payment_method.storage_state
+    assert_equal "cached", transaction.payment_method.storage_state
+    assert_equal "fred@example.com", transaction.email
+    assert_equal "perrin@wot.com", transaction.payment_method.email
     assert_match /\d/, transaction.gateway_transaction_id
+    assert_match "Purchase", transaction.transaction_type
+  end
+
+  def test_gateway_specific_fields
+    gateway_token = @environment.add_gateway(:test).token
+    card_token = create_card_on(@environment, retained: false).token
+
+    t = @environment.purchase_on_gateway(gateway_token, card_token, 344,
+          gateway_specific_fields:
+            {
+              litle: {
+                descriptor_name: "CompanyName",
+                descriptor_phone: "1331131131"
+              },
+              stripe: {
+                application_fee: 411
+              }
+            })
+
+    assert t.succeeded?
+    assert_equal "CompanyName", t.gateway_specific_fields[:litle][:descriptor_name]
+    assert_equal "411", t.gateway_specific_fields[:stripe][:application_fee]
   end
 
 end

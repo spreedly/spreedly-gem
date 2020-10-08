@@ -8,7 +8,7 @@ class RemoteAddReceiverTest < Test::Unit::TestCase
 
   def test_invalid_login
     assert_invalid_login do |environment|
-      environment.add_receiver(:test, nil)
+      environment.add_receiver(:test, 'http://api.example.com/post')
     end
   end
 
@@ -18,10 +18,22 @@ class RemoteAddReceiverTest < Test::Unit::TestCase
     end
   end
 
+  def test_add_test_receiver_sans_hostname
+    assert_raise_with_message(Spreedly::TransactionCreationError, "Hostnames can't be blank") do
+      @environment.add_receiver(:test, nil)
+    end
+  end
+
   def test_add_test_receiver
-    receiver = @environment.add_receiver(:test, 'http://api.example.com/post')
+    receiver = @environment.add_receiver(:test, 'http://spreedly-echo.herokuapp.com')
     assert_equal "test", receiver.receiver_type
-    assert_equal 'http://api.example.com/post', receiver.hostnames
+    assert_equal 'http://spreedly-echo.herokuapp.com', receiver.hostnames
+  end
+
+  def test_need_active_account
+    assert_raise_with_message(Spreedly::PaymentRequiredError, "Your environment (R7lHscqcYkZeDGGbthKp6GKMu15) has not been activated for real transactions with real payment methods. If you're using a Test Gateway you can *ONLY* use Test payment methods - ( https://docs.spreedly.com/test-data). All other credit card numbers are considered real credit cards; real credit cards are not allowed when using a Test Gateway.") do
+      @environment.add_receiver(:braintree)
+    end
   end
 
 end

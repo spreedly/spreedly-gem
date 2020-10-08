@@ -16,6 +16,7 @@ module ListTransactionsStubs
           <order_id nil="true"/>
           <ip nil="true"/>
           <description nil="true"/>
+          <email nil="true"/>
           <merchant_name_descriptor nil="true"/>
           <merchant_location_descriptor nil="true"/>
           <gateway_specific_fields nil="true"/>
@@ -31,6 +32,7 @@ module ListTransactionsStubs
             <cvv_code nil="true"/>
             <cvv_message nil="true"/>
             <pending type="boolean">false</pending>
+            <fraud_review type="boolean">false</fraud_review>
             <error_code></error_code>
             <error_detail nil="true"/>
             <cancelled type="boolean">false</cancelled>
@@ -45,6 +47,7 @@ module ListTransactionsStubs
             <data nil="true"/>
             <storage_state>retained</storage_state>
             <last_four_digits>4444</last_four_digits>
+            <first_six_digits>411111</first_six_digits>
             <card_type>master</card_type>
             <first_name>Perrin</first_name>
             <last_name>Aybara</last_name>
@@ -57,11 +60,14 @@ module ListTransactionsStubs
             <zip nil="true"/>
             <country nil="true"/>
             <phone_number nil="true"/>
+            <company>Acme</company>
             <full_name>Perrin Aybara</full_name>
             <payment_method_type>credit_card</payment_method_type>
+            <eligible_for_card_updater type="boolean">true</eligible_for_card_updater>
             <errors>
             </errors>
             <verification_value></verification_value>
+            <fingerprint>ac5579920013cc571e506805f1c8f3220eff</fingerprint>
             <number>XXXX-XXXX-XXXX-4444</number>
           </payment_method>
           <api_urls>
@@ -80,6 +86,7 @@ module ListTransactionsStubs
           <transaction_type>Capture</transaction_type>
           <order_id nil="true"/>
           <ip nil="true"/>
+          <email nil="true"/>
           <description nil="true"/>
           <merchant_name_descriptor nil="true"/>
           <merchant_location_descriptor nil="true"/>
@@ -96,6 +103,7 @@ module ListTransactionsStubs
             <cvv_code nil="true"/>
             <cvv_message nil="true"/>
             <pending type="boolean">false</pending>
+            <fraud_review type="boolean">false</fraud_review>
             <error_code></error_code>
             <error_detail nil="true"/>
             <cancelled type="boolean">false</cancelled>

@@ -2,6 +2,8 @@
 
 A convenient Ruby wrapper for the Spreedly API.
 
+This is an example Ruby integration with Spreedly. This version is no longer actively updated and will be superseded by a new version in the near future. Feature parity may lag behind, so please use this gem at your own risk.
+
 ## Philosophy
 
 * No global configuration of authentication credentials.
@@ -52,7 +54,7 @@ gateway.token     # => "DnbEJaaY2egcVkCvg3s8qT38xgt"
 
 #### Add a payment method
 Need a payment method token to try things out?  With Spreedly it's pretty straightforward to use a
-[transparent redirect](https://core.spreedly.com/manual/quickstart#submit-payment-form) to give you a
+[transparent redirect](https://docs.spreedly.com/guides/adding-payment-methods/web-form/) to give you a
 payment method token.  A payment form in your application could look something like this:
 
 ``` html
@@ -84,7 +86,7 @@ Once Spreedly has recorded the information, it will redirect the browser to the 
 
     http://yourdomain.com/transparent_redirect_done?token=OEj2G2QJZM4C10AfTLYTrsKIsZH
 
-Once you have the payment method token (OEj2G2QJZM4C10AfTLYTrsKIsZH in this case), you can remember it and use it whenever you'd like.  These [test cards](https://core.spreedly.com/manual/test-data) will help.
+Once you have the payment method token (OEj2G2QJZM4C10AfTLYTrsKIsZH in this case), you can remember it and use it whenever you'd like.  These [test cards](https://docs.spreedly.com/reference/test-data/) will help.
 
 #### Retrieve a payment method
 Let's say you'd like some additional information about the payment method.  You can find a payment method like so:
@@ -119,6 +121,13 @@ You can also specify an optional amount to capture.
 capture_transaction = env.capture_transaction(auth_transaction.token, amount: 100)
 ```
 
+#### Verify
+
+Verify a card is legitimate so you can charge it at a later date.
+
+``` ruby
+env.verify_on_gateway(gateway_token, payment_method_token, retain_on_success: true)
+```
 
 #### Void and refund
 
@@ -162,7 +171,7 @@ env.purchase_on_gateway(gateway_token, payment_method_token, amount, currency_co
 
 
 #### Extra options for the basic operations
-For Purchase, Authorize, Capture, Refund, and Void calls, you can specify additional options:
+For Purchase, Authorize, Capture, Refund, Verify, and Void calls, you can specify additional options:
 
 ``` ruby
 env.purchase_on_gateway(gateway_token, payment_method_token, amount,
@@ -174,11 +183,21 @@ env.purchase_on_gateway(gateway_token, payment_method_token, amount,
                        )
 ```
 
+#### Complete a transaction (3DS 2)
+
+```ruby
+env.complete_transaction(transaction_token)
+```
+
 #### Retain on success
-Retain a payment method automatically if the purchase or authorize transaction succeeded.  Saves you a separate call to retain:
+Retain a payment method automatically if the purchase, verify, or authorize transaction succeeded.  Saves you a separate call to retain:
 
 ``` ruby
 env.purchase_on_gateway(gateway_token, payment_method_token, amount, retain_on_success: true)
+```
+
+``` ruby
+env.verify_on_gateway(gateway_token, payment_method_token, retain_on_success: true)
 ```
 
 #### Retrieving gateways
@@ -262,24 +281,24 @@ Here's how you can do it:
 
 ``` ruby
 options = {
-email: 'perrin@wot.com', number: '5555555555554444', month: 1, year: 2019, last_name: 'Aybara', first_name: 'Perrin', data: "occupation: Blacksmith"
+email: 'perrin@wot.com', number: '5555555555554444', month: 1, year: 2023, last_name: 'Aybara', first_name: 'Perrin', data: "occupation: Blacksmith"
 }
 transaction = env.add_credit_card(options)
 
 transaction.token                 # => "2nQEJaaY3egcVkCvg2s9qT37xrb"
-transaction.card.token            # => "7rbEKaaY0egcBkCrg2sbqTo7Qrb"
-transaction.card.last_name        # => "Aybara"
+transaction.payment_method.token            # => "7rbEKaaY0egcBkCrg2sbqTo7Qrb"
+transaction.payment_method.last_name        # => "Aybara"
 ```
 
 You can also retain the card immediately like so:
 
 ``` ruby
 options = {
-email: 'perrin@wot.com', number: '5555555555554444', month: 1, year: 2019, last_name: 'Aybara', first_name: 'Perrin', data: "occupation: Blacksmith", retained: true
+email: 'perrin@wot.com', number: '5555555555554444', month: 1, year: 2023, last_name: 'Aybara', first_name: 'Perrin', data: "occupation: Blacksmith", retained: true
 }
 transaction = env.add_credit_card(options)
 
-transaction.card.storage_state    # => "retained"
+transaction.payment_method.storage_state    # => "retained"
 ```
 
 And you might want to specify a number of other details like the billing address, etc:
@@ -291,7 +310,7 @@ email: 'leavenworth@free.com', number: '9555555555554444', month: 3, year: 2021,
 
 transaction = env.add_credit_card(options)
 
-transaction.card.last_name      # => "Smedry"
+transaction.payment_method.last_name      # => "Smedry"
 
 ```
 
@@ -303,6 +322,27 @@ You can get the full list of supported gateways like so:
 env.gateway_options
 ```
 
+#### Getting meta information about the supported payment method distribution receivers
+
+You can get the full list of supported receivers like so:
+
+``` ruby
+env.receiver_options
+```
+
+#### Delivering a payment method
+
+You can deliver a payment method to a third party using [Payment Method Distribution](https://docs.spreedly.com/guides/payment-method-distribution/). Once a receiver is set up and you have a payment method that you would like to share, you can use the following call:
+
+```ruby
+env.deliver_to_receiver(
+  "receiver token goes here",
+  "payment method token goes here",
+  headers: { "Content-Type": "application/json" },
+  url: "https://spreedly-echo.herokuapp.com",
+  body: { card_number: "{{credit_card_number}}" }.to_json
+)
+```
 
 ## Error Handling
 
@@ -358,7 +398,7 @@ env.purchase_on_gateway(gateway_token, "Some Unknown Token", 4432) # Raises Spre
 
 #### Trying to use a non-test gateway or a non-test payment method with an inactive account
 
-You're free to use [test card data](https://core.spreedly.com/manual/test-data) and a [Test gateway](https://core.spreedly.com/manual/payment-gateways/test) to integrate Spreedly without having a
+You're free to use [test card data](https://docs.spreedly.com/reference/test-data/) and a [Test gateway](https://docs.spreedly.com/payment-gateways/test/) to integrate Spreedly without having a
 paid Spreedly account.  If you try to use a real card or a real gateway when your account isn't yet paid for, we'll raise an exception:
 
 ``` ruby
@@ -378,7 +418,7 @@ For api calls that actually talk to a payment gateway, the timout is longer sinc
 
 ## Sample applications using the gem
 
-There are some sample applications with source code using this gem.  You can [find them here](https://core.spreedly.com/manual/sample_applications).
+There are some sample applications with source code using this gem.  You can [find them here](https://docs.spreedly.com/resources/apps-libs/).
 
 ## Contributing
 
@@ -390,3 +430,7 @@ There are two rake tasks to help run the tests:
 rake test:remote  # Run remote tests that actually hit the Spreedly site
 rake test:units   # Run unit tests
 ```
+
+To run remote tests you'll need to copy `test/credentials/credentials.yml.example` to `test/credentials/credentials.yml` and update the values of `environment_key` and `access_secret`.
+
+When you're happy with your change, don't forget to add your contributions to CHANGELOG.md. We follow the changelog format found [here](https://keepachangelog.com/en/1.0.0/).

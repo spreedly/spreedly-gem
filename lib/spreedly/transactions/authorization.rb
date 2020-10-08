@@ -1,7 +1,3 @@
 module Spreedly
-
-  class Authorization < AuthPurchase
-
-  end
-
+  Authorization = Class.new(AuthPurchase)
 end
