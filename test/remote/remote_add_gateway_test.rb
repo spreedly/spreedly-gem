@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class RemoteAddReceiverTest < Test::Unit::TestCase
+class RemoteAddGatewayTest < Test::Unit::TestCase
 
   def setup
     @environment = Spreedly::Environment.new(remote_test_environment_key, remote_test_access_secret)
