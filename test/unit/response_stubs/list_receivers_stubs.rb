@@ -1,6 +1,6 @@
-module ListreceiversStubs
+module ListReceiversStubs
 
-  def successful_list_gateways_response
+  def successful_list_receivers_response
     StubResponse.succeeded <<-XML
       <receivers>
         <receiver>

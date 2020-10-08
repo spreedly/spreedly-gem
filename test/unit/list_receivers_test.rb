@@ -1,9 +1,9 @@
 require 'test_helper'
 require 'unit/response_stubs/list_receivers_stubs'
 
-class ListeReceiversTest < Test::Unit::TestCase
+class ListReceiversTest < Test::Unit::TestCase
 
-  include ListeReceiversStubs
+  include ListReceiversStubs
 
   def setup
     @environment = Spreedly::Environment.new("key", "secret")
