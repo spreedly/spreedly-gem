@@ -68,6 +68,7 @@ class GatewayOptionsTest < Test::Unit::TestCase
       :supports_general_credit,
       :supports_offsite_authorize,
       :supports_offsite_purchase,
+      :supports_populate_mit_fields,
       :supports_purchase,
       :supports_purchase_via_preauthorization,
       :supports_reference_purchase,
