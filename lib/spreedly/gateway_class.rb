@@ -11,8 +11,7 @@ module Spreedly
           :supports_3dsecure_2_purchase, :supports_3dsecure_2_authorize,
           :supports_3dsecure_2_mpi_purchase, :supports_3dsecure_2_mpi_authorize,
           :supports_store, :supports_remove, :supports_general_credit,
-          :supports_fraud_review, type: :boolean,
-          :supports_populate_mit_fields 
+          :supports_fraud_review, :supports_populate_mit_fields, type: :boolean
 
     attr_reader :supported_countries, :payment_methods, :auth_modes, :regions
 
