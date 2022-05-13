@@ -35,6 +35,22 @@ class RemoteVerifyTest < Test::Unit::TestCase
     assert_equal gateway_token, transaction.gateway_token
   end
 
+  def test_successful_verify_with_stored_credentials
+    gateway_token = @environment.add_gateway(:test).token
+    card_token = create_card_on(@environment).token
+
+    transaction = @environment.verify_on_gateway(
+      gateway_token,
+      card_token,
+      stored_credential_initiator: :merchant,
+      stored_credential_reason_type: :unscheduled
+    )
+
+    assert transaction.succeeded?
+    assert_equal 'merchant', transaction.stored_credential_initiator
+    assert_equal 'unscheduled', transaction.stored_credential_reason_type
+  end
+
   def test_failed_verify
     gateway_token = @environment.add_gateway(:test).token
     card_token = create_failed_card_on(@environment).token
