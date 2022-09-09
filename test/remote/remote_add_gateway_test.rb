@@ -25,10 +25,11 @@ class RemoteAddGatewayTest < Test::Unit::TestCase
     assert_equal "Spreedly Test", gateway.name
   end
 
-  def test_need_active_account
-    assert_raise_with_message(Spreedly::PaymentRequiredError, "Your environment (R7lHscqcYkZeDGGbthKp6GKMu15) has not been activated for real transactions with real payment methods. If you're using a Test Gateway you can *ONLY* use Test payment methods - ( https://docs.spreedly.com/test-data). All other credit card numbers are considered real credit cards; real credit cards are not allowed when using a Test Gateway.") do
-      @environment.add_gateway(:wirecard)
-    end
-  end
+  # 2022-09-08 There appears to no longer be a concept of a non-active environment. All environments are treated as production environments. There are only Test gateways that you can run test transactions against. 
+  # def test_need_active_account
+  #   assert_raise_with_message(Spreedly::PaymentRequiredError, "Your environment (" + remote_test_environment_key + ") has not been activated for real transactions with real payment methods. If you're using a Test Gateway you can *ONLY* use Test payment methods - ( https://docs.spreedly.com/test-data). All other credit card numbers are considered real credit cards; real credit cards are not allowed when using a Test Gateway.") do
+  #     @environment.add_gateway(:wirecard)
+  #   end
+  # end
 
 end

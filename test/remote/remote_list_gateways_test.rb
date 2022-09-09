@@ -21,9 +21,9 @@ class RemoteListGatewaysTest < Test::Unit::TestCase
     first_twenty = @environment.list_gateways
     assert_equal 20, first_twenty.size
     assert_kind_of Spreedly::Model, first_twenty.first
-
-    gateways = @environment.list_gateways(g1)
-    assert_equal 2, gateways.size
+    
+    gateways = @environment.list_gateways(g2)
+    assert_equal 1, gateways.size
     assert_kind_of(Spreedly::Gateway, gateways.first)
     assert_kind_of(Spreedly::Gateway, gateways.last)
 
