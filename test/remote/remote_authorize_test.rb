@@ -12,13 +12,16 @@ class RemoteAuthorizeTest < Test::Unit::TestCase
   end
 
   def test_payment_method_not_found
-    assert_raise_with_message(Spreedly::TransactionCreationError, "There is no payment method corresponding to the specified payment method token.") do
-      @environment.authorize_on_gateway('gateway_token', 'unknown_payment_method', 100)
+    gateway_token = @environment.add_gateway(:test).token
+
+    assert_raise_with_message(Spreedly::NotFoundError, "There is no payment method corresponding to the specified payment method token.") do
+      @environment.authorize_on_gateway(gateway_token, 'unknown_payment_method', 100)
     end
   end
 
   def test_gateway_not_found
     card_token = create_card_on(@environment).token
+
     assert_raise_with_message(Spreedly::NotFoundError, "Unable to find the specified gateway.") do
       @environment.authorize_on_gateway('unknown_gateway', card_token, 100)
     end

@@ -11,6 +11,13 @@ module Spreedly
       init_credentials(xml_doc)
     end
 
+    def self.new_list_from(xml_doc)
+      receivers = xml_doc.xpath('.//receivers/receiver')
+      receivers.map do |each|
+        self.new(each)
+      end
+    end
+
     private
     def init_credentials(xml_doc)
       @credentials = {}

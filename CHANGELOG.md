@@ -2,6 +2,11 @@
 
 All notable changes to this project will be documented in this file.
 
+## [2.0.25] - 2020-10-08
+### Added
+- @hoenth - Add list_receivers
+- @hoenth - Add list_supported_receivers
+
 ## [2.0.24] - 2021-07-12
 ### Added
 - @almalee24 - Add MIT Framework support flag, supports_populate_mit_fields  

@@ -24,8 +24,9 @@ class RemoteListTransactionsTest < Test::Unit::TestCase
     assert_equal 20, first_twenty.size
     assert_kind_of Spreedly::Model, first_twenty.first
 
-    transactions = @environment.list_transactions(t1.token)
-    assert_equal 2, transactions.size
+    transactions = @environment.list_transactions(t2.token)
+p transactions
+    assert_equal 1, transactions.size
     assert_kind_of(Spreedly::Authorization, transactions.first)
     assert_kind_of(Spreedly::Capture, transactions.last)
 
