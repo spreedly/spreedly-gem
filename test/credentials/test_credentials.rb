@@ -9,6 +9,10 @@ module Spreedly
       remote_creds["access_secret"]
     end
 
+    def remote_test_sca_provider_key
+      remote_creds["sca_provider_key"]
+    end
+
     private
     def remote_creds
       @@remote_creds ||= load_creds
