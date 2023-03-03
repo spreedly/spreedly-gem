@@ -1,9 +1,11 @@
 require 'test_helper'
 require 'unit/response_stubs/purchase_stubs'
+require 'unit/payment_token_stubs/google_payment_token_stubs'
 
 class PurchaseTest < Test::Unit::TestCase
 
   include PurchaseStubs
+  include GooglePaymentTokenStubs
 
   def setup
     @environment = Spreedly::Environment.new("key", "secret")
@@ -153,6 +155,26 @@ class PurchaseTest < Test::Unit::TestCase
       [ './continue_caching', 'true']
   end
 
+  def test_request_body_params_for_google_pay
+    body = get_request_body(successful_purchase_response) do
+      @environment.purchase_on_gateway("TheGatewayToken", google_pay_token, 2001, all_possible_options)
+    end
+
+    transaction = body.xpath('./transaction')
+    assert_xpaths_in transaction,
+      [ './amount', '2001' ],
+      [ './currency_code', 'EUR' ],
+      [ './payment_method_token', '' ],
+      [ './order_id', '8675' ],
+      [ './description', 'SuperDuper' ],
+      [ './ip', '183.128.100.103' ],
+      [ './merchant_name_descriptor', 'Real Stuff' ],
+      [ './merchant_location_descriptor', 'Raleigh' ],
+      [ './retain_on_success', 'true' ],
+      [ './continue_caching', 'true']
+
+    assert body.to_s.include?(google_pay_token)
+  end
 
   private
   def purchase_using(response)
