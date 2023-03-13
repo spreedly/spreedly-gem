@@ -183,9 +183,8 @@ module Spreedly
     end
 
     def add_payment_token(doc, payment_method_token)
-      payment_method_token = payment_method_token.gsub(/\n/, '')
-      if payment_method_token.include?('<google_pay>')
-        doc << payment_token.to_xml
+      if payment_method_token.include?('android_pay')
+        doc << "<google_pay><payment_data><![CDATA[#{payment_method_token}]]></payment_data><test_card_number>4111111111111111</test_card_number></google_pay>"
       else # if credit card
         doc.payment_method_token(payment_method_token)
       end
