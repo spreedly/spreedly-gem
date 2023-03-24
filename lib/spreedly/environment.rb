@@ -118,7 +118,7 @@ module Spreedly
     end
 
     def gateway_options
-      xml_doc = ssl_options(gateway_options_url)
+      xml_doc = ssl_get(gateway_options_url, headers)
       GatewayClass.new_list_from(xml_doc)
     end
 

@@ -1,10 +1,13 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+## [2.0.25] - 2023-03-24
+### Changed
+- @jknipp - Update the gateway options url to use `GET /v1/gateways_options.xml` instead of `OPTIONS /v1/gateways.xml`
 
 ## [2.0.24] - 2021-07-12
 ### Added
-- @almalee24 - Add MIT Framework support flag, supports_populate_mit_fields  
+- @almalee24 - Add MIT Framework support flag, supports_populate_mit_fields
 
 ## [2.0.24] - 2019-08-21
 ### Added
