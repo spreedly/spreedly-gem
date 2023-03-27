@@ -166,7 +166,8 @@ module Spreedly
     def headers
       {
         'Authorization' => ('Basic ' + Base64.strict_encode64("#{@key}:#{@access_secret}").chomp),
-        'Content-Type' => 'text/xml'
+        'Content-Type' => 'text/xml',
+        'User-Agent' => "spreedly-gem/#{Spreedly::VERSION}"
       }
     end
 
