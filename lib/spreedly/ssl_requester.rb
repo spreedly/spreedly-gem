@@ -16,10 +16,6 @@ module Spreedly
       ssl_request(:put, endpoint, body, headers)
     end
 
-    def ssl_options(endpoint)
-      ssl_request(:options, endpoint, nil, {})
-    end
-
     private
 
     def ssl_request(method, endpoint, body, headers, options = {})
