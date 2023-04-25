@@ -157,7 +157,7 @@ class PurchaseTest < Test::Unit::TestCase
 
   def test_request_body_params_for_google_pay
     body = get_request_body(successful_purchase_response) do
-      @environment.purchase_on_gateway("TheGatewayToken", google_pay_token, 2001, all_possible_options)
+      @environment.purchase_on_gateway("TheGatewayToken", google_pay_token, 2001, all_possible_options.merge("payment_method" => "google_pay"))
     end
 
     transaction = body.xpath('./transaction')
