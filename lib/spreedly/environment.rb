@@ -174,7 +174,7 @@ module Spreedly
       build_xml_request('transaction') do |doc|
         doc.amount amount
         doc.currency_code(options[:currency_code] || currency_code)
-        add_payment_token(doc, payment_method_token)
+        add_payment_token(doc, payment_method_token, options)
         add_to_doc(doc, options, :retain_on_success)
         add_to_doc(doc, options, :stored_credential_initiator)
         add_to_doc(doc, options, :stored_credential_reason_type)
@@ -182,8 +182,8 @@ module Spreedly
       end
     end
 
-    def add_payment_token(doc, payment_method_token)
-      if payment_method_token.include?('android_pay')
+    def add_payment_token(doc, payment_method_token, options = {})
+      if options["payment_method"] == "google_pay"
         doc << "<google_pay><payment_data><![CDATA[#{payment_method_token}]]></payment_data><test_card_number>4111111111111111</test_card_number></google_pay>"
       else # if credit card
         doc.payment_method_token(payment_method_token)
