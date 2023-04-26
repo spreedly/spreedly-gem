@@ -183,8 +183,13 @@ module Spreedly
     end
 
     def add_payment_token(doc, payment_method_token, options = {})
-      if options["payment_method"] == "google_pay"
-        doc << "<google_pay><payment_data><![CDATA[#{payment_method_token}]]></payment_data><test_card_number>4111111111111111</test_card_number></google_pay>"
+      if options[:payment_method] == :google_pay
+        doc << <<~XML
+          <google_pay>
+            <payment_data><![CDATA[#{payment_method_token}]]></payment_data>
+            #{'<test_card_number>4111111111111111</test_card_number>' unless Rails.env.production?}
+          </google_pay>
+        XML
       else # if credit card
         doc.payment_method_token(payment_method_token)
       end
