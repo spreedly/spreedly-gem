@@ -38,6 +38,7 @@ require 'spreedly/receiver'
 require 'spreedly/gateway_class'
 require 'spreedly/receiver_class'
 require 'spreedly/error'
+require 'spreedly/version'
 
 module Spreedly
 

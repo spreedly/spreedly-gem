@@ -91,7 +91,7 @@ module Spreedly
     end
 
     def gateway_options_url
-      "#{base_url}/v1/gateways.xml"
+      "#{base_url}/v1/gateways_options.xml"
     end
 
     def add_gateway_url
