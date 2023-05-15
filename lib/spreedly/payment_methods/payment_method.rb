@@ -28,6 +28,8 @@ module Spreedly
         return ThirdPartyToken.new(xml_doc)
       when 'google_pay'
         return GooglePay.new(xml_doc)
+      when 'apple_pay'
+        return ApplePay.new(xml_doc)
       end
     end
 

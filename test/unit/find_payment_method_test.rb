@@ -117,6 +117,18 @@ class FindPaymentMethodTest < Test::Unit::TestCase
     assert_equal("cached", google_pay.storage_state)
   end
 
+  def test_successfully_find_apple_pay
+    apple_pay = find_using(successful_get_apple_pay_response)
+
+    assert_kind_of(Spreedly::ApplePay, apple_pay)
+    assert_equal "5OHW2sAiQQMTNB06A3sOZ8UVduo", apple_pay.token
+    assert_equal(1682445021, apple_pay.created_at.to_i)
+    assert_equal(1682445021, apple_pay.updated_at.to_i)
+    assert_equal("", apple_pay.data)
+    assert_equal("apple_pay", apple_pay.payment_method_type)
+    assert_equal("cached", apple_pay.storage_state)
+  end
+
   private
   def find_using(response)
     @environment.stubs(:raw_ssl_request).returns(response)

@@ -181,4 +181,10 @@ module FindPaymentMethodStubs
     XML
   end
 
+  def successful_get_apple_pay_response
+    StubResponse.succeeded <<-XML
+      # TODO ADD APPLE RESPONSE
+    XML
+  end
+
 end

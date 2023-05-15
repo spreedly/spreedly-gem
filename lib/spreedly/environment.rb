@@ -191,6 +191,13 @@ module Spreedly
             #{'<test_card_number>4111111111111111</test_card_number>' if options[:test_mode]}
           </google_pay>
         XML
+      elsif options[:payment_method] == :apple_pay
+        doc << <<~XML
+          <apple_pay>
+            <payment_data><![CDATA[#{payment_method_token}]]></payment_data>
+            #{'<test_card_number>4111111111111111</test_card_number>' if options[:test_mode]}
+          </apple_pay>
+        XML
       else # if credit card
         doc.payment_method_token(payment_method_token)
       end
