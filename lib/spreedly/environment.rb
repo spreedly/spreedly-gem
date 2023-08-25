@@ -1,5 +1,6 @@
 require 'base64'
 require 'nokogiri'
+require 'spreedly/version'
 
 module Spreedly
   class Environment
