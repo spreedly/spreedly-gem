@@ -1,6 +1,11 @@
 # Changelog
 
 All notable changes to this project will be documented in this file.
+
+## [2.0.28] - 2023-08-23
+### Changed
+- @jknipp - Merge fix for Spreedly version error in User-Agent header reference from @mrudult
+
 ## [2.0.27] - 2023-03-27
 ### Changed
 - @jknipp - Add User-Agent header to requests
