@@ -139,4 +139,46 @@ module FindPaymentMethodStubs
     XML
   end
 
+  def successful_get_google_pay_response
+    StubResponse.succeeded <<-XML
+      <payment_method>
+        <token>5OHW2sAiQQMTNB06A3sOZ8UVduo</token>
+        <created_at type=\"dateTime\">2023-04-25T17:50:21Z</created_at>
+        <updated_at type=\"dateTime\">2023-04-25T17:50:21Z</updated_at>
+        <email nil=\"true\"/>
+        <data nil=\"true\"/>
+        <storage_state>cached</storage_state>
+        <test type=\"boolean\">true</test>
+        <metadata nil=\"true\"/>
+        <callback_url nil=\"true\"/>
+        <last_four_digits>1111</last_four_digits>
+        <first_six_digits>411111</first_six_digits>
+        <card_type>visa</card_type>
+        <first_name nil=\"true\"/>
+        <last_name nil=\"true\"/>
+        <month type=\"integer\">6</month>
+        <year type=\"integer\">2027</year>
+        <full_name/>
+        <address1 nil=\"true\"/>
+        <address2 nil=\"true\"/>
+        <city nil=\"true\"/>
+        <state nil=\"true\"/>
+        <zip nil=\"true\"/>
+        <country nil=\"true\"/>
+        <phone_number nil=\"true\"/>
+        <company nil=\"true\"/>
+        <shipping_address1 nil=\"true\"/>
+        <shipping_address2 nil=\"true\"/>
+        <shipping_city nil=\"true\"/>
+        <shipping_state nil=\"true\"/>
+        <shipping_zip nil=\"true\"/>
+        <shipping_country nil=\"true\"/>
+        <shipping_phone_number nil=\"true\"/>
+        <eligible_for_card_updater type=\"boolean\">false</eligible_for_card_updater>
+        <payment_method_type>google_pay</payment_method_type>
+        <errors></errors>
+      </payment_method>
+    XML
+  end
+
 end

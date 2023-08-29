@@ -26,6 +26,8 @@ module Spreedly
         return BankAccount.new(xml_doc)
       when 'third_party_token'
         return ThirdPartyToken.new(xml_doc)
+      when 'google_pay'
+        return GooglePay.new(xml_doc)
       end
     end
 

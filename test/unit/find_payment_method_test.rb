@@ -105,6 +105,18 @@ class FindPaymentMethodTest < Test::Unit::TestCase
     assert_equal([], b.errors)
   end
 
+  def test_successfully_find_google_pay
+    google_pay = find_using(successful_get_google_pay_response)
+
+    assert_kind_of(Spreedly::GooglePay, google_pay)
+    assert_equal "5OHW2sAiQQMTNB06A3sOZ8UVduo", google_pay.token
+    assert_equal(1682445021, google_pay.created_at.to_i)
+    assert_equal(1682445021, google_pay.updated_at.to_i)
+    assert_equal("", google_pay.data)
+    assert_equal("google_pay", google_pay.payment_method_type)
+    assert_equal("cached", google_pay.storage_state)
+  end
+
   private
   def find_using(response)
     @environment.stubs(:raw_ssl_request).returns(response)
