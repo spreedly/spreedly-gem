@@ -107,6 +107,57 @@ class RemotePurchaseTest < Test::Unit::TestCase
     assert_equal "device_fingerprint", transaction.required_action
   end
 
+  def test_3d_secure_global_challenge_transaction_arguments
+    gateway_token = @environment.add_gateway(:test).token
+    card_token = create_card_on(@environment, number: '4556761029983886', retained: false).token
+    browser_info = "eyJ3aWR0aCI6MzAwOCwiaGVpZ2h0IjoxNjkyLCJkZXB0aCI6MjQsInRpbWV6b25lIjoyNDAsInVzZXJfYWdlbnQiOiJNb3ppbGxhLzUuMCAoTWFjaW50b3NoOyBJbnRlbCBNYWMgT1MgWCAxMC4xNDsgcnY6NjguMCkgR2Vja28vMjAxMDAxMDEgRmlyZWZveC82OC4wIiwiamF2YSI6ZmFsc2UsImxhbmd1YWdlIjoiZW4tVVMiLCJhY2NlcHRfaGVhZGVyIjoidGV4dC9odG1sLGFwcGxpY2F0aW9uL3hodG1sK3htbCxhcHBsaWNhdGlvbi94bWwifQ=="
+    transaction = @environment.purchase_on_gateway(gateway_token, card_token, 3004,
+      sca_provider_key: remote_test_sca_provider_key,
+      sca_authentication_parameters: {
+        test_scenario: {
+          scenario: "challenge" # returns a pending transaction that must go through a challenge flow using Spreedly’s iFrame helpers
+        }
+      },
+      browser_info: browser_info
+    )
+    assert !transaction.succeeded?
+    assert_equal "pending", transaction.state
+    assert_equal "challenge", transaction.required_action
+    assert_match "form action", transaction.challenge_form
+  end
+
+  def test_3d_secure_global_authenticated_transaction_arguments
+    gateway_token = @environment.add_gateway(:test).token
+    card_token = create_card_on(@environment, number: '4556761029983886', retained: false).token
+    browser_info = "eyJ3aWR0aCI6MzAwOCwiaGVpZ2h0IjoxNjkyLCJkZXB0aCI6MjQsInRpbWV6b25lIjoyNDAsInVzZXJfYWdlbnQiOiJNb3ppbGxhLzUuMCAoTWFjaW50b3NoOyBJbnRlbCBNYWMgT1MgWCAxMC4xNDsgcnY6NjguMCkgR2Vja28vMjAxMDAxMDEgRmlyZWZveC82OC4wIiwiamF2YSI6ZmFsc2UsImxhbmd1YWdlIjoiZW4tVVMiLCJhY2NlcHRfaGVhZGVyIjoidGV4dC9odG1sLGFwcGxpY2F0aW9uL3hodG1sK3htbCxhcHBsaWNhdGlvbi94bWwifQ=="
+    transaction = @environment.purchase_on_gateway(gateway_token, card_token, 3004,
+      sca_provider_key: remote_test_sca_provider_key,
+      sca_authentication_parameters: {
+        test_scenario: {
+          scenario: "authenticated" # frictionless
+        }
+      },
+      browser_info: browser_info
+    )
+    assert transaction.succeeded?
+  end
+
+  def test_3d_secure_global_not_authenticated_transaction_arguments
+    gateway_token = @environment.add_gateway(:test).token
+    card_token = create_card_on(@environment, number: '4556761029983886', retained: false).token
+    browser_info = "eyJ3aWR0aCI6MzAwOCwiaGVpZ2h0IjoxNjkyLCJkZXB0aCI6MjQsInRpbWV6b25lIjoyNDAsInVzZXJfYWdlbnQiOiJNb3ppbGxhLzUuMCAoTWFjaW50b3NoOyBJbnRlbCBNYWMgT1MgWCAxMC4xNDsgcnY6NjguMCkgR2Vja28vMjAxMDAxMDEgRmlyZWZveC82OC4wIiwiamF2YSI6ZmFsc2UsImxhbmd1YWdlIjoiZW4tVVMiLCJhY2NlcHRfaGVhZGVyIjoidGV4dC9odG1sLGFwcGxpY2F0aW9uL3hodG1sK3htbCxhcHBsaWNhdGlvbi94bWwifQ=="
+    transaction = @environment.purchase_on_gateway(gateway_token, card_token, 3004,
+      sca_provider_key: remote_test_sca_provider_key,
+      sca_authentication_parameters: {
+        test_scenario: {
+          scenario: "not_authenticated" # immediate failure
+        }
+      },
+      browser_info: browser_info
+    )
+    assert !transaction.succeeded?
+  end
+
   def test_optional_arguments
     gateway_token = @environment.add_gateway(:test).token
     card_token = create_card_on(@environment, retained: false).token
