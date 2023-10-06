@@ -9,6 +9,22 @@ module Spreedly
       remote_creds["access_secret"]
     end
 
+    def remote_test_gateway_token
+      remote_creds["gateway_token"]
+    end
+
+    def inactive_environment_key
+      remote_creds["inactive_environment_key"]
+    end
+
+    def inactive_access_secret
+      remote_creds["inactive_access_secret"]
+    end
+
+    def all_creds
+      remote_creds
+    end
+
     private
     def remote_creds
       @@remote_creds ||= load_creds

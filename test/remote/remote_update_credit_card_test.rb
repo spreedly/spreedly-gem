@@ -56,7 +56,7 @@ class RemoteUpdateCreditCardTest < Test::Unit::TestCase
   private
   def card_deets(options = {})
     {
-      email: 'cauthon@wot.com', month: 1, year: 2023,
+      email: 'cauthon@wot.com', month: 1, year: 2030,
       last_name: 'Cauthon', first_name: 'Mat',
       eligible_for_card_updater: 'false'
     }.merge(options)

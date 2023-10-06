@@ -26,7 +26,7 @@ class FindPaymentMethodTest < Test::Unit::TestCase
     assert_equal('Alcatraz', card.first_name)
     assert_equal('Smedry', card.last_name)
     assert_equal('8', card.month)
-    assert_equal('2020', card.year)
+    assert_equal('2030', card.year)
     assert_equal('123 Freedom Street', card.address1)
     assert_equal('Apt. 8', card.address2)
     assert_equal('Wanaque', card.city)

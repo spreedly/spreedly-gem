@@ -38,9 +38,9 @@ class RemoteDeliverPaymentMethodTest < Test::Unit::TestCase
     assert_equal(true, transaction.succeeded?)
     assert_equal(card_token, transaction.payment_method.token)
     assert_equal(receiver_token, transaction.receiver.token)
-    assert_match(/HOST: spreedly-echo.herokuapp.com\nCONNECTION: close/m, transaction.response.body)
+    assert_match("{\"product_id\":\"916593\",\"card_number\":\"[FILTERED]\",\"user_name\":\"\",\"secret_password\":\"\"}", transaction.response.body)
     assert_equal('200', transaction.response.status)
-    assert_match(/Server: thin/m, transaction.response.headers)
+    assert_match("Server: Spreedly Echo Server\n" + "Connection: close\n" + "Content-Length: 92", transaction.response.headers)
   end
 
   private
