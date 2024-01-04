@@ -1,5 +1,6 @@
 require 'base64'
 require 'nokogiri'
+require 'spreedly/version'
 
 module Spreedly
   class Environment
@@ -118,7 +119,7 @@ module Spreedly
     end
 
     def gateway_options
-      xml_doc = ssl_options(gateway_options_url)
+      xml_doc = ssl_get(gateway_options_url, headers)
       GatewayClass.new_list_from(xml_doc)
     end
 
@@ -166,7 +167,8 @@ module Spreedly
     def headers
       {
         'Authorization' => ('Basic ' + Base64.strict_encode64("#{@key}:#{@access_secret}").chomp),
-        'Content-Type' => 'text/xml'
+        'Content-Type' => 'text/xml',
+        'User-Agent' => "spreedly-gem/#{Spreedly::VERSION}"
       }
     end
 
