@@ -158,6 +158,12 @@ module Spreedly
       PaymentMethod.new_from(xml_doc)
     end
 
+    def update_gratis_credit_card(credit_card_token, options)
+      body = update_credit_card_body(options)
+      xml_doc = ssl_put(update_gratis_payment_method_url(credit_card_token), body, headers)
+      PaymentMethod.new_from(xml_doc)
+    end
+
     def deliver_to_receiver(receiver_token, payment_method_token, receiver_options)
       body = deliver_to_receiver_body(payment_method_token, receiver_options)
       api_post(deliver_to_receiver_url(receiver_token), body)
@@ -273,7 +279,7 @@ module Spreedly
         doc.credit_card do
           add_to_doc(doc, options, :number, :verification_value, :month, :full_name, :first_name, :last_name,
                      :year, :address1, :address2, :city, :state, :zip, :country, :phone_number,
-                     :company, :eligible_for_card_updater)
+                     :company, :eligible_for_card_updater, :managed)
         end
       end
     end
@@ -281,7 +287,7 @@ module Spreedly
     def update_credit_card_body(options)
       build_xml_request('payment_method') do |doc|
         add_to_doc(doc, options, :email, :month, :full_name, :first_name, :last_name, :year,
-                   :address1, :address2, :city, :state, :zip, :country, :phone_number,
+                   :address1, :address2, :city, :state, :zip, :country, :phone_number, :managed,
                    :eligible_for_card_updater, :allow_blank_name, :allow_expired_date, :allow_blank_date)
       end
     end
