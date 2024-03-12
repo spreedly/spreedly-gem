@@ -186,6 +186,8 @@ module Spreedly
         add_to_doc(doc, options, :retain_on_success)
         add_to_doc(doc, options, :stored_credential_initiator)
         add_to_doc(doc, options, :stored_credential_reason_type)
+        add_to_doc(doc, options, :provision_network_token)
+        add_to_doc(doc, options, :attempt_network_token)
         add_extra_options_for_basic_ops(doc, options)
       end
     end
@@ -196,6 +198,8 @@ module Spreedly
         add_to_doc(doc, options, :retain_on_success)
         add_to_doc(doc, options, :stored_credential_initiator)
         add_to_doc(doc, options, :stored_credential_reason_type)
+        add_to_doc(doc, options, :provision_network_token)
+        add_to_doc(doc, options, :attempt_network_token)
         add_extra_options_for_basic_ops(doc, options)
       end
     end
@@ -275,7 +279,7 @@ module Spreedly
 
     def add_credit_card_body(options)
       build_xml_request('payment_method') do |doc|
-        add_to_doc(doc, options, :data, :retained, :email)
+        add_to_doc(doc, options, :data, :retained, :email, :provision_network_token)
         doc.credit_card do
           add_to_doc(doc, options, :number, :verification_value, :month, :full_name, :first_name, :last_name,
                      :year, :address1, :address2, :city, :state, :zip, :country, :phone_number,
