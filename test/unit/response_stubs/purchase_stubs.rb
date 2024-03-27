@@ -20,6 +20,7 @@ module PurchaseStubs
         <gateway_specific_fields nil="true"/>
         <gateway_specific_response_fields nil="true"/>
         <message key="messages.transaction_succeeded">Succeeded!</message>
+        <gateway_type>test</gateway_type>
         <gateway_token>YOaCn5a9xRaBTGgmGAWbkgWUuqv</gateway_token>
         <gateway_transaction_id>44</gateway_transaction_id>
         <three_ds_context>three-ds-context</three_ds_context>

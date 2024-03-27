@@ -118,6 +118,10 @@ module Spreedly
       "#{base_url}/v1/payment_methods/#{token}.xml"
     end
 
+    def update_gratis_payment_method_url(token)
+      "#{base_url}/v1/payment_methods/#{token}/update_gratis.xml"
+    end
+
     def deliver_to_receiver_url(receiver_token)
       "#{base_url}/v1/receivers/#{receiver_token}/deliver.xml"
     end

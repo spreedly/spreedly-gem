@@ -26,6 +26,7 @@ class RefundTest < Test::Unit::TestCase
     assert_equal 'LotsOCoffee', t.description
     assert_equal 'My Writeoff Inc.', t.merchant_name_descriptor
     assert_equal 'Tax Free Zone', t.merchant_location_descriptor
+    assert_equal 'test', t.gateway_type
     assert_equal 'XYI0V2l4KC1cAm6Y3c2kG5loJaA', t.gateway_token
     assert_equal 'RkIAltzr49eXuWc7ajBjLLeKZt8', t.reference_token
     assert_equal 'Credit', t.transaction_type

@@ -26,6 +26,7 @@ class PurchaseTest < Test::Unit::TestCase
     assert_equal '4 Shardblades', t.description
     assert_equal '', t.merchant_name_descriptor
     assert_equal '', t.merchant_location_descriptor
+    assert_equal 'test', t.gateway_type
     assert_equal 'YOaCn5a9xRaBTGgmGAWbkgWUuqv', t.gateway_token
     assert_equal '8xXXIPGXTaPXysDA5OUpgnjTEjK', t.payment_method.token
     assert_equal "44", t.gateway_transaction_id

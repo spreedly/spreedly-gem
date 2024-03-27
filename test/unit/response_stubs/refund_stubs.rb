@@ -21,6 +21,7 @@ module RefundStubs
         <gateway_specific_fields nil="true"/>
         <gateway_specific_response_fields nil="true"/>
         <message key="messages.transaction_succeeded">Succeeded!</message>
+        <gateway_type>test</gateway_type>
         <gateway_token>XYI0V2l4KC1cAm6Y3c2kG5loJaA</gateway_token>
         <gateway_transaction_id>44</gateway_transaction_id>
         <response>
