@@ -142,6 +142,13 @@ module Spreedly
       Gateway.new(xml_doc)
     end
 
+    def update_gateway(gateway_token, credentials: {}, options: {})
+      body = update_gateway_body(credentials: credentials, options: options)
+      puts body
+      xml_doc = ssl_put(update_gateway_url(gateway_token), body, headers)
+      Gateway.new(xml_doc)
+    end
+
     def add_receiver(receiver_type, host_names = nil, credentials = [])
       body = add_receiver_body(receiver_type, host_names, credentials)
       xml_doc = ssl_post(add_receiver_url, body, headers)
@@ -249,6 +256,13 @@ module Spreedly
       build_xml_request('gateway') do |doc|
         doc.gateway_type gateway_type
         add_to_doc(doc, credentials, *credentials.keys)
+      end
+    end
+
+    def update_gateway_body(credentials: {}, options: {})
+      build_xml_request('gateway') do |doc|
+        add_to_doc(doc, credentials, *credentials.keys)
+        add_to_doc(doc, options, :description, :merchant_profile_key, :sub_merchant_key)
       end
     end
 

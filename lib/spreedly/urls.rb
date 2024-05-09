@@ -98,6 +98,10 @@ module Spreedly
       "#{base_url}/v1/gateways.xml"
     end
 
+    def update_gateway_url(gateway_token)
+      "#{base_url}/v1/gateways/#{gateway_token}.xml"
+    end
+
     def receiver_options_url
       "#{base_url}/v1/receivers_options.xml"
     end
