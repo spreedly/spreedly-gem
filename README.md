@@ -1,5 +1,7 @@
 # Spreedly Gem
 
+**This is a fork of the spreedly gem. We had to fork it due to the fact that it doesn't convert array data to xml here: https://github.com/spreedly/spreedly-gem/blob/master/lib/spreedly/environment.rb#L328. This fork has a very specific patch to fix our issue. We hope they will make a fix for us in their gem so we can go back to using it.**
+
 A convenient Ruby wrapper for the Spreedly API.
 
 This is an example Ruby integration with Spreedly. This version is no longer actively updated and will be superseded by a new version in the near future. Feature parity may lag behind, so please use this gem at your own risk.

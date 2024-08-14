@@ -327,8 +327,24 @@ module Spreedly
 
     def xml_for_hash(hash)
       hash.map do |key, value|
-        text = value.kind_of?(Hash) ? xml_for_hash(value) : value
+        if value.kind_of?(Hash)
+          text = xml_for_hash(value)
+        elsif value.kind_of?(Array)
+          text = xml_for_array(value)
+        else
+          text = value
+        end
         "<#{key}>#{text}</#{key}>"
+      end.join
+    end
+
+    def xml_for_array(array)
+      array.map do |value|
+        if value.kind_of?(Hash)
+          xml_for_hash(value)
+        else
+          value.to_s
+        end
       end.join
     end
 
